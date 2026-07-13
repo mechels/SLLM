@@ -1,0 +1,330 @@
+INFO 07-13 13:23:56 cli.py:211] Starting gRPC server
+INFO 07-13 13:23:56 server.py:40] StorageServicer: storage_path=/mnt/data1/mechels, mem_pool_size=34359738368, num_thread=4, chunk_size=16777216, registration_required=False
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I20260713 13:23:56.859984 79012 checkpoint_store.cpp:41] Number of GPUs: 1
+I20260713 13:23:56.860033 79012 checkpoint_store.cpp:43] I/O threads: 4, chunk size: 16MB
+I20260713 13:23:56.860042 79012 checkpoint_store.cpp:45] Storage path: "/mnt/data1/mechels"
+I20260713 13:23:56.997347 79012 checkpoint_store.cpp:71] GPU 0 UUID: e00f9c39-26cb-e49a-5563-c9ff59f4e47f
+I20260713 13:23:56.997428 79012 pinned_memory_pool.cpp:29] Creating PinnedMemoryPool with 2048 buffers of 16777216 bytes
+I20260713 13:24:07.548022 79012 checkpoint_store.cpp:83] Memory pool created with 32GB
+INFO 07-13 13:24:07 server.py:231] Starting gRPC server on 0.0.0.0:8073
+I20260713 13:26:45.949012 79012 model.cpp:53] Tensor file "/mnt/data1/mechels/meta-llama/Meta-Llama-3-8B_0/tensor.data_2" does not exist
+I20260713 13:26:45.951174 79012 checkpoint_store.cpp:106] Model meta-llama/Meta-Llama-3-8B_0 is registered
+I20260713 13:26:45.951399 89002 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 958 buffers free buffers 1090 total buffers 2048
+INFO 07-13 13:26:45 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+I20260713 13:26:45.951969 89002 model.cpp:120] Loading model meta-llama/Meta-Llama-3-8B_0 size 16060522496 to host
+I20260713 13:26:45.951992 89002 model.cpp:134] Loading model meta-llama/Meta-Llama-3-8B_0 to host with 4 threads, 958 chunks, 16777216 chunk size, 240 chunks per thread
+I20260713 13:26:45.952098 89003 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260713 13:26:45.952149 89004 model.cpp:155] Thread 1 starting from partition 0 offset 4026531840
+I20260713 13:26:45.952279 89006 model.cpp:155] Thread 3 starting from partition 1 offset 1348108288
+I20260713 13:26:45.952291 89005 model.cpp:155] Thread 2 starting from partition 0 offset 8053063680
+INFO 07-13 13:26:46 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:26:46.881603 89051 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:26:47.005398 89051 model.cpp:269] Creating replica 8dfd361c-9288-4b93-951d-9268321a3da4
+I20260713 13:26:47.005465 89051 model.cpp:273] Creating queue for device 0
+I20260713 13:26:47.005491 89051 model.cpp:279] Created replica 8dfd361c-9288-4b93-951d-9268321a3da4
+I20260713 13:26:47.005594 89051 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:26:47.005635 89051 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:02.601500 89057 model.cpp:336] Finished loading tensor from memory to device 0
+I20260713 13:29:02.622123 89002 model.cpp:250] Finished loading model meta-llama/Meta-Llama-3-8B_0 from disk
+INFO 07-13 13:29:02 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 8dfd361c-9288-4b93-951d-9268321a3da4 success
+INFO 07-13 13:29:05 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:05 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:05.157871 95902 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:05.296763 95902 model.cpp:269] Creating replica b9de1c77-9081-4b67-8076-68ff2dbf1235
+I20260713 13:29:05.296819 95902 model.cpp:273] Creating queue for device 0
+I20260713 13:29:05.296830 95902 model.cpp:279] Created replica b9de1c77-9081-4b67-8076-68ff2dbf1235
+I20260713 13:29:05.296931 95902 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:05.296962 95902 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:05.591794 95909 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:05 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica b9de1c77-9081-4b67-8076-68ff2dbf1235 success
+INFO 07-13 13:29:07 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:08 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:08.066083 96093 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:08.195209 96093 model.cpp:269] Creating replica 553348e5-0607-4614-b844-fb4f9fcdf2fd
+I20260713 13:29:08.195279 96093 model.cpp:273] Creating queue for device 0
+I20260713 13:29:08.195289 96093 model.cpp:279] Created replica 553348e5-0607-4614-b844-fb4f9fcdf2fd
+I20260713 13:29:08.195416 96093 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:08.195461 96093 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:08.490343 96099 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:08 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 553348e5-0607-4614-b844-fb4f9fcdf2fd success
+INFO 07-13 13:29:10 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:10 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:10.943984 96282 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:11.088555 96282 model.cpp:269] Creating replica 85d11d28-3cfc-4cc0-852d-01013c90a1bc
+I20260713 13:29:11.088624 96282 model.cpp:273] Creating queue for device 0
+I20260713 13:29:11.088634 96282 model.cpp:279] Created replica 85d11d28-3cfc-4cc0-852d-01013c90a1bc
+I20260713 13:29:11.088754 96282 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:11.088809 96282 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:11.383600 96299 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:11 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 85d11d28-3cfc-4cc0-852d-01013c90a1bc success
+INFO 07-13 13:29:13 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:13 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:13.811056 96450 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:13.951529 96450 model.cpp:269] Creating replica 8c3c95da-5f64-4b97-9755-f91b561ccc3e
+I20260713 13:29:13.951601 96450 model.cpp:273] Creating queue for device 0
+I20260713 13:29:13.951611 96450 model.cpp:279] Created replica 8c3c95da-5f64-4b97-9755-f91b561ccc3e
+I20260713 13:29:13.951735 96450 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:13.951824 96450 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:14.246541 96457 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:14 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 8c3c95da-5f64-4b97-9755-f91b561ccc3e success
+INFO 07-13 13:29:16 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+I20260713 13:29:16.807627 96702 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+INFO 07-13 13:29:16 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:16.947472 96702 model.cpp:269] Creating replica d1e00433-c620-47c0-aa94-8783b702f65f
+I20260713 13:29:16.947527 96702 model.cpp:273] Creating queue for device 0
+I20260713 13:29:16.947538 96702 model.cpp:279] Created replica d1e00433-c620-47c0-aa94-8783b702f65f
+I20260713 13:29:16.947654 96702 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:16.947700 96702 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:17.242519 96734 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:17 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica d1e00433-c620-47c0-aa94-8783b702f65f success
+INFO 07-13 13:29:19 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+I20260713 13:29:19.763964 96888 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+INFO 07-13 13:29:19 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:19.903316 96888 model.cpp:269] Creating replica f68b52d1-962b-456d-a004-d10863debece
+I20260713 13:29:19.903383 96888 model.cpp:273] Creating queue for device 0
+I20260713 13:29:19.903394 96888 model.cpp:279] Created replica f68b52d1-962b-456d-a004-d10863debece
+I20260713 13:29:19.903517 96888 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:19.903556 96888 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:20.198171 96900 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:20 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica f68b52d1-962b-456d-a004-d10863debece success
+INFO 07-13 13:29:22 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:22 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:22.714051 97154 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:22.838989 97154 model.cpp:269] Creating replica f7d625aa-62b6-4fa2-a620-d851c8e70d9f
+I20260713 13:29:22.839061 97154 model.cpp:273] Creating queue for device 0
+I20260713 13:29:22.839071 97154 model.cpp:279] Created replica f7d625aa-62b6-4fa2-a620-d851c8e70d9f
+I20260713 13:29:22.839197 97154 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:22.839253 97154 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:23.134119 97161 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:23 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica f7d625aa-62b6-4fa2-a620-d851c8e70d9f success
+INFO 07-13 13:29:25 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:25 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:25.725430 97329 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:25.872488 97329 model.cpp:269] Creating replica 20748e04-8e3e-471d-902c-26cdee004988
+I20260713 13:29:25.872556 97329 model.cpp:273] Creating queue for device 0
+I20260713 13:29:25.872568 97329 model.cpp:279] Created replica 20748e04-8e3e-471d-902c-26cdee004988
+I20260713 13:29:25.872686 97329 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:25.872769 97329 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:26.167547 97339 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:26 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 20748e04-8e3e-471d-902c-26cdee004988 success
+INFO 07-13 13:29:28 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+I20260713 13:29:28.665100 97490 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+INFO 07-13 13:29:28 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:28.830060 97490 model.cpp:269] Creating replica 266d0ff7-73fe-49ac-be80-021c79098ad1
+I20260713 13:29:28.830129 97490 model.cpp:273] Creating queue for device 0
+I20260713 13:29:28.830140 97490 model.cpp:279] Created replica 266d0ff7-73fe-49ac-be80-021c79098ad1
+I20260713 13:29:28.830274 97490 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:28.830343 97490 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:29.124986 97508 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:29 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 266d0ff7-73fe-49ac-be80-021c79098ad1 success
+INFO 07-13 13:29:31 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:31 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:31.606884 97683 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:31.748952 97683 model.cpp:269] Creating replica a321a2ba-7075-4646-a2a3-52d954d451eb
+I20260713 13:29:31.749001 97683 model.cpp:273] Creating queue for device 0
+I20260713 13:29:31.749012 97683 model.cpp:279] Created replica a321a2ba-7075-4646-a2a3-52d954d451eb
+I20260713 13:29:31.749125 97683 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:31.749181 97683 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:32.043939 97691 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:32 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica a321a2ba-7075-4646-a2a3-52d954d451eb success
+INFO 07-13 13:29:34 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:34 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:34.569078 97857 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:34.695052 97857 model.cpp:269] Creating replica e44dea5d-b8f2-4e64-a6f8-926f10d6484a
+I20260713 13:29:34.695118 97857 model.cpp:273] Creating queue for device 0
+I20260713 13:29:34.695129 97857 model.cpp:279] Created replica e44dea5d-b8f2-4e64-a6f8-926f10d6484a
+I20260713 13:29:34.695273 97857 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:34.695315 97857 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:34.990132 97864 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:35 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica e44dea5d-b8f2-4e64-a6f8-926f10d6484a success
+INFO 07-13 13:29:37 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:37 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:37.467828 98032 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:37.591503 98032 model.cpp:269] Creating replica 77182fc0-e5e3-4ec4-9a31-0b71f48c5ee4
+I20260713 13:29:37.591564 98032 model.cpp:273] Creating queue for device 0
+I20260713 13:29:37.591574 98032 model.cpp:279] Created replica 77182fc0-e5e3-4ec4-9a31-0b71f48c5ee4
+I20260713 13:29:37.591691 98032 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:37.591724 98032 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:37.886507 98038 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:37 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 77182fc0-e5e3-4ec4-9a31-0b71f48c5ee4 success
+INFO 07-13 13:29:40 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:40 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:40.453917 98203 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:40.622567 98203 model.cpp:269] Creating replica b695e21a-9a82-4144-943c-f01c49bc7caf
+I20260713 13:29:40.622641 98203 model.cpp:273] Creating queue for device 0
+I20260713 13:29:40.622651 98203 model.cpp:279] Created replica b695e21a-9a82-4144-943c-f01c49bc7caf
+I20260713 13:29:40.622776 98203 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:40.622809 98203 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:40.917548 98210 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:40 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica b695e21a-9a82-4144-943c-f01c49bc7caf success
+INFO 07-13 13:29:43 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:43 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:43.482689 98358 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:43.632817 98358 model.cpp:269] Creating replica bd84ad75-8525-400a-b569-5a9c3295006f
+I20260713 13:29:43.632875 98358 model.cpp:273] Creating queue for device 0
+I20260713 13:29:43.632886 98358 model.cpp:279] Created replica bd84ad75-8525-400a-b569-5a9c3295006f
+I20260713 13:29:43.632995 98358 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:43.633061 98358 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:43.927685 98378 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:43 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica bd84ad75-8525-400a-b569-5a9c3295006f success
+INFO 07-13 13:29:46 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:46 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:46.411582 98578 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:46.532800 98578 model.cpp:269] Creating replica def20d68-4904-4904-8a5d-7b6c924ec8d7
+I20260713 13:29:46.532871 98578 model.cpp:273] Creating queue for device 0
+I20260713 13:29:46.532882 98578 model.cpp:279] Created replica def20d68-4904-4904-8a5d-7b6c924ec8d7
+I20260713 13:29:46.532996 98578 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:46.533071 98578 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:46.827932 98586 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:46 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica def20d68-4904-4904-8a5d-7b6c924ec8d7 success
+INFO 07-13 13:29:49 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:49 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:49.381124 98746 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:49.521675 98746 model.cpp:269] Creating replica ff77f3e2-8a4f-403f-babc-daa998d71801
+I20260713 13:29:49.521741 98746 model.cpp:273] Creating queue for device 0
+I20260713 13:29:49.521752 98746 model.cpp:279] Created replica ff77f3e2-8a4f-403f-babc-daa998d71801
+I20260713 13:29:49.521875 98746 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:49.521936 98746 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:49.817335 98753 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:49 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica ff77f3e2-8a4f-403f-babc-daa998d71801 success
+INFO 07-13 13:29:52 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:52 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:52.409718 98955 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:52.537384 98955 model.cpp:269] Creating replica 8dd802fc-7030-45bf-8050-cd480ad60ad3
+I20260713 13:29:52.537456 98955 model.cpp:273] Creating queue for device 0
+I20260713 13:29:52.537467 98955 model.cpp:279] Created replica 8dd802fc-7030-45bf-8050-cd480ad60ad3
+I20260713 13:29:52.537595 98955 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:52.537633 98955 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:52.833079 98961 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:52 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 8dd802fc-7030-45bf-8050-cd480ad60ad3 success
+INFO 07-13 13:29:55 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:55 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:55.369094 99123 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:55.501279 99123 model.cpp:269] Creating replica 69b86126-8561-4d77-847e-501f51b2b5e9
+I20260713 13:29:55.501333 99123 model.cpp:273] Creating queue for device 0
+I20260713 13:29:55.501344 99123 model.cpp:279] Created replica 69b86126-8561-4d77-847e-501f51b2b5e9
+I20260713 13:29:55.501470 99123 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:55.501521 99123 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:55.796139 99133 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:55 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 69b86126-8561-4d77-847e-501f51b2b5e9 success
+INFO 07-13 13:29:58 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:29:58 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:29:58.288748 99290 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:58.500020 99290 model.cpp:269] Creating replica f5edd55e-cb11-4cc5-b196-d00c1c362daa
+I20260713 13:29:58.500092 99290 model.cpp:273] Creating queue for device 0
+I20260713 13:29:58.500101 99290 model.cpp:279] Created replica f5edd55e-cb11-4cc5-b196-d00c1c362daa
+I20260713 13:29:58.500224 99290 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:29:58.500262 99290 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:29:58.794981 99300 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:29:58 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica f5edd55e-cb11-4cc5-b196-d00c1c362daa success
+INFO 07-13 13:30:01 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+I20260713 13:30:01.322814 99488 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+INFO 07-13 13:30:01 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:01.473158 99488 model.cpp:269] Creating replica 3e82c676-90a7-48a3-bea2-1fb7337d9332
+I20260713 13:30:01.473227 99488 model.cpp:273] Creating queue for device 0
+I20260713 13:30:01.473237 99488 model.cpp:279] Created replica 3e82c676-90a7-48a3-bea2-1fb7337d9332
+I20260713 13:30:01.473363 99488 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:01.473420 99488 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:01.768134 99495 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:01 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 3e82c676-90a7-48a3-bea2-1fb7337d9332 success
+INFO 07-13 13:30:04 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:04 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:04.322482 99665 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:04.468966 99665 model.cpp:269] Creating replica 632cad21-7cd2-4fdc-a937-95f2a4e0970c
+I20260713 13:30:04.469038 99665 model.cpp:273] Creating queue for device 0
+I20260713 13:30:04.469048 99665 model.cpp:279] Created replica 632cad21-7cd2-4fdc-a937-95f2a4e0970c
+I20260713 13:30:04.469175 99665 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:04.469219 99665 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:04.763883 99672 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:04 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 632cad21-7cd2-4fdc-a937-95f2a4e0970c success
+INFO 07-13 13:30:07 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:07 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:07.375432 99849 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:07.531019 99849 model.cpp:269] Creating replica c0ac002d-9a89-4376-bff1-2904f19a36bc
+I20260713 13:30:07.531090 99849 model.cpp:273] Creating queue for device 0
+I20260713 13:30:07.531100 99849 model.cpp:279] Created replica c0ac002d-9a89-4376-bff1-2904f19a36bc
+I20260713 13:30:07.531219 99849 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:07.531275 99849 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:07.826038 99857 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:07 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica c0ac002d-9a89-4376-bff1-2904f19a36bc success
+INFO 07-13 13:30:10 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:10 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:10.288748 100042 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:10.412745 100042 model.cpp:269] Creating replica 2dd3b840-b3d4-4dc1-8702-f26f050d9b0e
+I20260713 13:30:10.412812 100042 model.cpp:273] Creating queue for device 0
+I20260713 13:30:10.412823 100042 model.cpp:279] Created replica 2dd3b840-b3d4-4dc1-8702-f26f050d9b0e
+I20260713 13:30:10.412940 100042 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:10.413024 100042 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:10.707823 100048 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:10 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 2dd3b840-b3d4-4dc1-8702-f26f050d9b0e success
+INFO 07-13 13:30:13 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:13 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:13.258751 100194 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:13.385317 100194 model.cpp:269] Creating replica 3683d834-de9c-464f-84fc-d5d5dfd3bf16
+I20260713 13:30:13.385385 100194 model.cpp:273] Creating queue for device 0
+I20260713 13:30:13.385396 100194 model.cpp:279] Created replica 3683d834-de9c-464f-84fc-d5d5dfd3bf16
+I20260713 13:30:13.385519 100194 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:13.385558 100194 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:13.680342 100200 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:13 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 3683d834-de9c-464f-84fc-d5d5dfd3bf16 success
+INFO 07-13 13:30:16 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+I20260713 13:30:16.149015 100427 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+INFO 07-13 13:30:16 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:16.308570 100427 model.cpp:269] Creating replica e3e19229-070c-4cac-9809-5d2059416645
+I20260713 13:30:16.308632 100427 model.cpp:273] Creating queue for device 0
+I20260713 13:30:16.308642 100427 model.cpp:279] Created replica e3e19229-070c-4cac-9809-5d2059416645
+I20260713 13:30:16.308761 100427 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:16.308797 100427 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:16.603399 100437 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:16 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica e3e19229-070c-4cac-9809-5d2059416645 success
+INFO 07-13 13:30:19 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:19 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:19.270615 100612 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:19.403652 100612 model.cpp:269] Creating replica 6e168149-3f82-401e-be89-c00e5f76973b
+I20260713 13:30:19.403710 100612 model.cpp:273] Creating queue for device 0
+I20260713 13:30:19.403720 100612 model.cpp:279] Created replica 6e168149-3f82-401e-be89-c00e5f76973b
+I20260713 13:30:19.403841 100612 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:19.403877 100612 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:19.698679 100627 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:19 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 6e168149-3f82-401e-be89-c00e5f76973b success
+INFO 07-13 13:30:22 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:22 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:22.131009 100802 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:22.266381 100802 model.cpp:269] Creating replica 48e0dd4e-65b4-4b53-b650-cdf2235d0281
+I20260713 13:30:22.266440 100802 model.cpp:273] Creating queue for device 0
+I20260713 13:30:22.266451 100802 model.cpp:279] Created replica 48e0dd4e-65b4-4b53-b650-cdf2235d0281
+I20260713 13:30:22.266585 100802 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:22.266630 100802 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:22.561434 100808 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:22 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 48e0dd4e-65b4-4b53-b650-cdf2235d0281 success
+INFO 07-13 13:30:25 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:25 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:25.098603 100967 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:25.226758 100967 model.cpp:269] Creating replica 0a49afbc-7198-4daa-b6f8-778d9f760cb3
+I20260713 13:30:25.226825 100967 model.cpp:273] Creating queue for device 0
+I20260713 13:30:25.226835 100967 model.cpp:279] Created replica 0a49afbc-7198-4daa-b6f8-778d9f760cb3
+I20260713 13:30:25.226969 100967 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:25.227037 100967 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:25.521764 100977 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:25 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 0a49afbc-7198-4daa-b6f8-778d9f760cb3 success
+INFO 07-13 13:30:27 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:28 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:28.041019 101122 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:28.182448 101122 model.cpp:269] Creating replica 5b4dd4a5-2155-4ca8-85db-e5929fc229c0
+I20260713 13:30:28.182519 101122 model.cpp:273] Creating queue for device 0
+I20260713 13:30:28.182529 101122 model.cpp:279] Created replica 5b4dd4a5-2155-4ca8-85db-e5929fc229c0
+I20260713 13:30:28.182653 101122 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:28.182693 101122 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:28.477434 101129 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:28 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica 5b4dd4a5-2155-4ca8-85db-e5929fc229c0 success
+INFO 07-13 13:30:30 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 1
+INFO 07-13 13:30:30 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_0 with target 2
+I20260713 13:30:30.936295 101309 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:31.088698 101309 model.cpp:269] Creating replica c44b87c4-2ade-4a7a-b8f8-19c18b84a4b1
+I20260713 13:30:31.088768 101309 model.cpp:273] Creating queue for device 0
+I20260713 13:30:31.088778 101309 model.cpp:279] Created replica c44b87c4-2ade-4a7a-b8f8-19c18b84a4b1
+I20260713 13:30:31.088905 101309 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_0
+I20260713 13:30:31.088940 101309 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_0 num tasks 1 state 3
+I20260713 13:30:31.383821 101316 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-13 13:30:31 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_0 replica c44b87c4-2ade-4a7a-b8f8-19c18b84a4b1 success

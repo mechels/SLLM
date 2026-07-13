@@ -1,0 +1,24 @@
+{
+  "model_name": "meta-llama/Meta-Llama-3-8B",
+  "num_replicas": 30,
+  "benchmark_type": "cached",
+  "statistics": {
+    "sllm": {
+      "count": 30,
+      "avg_loading_time": 0.5408598184585571,
+      "min_loading_time": 0.5238571166992188,
+      "max_loading_time": 0.5923504829406738,
+      "std_loading_time": 0.014200132320962953,
+      "avg_throughput": 78.91553075006279
+    },
+    "safetensors": {
+      "count": 30,
+      "avg_loading_time": 3.776170762379964,
+      "min_loading_time": 3.15280818939209,
+      "max_loading_time": 4.648879766464233,
+      "std_loading_time": 0.22982608527095935,
+      "avg_throughput": 76.9628200673769
+    }
+  },
+  "speedup": 6.981792016167882
+}
