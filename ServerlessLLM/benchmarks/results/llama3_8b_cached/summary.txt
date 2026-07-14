@@ -9,17 +9,17 @@ Loading Time Comparison:
 ------------------------------------------------------------
 Format          Avg (s)      Min (s)      Max (s)      Std Dev   
 ------------------------------------------------------------
-SLLM            0.547        0.532        0.570        0.013     
-SafeTensors     4.580        4.055        5.319        0.349     
-SLLM Condense   0.546        0.533        0.560        0.011     
+SLLM            0.549        0.533        0.566        0.009     
+SafeTensors     3.662        3.081        4.426        0.326     
+SLLM Condense   0.583        0.564        0.603        0.015     
 ------------------------------------------------------------
-SLLM Speedup: 8.38x faster than SafeTensors
-SLLM Condense Speedup: 8.39x faster than SafeTensors
+SLLM Speedup: 6.67x faster than SafeTensors
+SLLM Condense Speedup: 6.28x faster than SafeTensors
 
 Inference Performance:
 ------------------------------------------------------------
-SLLM Avg Throughput: 78.07 tokens/s
-SafeTensors Avg Throughput: 74.16 tokens/s
-SLLM Condense Avg Throughput: 78.44 tokens/s
+SLLM Avg Throughput: 76.90 tokens/s
+SafeTensors Avg Throughput: 75.42 tokens/s
+SLLM Condense Avg Throughput: 74.96 tokens/s
 
 ============================================================

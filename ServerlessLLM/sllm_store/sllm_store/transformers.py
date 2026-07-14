@@ -29,6 +29,8 @@ from accelerate import dispatch_model, init_empty_weights
 from accelerate.utils import set_module_tensor_to_device
 from sllm_store._C import (
     allocate_cuda_memory,
+    copy_cuda_memory,
+    free_cuda_memory,
     get_cuda_memory_handles,
     get_device_uuid_map,
     restore_tensors,
@@ -156,9 +158,30 @@ def load_model(
             quantization_config=quantization_config,
             storage_path=storage_path,
         )
+
     # if fully_parallel is disabled, we still try to parallelize the model
     # initialization and data loading in the best effort
     return best_effort_load(
+        model_path=model_path,
+        hf_model_class=hf_model_class,
+        device_map=device_map,
+        torch_dtype=torch_dtype,
+        quantization_config=quantization_config,
+        storage_path=storage_path,
+    )
+
+
+def load_model_condense(
+    model_path: Optional[Union[str, os.PathLike]],
+    device_map: DeviceMapType = "auto",
+    torch_dtype: Optional[torch.dtype] = None,
+    quantization_config: Optional[
+        Union[QuantizationConfigMixin, Dict[str, Any]]
+    ] = None,
+    storage_path: Optional[str] = None,
+    hf_model_class: str = "AutoModelForCausalLM",
+):
+    return best_effort_load_condense(
         model_path=model_path,
         hf_model_class=hf_model_class,
         device_map=device_map,
@@ -370,6 +393,178 @@ def best_effort_load(
     start = time.time()
     state_dict = restore_tensors(
         tensor_meta_index, cuda_memory_ptrs, tensor_device_offsets
+    )
+    logger.info(f"restore state_dict takes {time.time() - start} seconds")
+
+    with torch.no_grad():
+        if quantization_config and torch.cuda.is_available():
+            model = quantize(
+                model,
+                state_dict,
+                quantization_config,
+                torch_dtype,
+                device_map,
+                model_path,
+                replica_uuid,
+                logger,
+            )
+        else:
+            if quantization_config is not None:
+                logger.debug(
+                    "Quantization on current device is not supported yet"
+                )
+
+            for name, param in state_dict.items():
+                set_module_tensor_to_device(model, name, param.device, param)
+        send_module_buffers_to_device(model, device_map)
+
+    dispatch_model(
+        model, device_map, skip_keys=model._skip_keys_device_placement
+    )
+
+    client.confirm_model_loaded(model_path, replica_uuid)
+    model.eval()
+    model.hf_device_map = device_map
+
+    return model
+
+
+def best_effort_load_condense(
+    model_path: Optional[Union[str, os.PathLike]],
+    hf_model_class: str,
+    device_map: DeviceMapType = "auto",
+    torch_dtype: Optional[torch.dtype] = None,
+    quantization_config: Optional[
+        Union[QuantizationConfigMixin, Dict[str, Any]]
+    ] = None,
+    storage_path: Optional[str] = None,
+):
+    client = SllmStoreClient("127.0.0.1:8073")
+    ret = client.load_into_cpu(model_path)
+    if not ret:
+        raise ValueError(f"Failed to load model {model_path} into CPU")
+
+    replica_uuid = _get_uuid()
+    device_map = _transform_device_map_to_dict(device_map)
+
+    if isinstance(device_map, dict) and (
+        torch.device("cpu") in device_map.values()
+        or "cpu" in device_map.values()
+    ):
+        raise ValueError("CPU is not supported in device_map.")
+
+    if not storage_path:
+        storage_path = os.getenv("STORAGE_PATH", os.path.expanduser("~/models"))
+    start = time.time()
+    config = AutoConfig.from_pretrained(
+        f"{os.path.join(storage_path, model_path)}", trust_remote_code=True
+    )
+    if torch_dtype is not None:
+        config.torch_dtype = torch_dtype
+
+    logger.debug(f"load config takes {time.time() - start} seconds")
+    start = time.time()
+    with init_empty_weights():
+        module = importlib.import_module("transformers")
+        _class = getattr(module, hf_model_class)
+        model = _class.from_config(config, trust_remote_code=True).to(
+            config.torch_dtype
+        )
+
+    model.tie_weights()
+    logger.debug(f"load model takes {time.time() - start} seconds")
+
+    start = time.time()
+    if isinstance(device_map, str):
+        device_map = _compute_device_placement_from_map(
+            model, device_map, config.torch_dtype
+        )
+        logger.debug(f"device_map: {device_map}")
+    if "cpu" in device_map.values():
+        raise ValueError(
+            "The GPUs are either unavailable or do not have enough memory. Please ensure they are available and ready for use."  # noqa: E501
+        )
+
+    logger.debug(
+        f"compute_device_placement takes {time.time() - start} seconds"
+    )
+
+    with open(
+        os.path.join(storage_path, model_path, "tensor_index.json"), "r"
+    ) as f:
+        tensor_index = json.load(f)
+
+    tensor_meta_index = {}
+    tensor_data_index = {}
+    for name, (offset, size, shape, stride, dtype) in tensor_index.items():
+        tensor_meta_index[name] = (shape, stride, dtype)
+        tensor_data_index[name] = (offset, size)
+
+    start = time.time()
+    expanded_device_map = _expand_tensor_name(
+        device_map, list(tensor_index.keys())
+    )
+    device_memory = calculate_device_memory(
+        expanded_device_map, tensor_data_index
+    )
+    if set(device_memory.keys()) != {0}:
+        raise ValueError(
+            "sllm-condense staging prototype only supports one visible GPU "
+            f"(cuda:0), got device memory map {device_memory}"
+        )
+
+    final_cuda_memory_ptrs = None
+    staging_cuda_memory_ptrs = None
+    try:
+        final_cuda_memory_ptrs = allocate_cuda_memory(device_memory)
+        staging_cuda_memory_ptrs = allocate_cuda_memory(device_memory)
+        staging_cuda_memory_handles = get_cuda_memory_handles(
+            staging_cuda_memory_ptrs
+        )
+        device_uuid_map = get_device_uuid_map()
+        tensor_device_offsets, tensor_copy_chunks = (
+            calculate_tensor_device_offsets(
+                expanded_device_map, tensor_data_index
+            )
+        )
+        logger.debug(
+            f"allocate staged cuda memory takes {time.time() - start} seconds"
+        )
+
+        ret = client.load_into_gpu(
+            model_path,
+            replica_uuid,
+            {
+                device_uuid_map[device_id]: v
+                for device_id, v in tensor_copy_chunks.items()
+            },
+            {
+                device_uuid_map[device_id]: [v]
+                for device_id, v in staging_cuda_memory_handles.items()
+            },
+        )
+        if not ret:
+            raise ValueError(f"Failed to load model {model_path} into GPU")
+
+        start = time.time()
+        copy_cuda_memory(
+            final_cuda_memory_ptrs, staging_cuda_memory_ptrs, device_memory
+        )
+        logger.info(
+            f"copy staging buffer to final cuda memory takes {time.time() - start} seconds"
+        )
+    except Exception:
+        if staging_cuda_memory_ptrs:
+            free_cuda_memory(staging_cuda_memory_ptrs)
+        if final_cuda_memory_ptrs:
+            free_cuda_memory(final_cuda_memory_ptrs)
+        raise
+    else:
+        free_cuda_memory(staging_cuda_memory_ptrs)
+
+    start = time.time()
+    state_dict = restore_tensors(
+        tensor_meta_index, final_cuda_memory_ptrs, tensor_device_offsets
     )
     logger.info(f"restore state_dict takes {time.time() - start} seconds")
 

@@ -5,31 +5,31 @@
   "statistics": {
     "sllm": {
       "count": 10,
-      "avg_loading_time": 0.5468688249588013,
-      "min_loading_time": 0.5322692394256592,
-      "max_loading_time": 0.5703520774841309,
-      "std_loading_time": 0.012675509953933047,
-      "avg_throughput": 78.07384549607015
+      "avg_loading_time": 0.5486778020858765,
+      "min_loading_time": 0.533132791519165,
+      "max_loading_time": 0.5659449100494385,
+      "std_loading_time": 0.008679323016998525,
+      "avg_throughput": 76.90292784367666
     },
     "safetensors": {
       "count": 10,
-      "avg_loading_time": 4.580418682098388,
-      "min_loading_time": 4.054511547088623,
-      "max_loading_time": 5.3186211585998535,
-      "std_loading_time": 0.3489122393947264,
-      "avg_throughput": 74.15529072576366
+      "avg_loading_time": 3.661820316314697,
+      "min_loading_time": 3.0812580585479736,
+      "max_loading_time": 4.426392555236816,
+      "std_loading_time": 0.32569378131888577,
+      "avg_throughput": 75.41919525701385
     },
     "sllm-condense": {
       "count": 10,
-      "avg_loading_time": 0.5460577964782715,
-      "min_loading_time": 0.5325679779052734,
-      "max_loading_time": 0.5603482723236084,
-      "std_loading_time": 0.010935674328055213,
-      "avg_throughput": 78.44142038070845
+      "avg_loading_time": 0.5831410169601441,
+      "min_loading_time": 0.5640192031860352,
+      "max_loading_time": 0.6029148101806641,
+      "std_loading_time": 0.014757969860237667,
+      "avg_throughput": 74.95564985882464
     }
   },
   "speedup": {
-    "sllm": 8.375717307424605,
-    "sllm-condense": 8.388157282322863
+    "sllm": 6.673899148815148,
+    "sllm-condense": 6.279476507077827
   }
 }

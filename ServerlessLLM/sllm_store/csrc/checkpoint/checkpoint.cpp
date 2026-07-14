@@ -34,6 +34,7 @@
 #include <fstream>
 #include <future>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <thread>
 #include <unordered_map>
@@ -199,6 +200,54 @@ std::unordered_map<int, void*> AllocateCudaMemory(
     memory_ptrs[device] = ptr;
   }
   return memory_ptrs;
+}
+
+void CopyCudaMemory(const std::unordered_map<int, void*>& dst_memory_ptrs,
+                    const std::unordered_map<int, void*>& src_memory_ptrs,
+                    const std::unordered_map<int, size_t>& tensor_sizes) {
+  for (const auto& p : tensor_sizes) {
+    int device = p.first;
+    size_t size = p.second;
+    if (dst_memory_ptrs.find(device) == dst_memory_ptrs.end()) {
+      throw std::runtime_error("Missing destination CUDA memory for device " +
+                               std::to_string(device));
+    }
+    if (src_memory_ptrs.find(device) == src_memory_ptrs.end()) {
+      throw std::runtime_error("Missing source CUDA memory for device " +
+                               std::to_string(device));
+    }
+
+    cudaError_t err = cudaSetDevice(device);
+    if (err != cudaSuccess) {
+      throw std::runtime_error("cudaSetDevice failed: " +
+                               std::string(cudaGetErrorString(err)));
+    }
+
+    err = cudaMemcpy(dst_memory_ptrs.at(device), src_memory_ptrs.at(device),
+                     size, cudaMemcpyDeviceToDevice);
+    if (err != cudaSuccess) {
+      throw std::runtime_error("cudaMemcpyDeviceToDevice failed: " +
+                               std::string(cudaGetErrorString(err)));
+    }
+  }
+}
+
+void FreeCudaMemory(const std::unordered_map<int, void*>& memory_ptrs) {
+  for (const auto& p : memory_ptrs) {
+    int device = p.first;
+    void* ptr = p.second;
+    cudaError_t err = cudaSetDevice(device);
+    if (err != cudaSuccess) {
+      throw std::runtime_error("cudaSetDevice failed: " +
+                               std::string(cudaGetErrorString(err)));
+    }
+
+    err = cudaFree(ptr);
+    if (err != cudaSuccess) {
+      throw std::runtime_error("cudaFree failed: " +
+                               std::string(cudaGetErrorString(err)));
+    }
+  }
 }
 
 std::unordered_map<int, std::string> GetCudaMemoryHandles(

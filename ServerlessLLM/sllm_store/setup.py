@@ -242,15 +242,26 @@ class cmake_build_ext(build_ext):
                 if filename.startswith("libglog.so"):
                     src = os.path.join(root, filename)
                     dst = os.path.join(package_dir, filename)
-                    if os.path.abspath(src) != os.path.abspath(dst):
+                    if not self.is_same_file(src, dst):
                         shutil.copy2(src, dst)
 
                     # server.py loads exactly "libglog.so", while some CMake
                     # builds emit only the versioned soname file.
                     unversioned = os.path.join(package_dir, "libglog.so")
-                    if filename != "libglog.so":
+                    if filename != "libglog.so" and not self.is_same_file(
+                        src, unversioned
+                    ):
                         shutil.copy2(src, unversioned)
                     return
+
+    @staticmethod
+    def is_same_file(path_a: str, path_b: str) -> bool:
+        if os.path.abspath(path_a) == os.path.abspath(path_b):
+            return True
+        try:
+            return os.path.samefile(path_a, path_b)
+        except FileNotFoundError:
+            return False
 
 
 cmdclass = {

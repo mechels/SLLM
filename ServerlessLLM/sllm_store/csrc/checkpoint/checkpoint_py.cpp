@@ -26,6 +26,8 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
   m.def("save_tensors", &SaveTensors, "Save a state dict")
       .def("restore_tensors", &RestoreTensors, "Restore a state dict")
       .def("allocate_cuda_memory", &AllocateCudaMemory, "Allocate cuda memory")
+      .def("copy_cuda_memory", &CopyCudaMemory, "Copy CUDA memory")
+      .def("free_cuda_memory", &FreeCudaMemory, "Free CUDA memory")
       .def(
           "get_cuda_memory_handles",
           [](const std::unordered_map<int, void*>& memory_ptrs) {
