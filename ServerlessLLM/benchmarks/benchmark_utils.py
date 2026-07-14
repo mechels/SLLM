@@ -102,11 +102,16 @@ def measure(
         model_record = {"model_name": f"{model_name}_{model_idx}"}
 
         # Model Loading
-        if model_format == "sllm":
-            model_path = os.path.join(model_dir, f"{model_name}_{model_idx}")
+        if model_format in ("sllm", "sllm-condense"):
+            model_id = (
+                f"{model_name}_{model_idx}"
+                if model_format == "sllm"
+                else f"{model_name}_sllm-condense_{model_idx}"
+            )
+            model_path = os.path.join(model_dir, model_id)
             start_time = time.time()
             model = load_model(
-                f"{model_name}_{model_idx}",
+                model_id,
                 storage_path=model_dir,
                 device_map="auto",
                 torch_dtype=torch.float16,

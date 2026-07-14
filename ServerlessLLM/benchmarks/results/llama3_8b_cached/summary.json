@@ -1,24 +1,35 @@
 {
   "model_name": "meta-llama/Meta-Llama-3-8B",
-  "num_replicas": 5,
+  "num_replicas": 10,
   "benchmark_type": "cached",
   "statistics": {
     "sllm": {
-      "count": 5,
-      "avg_loading_time": 0.45441741943359376,
-      "min_loading_time": 0.4416780471801758,
-      "max_loading_time": 0.4760551452636719,
-      "std_loading_time": 0.011819435470409917,
-      "avg_throughput": 27.191428872082717
+      "count": 10,
+      "avg_loading_time": 0.5468688249588013,
+      "min_loading_time": 0.5322692394256592,
+      "max_loading_time": 0.5703520774841309,
+      "std_loading_time": 0.012675509953933047,
+      "avg_throughput": 78.07384549607015
     },
     "safetensors": {
-      "count": 5,
-      "avg_loading_time": 3.3647781372070313,
-      "min_loading_time": 3.179185152053833,
-      "max_loading_time": 3.8386974334716797,
-      "std_loading_time": 0.23967942351360283,
-      "avg_throughput": 30.492903338892614
+      "count": 10,
+      "avg_loading_time": 4.580418682098388,
+      "min_loading_time": 4.054511547088623,
+      "max_loading_time": 5.3186211585998535,
+      "std_loading_time": 0.3489122393947264,
+      "avg_throughput": 74.15529072576366
+    },
+    "sllm-condense": {
+      "count": 10,
+      "avg_loading_time": 0.5460577964782715,
+      "min_loading_time": 0.5325679779052734,
+      "max_loading_time": 0.5603482723236084,
+      "std_loading_time": 0.010935674328055213,
+      "avg_throughput": 78.44142038070845
     }
   },
-  "speedup": 7.4045976085182685
+  "speedup": {
+    "sllm": 8.375717307424605,
+    "sllm-condense": 8.388157282322863
+  }
 }

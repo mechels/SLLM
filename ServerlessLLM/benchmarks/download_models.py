@@ -39,7 +39,7 @@ def get_args():
         "--save-format",
         type=str,
         required=True,
-        choices=["sllm", "safetensors"],
+        choices=["sllm", "safetensors", "sllm-condense"],
         help="Format to save the model in",
     )
     parser.add_argument(
@@ -77,10 +77,15 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
 
     # # Save model
-    if save_format == "sllm":
-        print(f"Saving {replicas} sllm models to {save_dir}")
+    if save_format in ("sllm", "sllm-condense"):
+        print(f"Saving {replicas} {save_format} models to {save_dir}")
         for i in tqdm(range(replicas)):
-            model_dir = os.path.join(save_dir, f"{model_name}_{i}")
+            model_suffix = (
+                f"{model_name}_{i}"
+                if save_format == "sllm"
+                else f"{model_name}_sllm-condense_{i}"
+            )
+            model_dir = os.path.join(save_dir, model_suffix)
             save_model(model, model_dir)
             tokenizer.save_pretrained(model_dir)
     elif save_format == "safetensors":

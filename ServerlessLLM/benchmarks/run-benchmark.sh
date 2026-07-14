@@ -223,8 +223,8 @@ run_format_benchmark() {
     local MODEL_FORMAT=$1
     log "=== Testing $MODEL_FORMAT format ==="
 
-    # Start sllm-store only for sllm format (saves memory for safetensors benchmark)
-    if [ "$MODEL_FORMAT" = "sllm" ]; then
+    # Start sllm-store only for SLLM-backed formats (saves memory for safetensors benchmark)
+    if [ "$MODEL_FORMAT" = "sllm" ] || [ "$MODEL_FORMAT" = "sllm-condense" ]; then
         start_sllm_store
     fi
 
@@ -261,14 +261,14 @@ run_format_benchmark() {
         rm -rf "${STORAGE_PATH:?}"/* || true
     fi
 
-    # Stop sllm-store after sllm format benchmark (frees memory)
-    if [ "$MODEL_FORMAT" = "sllm" ]; then
+    # Stop sllm-store after SLLM-backed format benchmark (frees memory)
+    if [ "$MODEL_FORMAT" = "sllm" ] || [ "$MODEL_FORMAT" = "sllm-condense" ]; then
         stop_sllm_store
     fi
 }
 
 # Run each format in separate subprocess (GPU memory freed on subprocess exit)
-for MODEL_FORMAT in safetensors sllm; do
+for MODEL_FORMAT in safetensors sllm sllm-condense; do
     ( run_format_benchmark "$MODEL_FORMAT" )
     log "Format $MODEL_FORMAT completed, GPU memory released"
     sleep 5

@@ -10,13 +10,20 @@ from pathlib import Path
 from typing import Dict, List
 
 
+FORMAT_LABELS = {
+    "sllm": "SLLM",
+    "safetensors": "SafeTensors",
+    "sllm-condense": "SLLM Condense",
+}
+
+
 def load_results(
     results_dir: str, model_name: str, num_replicas: int, benchmark_type: str
 ) -> Dict:
     """Load benchmark results from JSON files."""
     results = {}
 
-    for format_type in ["sllm", "safetensors"]:
+    for format_type in FORMAT_LABELS:
         filename = (
             f"{model_name}_{format_type}_{num_replicas}_{benchmark_type}.json"
         )
@@ -90,52 +97,43 @@ def generate_text_report(
     )
     report.append("-" * 60)
 
-    sllm_stats = stats.get("sllm", {})
-    safetensors_stats = stats.get("safetensors", {})
-
-    if sllm_stats:
+    for format_type, format_stats in stats.items():
         report.append(
-            f"{'SLLM':<15} "
-            f"{sllm_stats['avg_loading_time']:<12.3f} "
-            f"{sllm_stats['min_loading_time']:<12.3f} "
-            f"{sllm_stats['max_loading_time']:<12.3f} "
-            f"{sllm_stats['std_loading_time']:<10.3f}"
-        )
-
-    if safetensors_stats:
-        report.append(
-            f"{'SafeTensors':<15} "
-            f"{safetensors_stats['avg_loading_time']:<12.3f} "
-            f"{safetensors_stats['min_loading_time']:<12.3f} "
-            f"{safetensors_stats['max_loading_time']:<12.3f} "
-            f"{safetensors_stats['std_loading_time']:<10.3f}"
+            f"{FORMAT_LABELS.get(format_type, format_type):<15} "
+            f"{format_stats['avg_loading_time']:<12.3f} "
+            f"{format_stats['min_loading_time']:<12.3f} "
+            f"{format_stats['max_loading_time']:<12.3f} "
+            f"{format_stats['std_loading_time']:<10.3f}"
         )
 
     report.append("-" * 60)
 
     # Speedup calculation
-    if sllm_stats and safetensors_stats:
-        speedup = (
-            safetensors_stats["avg_loading_time"]
-            / sllm_stats["avg_loading_time"]
-        )
-        report.append(f"SLLM Speedup: {speedup:.2f}x faster than SafeTensors")
+    safetensors_stats = stats.get("safetensors", {})
+    if safetensors_stats:
+        for format_type, format_stats in stats.items():
+            if format_type == "safetensors":
+                continue
+            speedup = (
+                safetensors_stats["avg_loading_time"]
+                / format_stats["avg_loading_time"]
+            )
+            report.append(
+                f"{FORMAT_LABELS.get(format_type, format_type)} Speedup: "
+                f"{speedup:.2f}x faster than SafeTensors"
+            )
         report.append("")
 
     # Inference throughput
-    if (
-        sllm_stats.get("avg_throughput", 0) > 0
-        or safetensors_stats.get("avg_throughput", 0) > 0
-    ):
+    if any(format_stats.get("avg_throughput", 0) > 0 for format_stats in stats.values()):
         report.append("Inference Performance:")
         report.append("-" * 60)
-        if sllm_stats.get("avg_throughput", 0) > 0:
+        for format_type, format_stats in stats.items():
+            if format_stats.get("avg_throughput", 0) <= 0:
+                continue
             report.append(
-                f"SLLM Avg Throughput: {sllm_stats['avg_throughput']:.2f} tokens/s"
-            )
-        if safetensors_stats.get("avg_throughput", 0) > 0:
-            report.append(
-                f"SafeTensors Avg Throughput: {safetensors_stats['avg_throughput']:.2f} tokens/s"
+                f"{FORMAT_LABELS.get(format_type, format_type)} Avg Throughput: "
+                f"{format_stats['avg_throughput']:.2f} tokens/s"
             )
         report.append("")
 
@@ -159,11 +157,15 @@ def generate_json_summary(
         "statistics": stats,
     }
 
-    if stats.get("sllm") and stats.get("safetensors"):
-        summary["speedup"] = (
-            stats["safetensors"]["avg_loading_time"]
-            / stats["sllm"]["avg_loading_time"]
-        )
+    if stats.get("safetensors"):
+        summary["speedup"] = {
+            format_type: (
+                stats["safetensors"]["avg_loading_time"]
+                / format_stats["avg_loading_time"]
+            )
+            for format_type, format_stats in stats.items()
+            if format_type != "safetensors"
+        }
 
     return summary
 
