@@ -123,6 +123,7 @@ class SllmStoreClient:
         try:
             _ = self.stub.ConfirmModel(request)
             logger.info("Model loaded")
+            return True
         except grpc.RpcError as e:
             if e.code() == grpc.StatusCode.CANCELLED:
                 logger.error("Model not loaded")

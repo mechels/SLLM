@@ -51,7 +51,7 @@ def _warmup_inference():
     print("Warming up inference")
     model_name = "facebook/opt-6.7b"
     model = AutoModelForCausalLM.from_pretrained(
-        model_name, torch_dtype=torch.float16, device_map="auto"
+        model_name, torch_dtype=torch.bfloat16, device_map="auto"
     )
     prompts = [
         "The quick brown fox jumps over the lazy dog.",
@@ -100,6 +100,7 @@ def measure(
         print(f"Loading {model_name}_{model_idx}")
         print_gpu_memory(f"before load #{model_idx}")
         model_record = {"model_name": f"{model_name}_{model_idx}"}
+        loading_time_adjustment = 0.0
 
         # Model Loading
         if model_format == "sllm":
@@ -110,18 +111,19 @@ def measure(
                 model_id,
                 storage_path=model_dir,
                 device_map="auto",
-                torch_dtype=torch.float16,
+                torch_dtype=torch.bfloat16,
             )
             end_time = time.time()
+        ############## SLLM-CONDENSE #########
         elif model_format == "sllm-condense":
             model_id = f"{model_name}_sllm-condense_{model_idx}"
             model_path = os.path.join(model_dir, model_id)
             start_time = time.time()
-            model = load_model_condense(
+            model, loading_time_adjustment = load_model_condense(
                 model_id,
                 storage_path=model_dir,
                 device_map="auto",
-                torch_dtype=torch.float16,
+                torch_dtype=torch.bfloat16,
             )
             end_time = time.time()
         elif model_format == "safetensors":
@@ -131,11 +133,14 @@ def measure(
             start_time = time.time()
             model = AutoModelForCausalLM.from_pretrained(
                 model_path,
-                torch_dtype=torch.float16,
+                torch_dtype=torch.bfloat16,
                 device_map="auto",
             )
             end_time = time.time()
-        model_record["loading_time"] = end_time - start_time
+        ############## SLLM-CONDENSE #########
+        model_record["loading_time"] = (
+            end_time - start_time - loading_time_adjustment
+        )
 
         # Inference
         end_to_end_time, throughput, output_text = benchmark_inference(

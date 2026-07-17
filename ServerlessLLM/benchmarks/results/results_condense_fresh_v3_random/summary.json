@@ -1,0 +1,35 @@
+{
+  "model_name": "meta-llama/Meta-Llama-3-8B",
+  "num_replicas": 5,
+  "benchmark_type": "random",
+  "statistics": {
+    "sllm": {
+      "count": 5,
+      "avg_loading_time": 137.12240958213806,
+      "min_loading_time": 136.7097749710083,
+      "max_loading_time": 138.50597620010376,
+      "std_loading_time": 0.6943229714593878,
+      "avg_throughput": 74.69230787477585
+    },
+    "safetensors": {
+      "count": 5,
+      "avg_loading_time": 126.85823411941529,
+      "min_loading_time": 3.464934825897217,
+      "max_loading_time": 510.1199789047241,
+      "std_loading_time": 196.28065062230235,
+      "avg_throughput": 70.90003016610119
+    },
+    "sllm-condense": {
+      "count": 5,
+      "avg_loading_time": 61.10918213293407,
+      "min_loading_time": 60.528671614792984,
+      "max_loading_time": 62.171640566368296,
+      "std_loading_time": 0.5997457910187183,
+      "avg_throughput": 76.06078453256909
+    }
+  },
+  "speedup": {
+    "sllm": 0.9251458934101183,
+    "sllm-condense": 2.0759275397182337
+  }
+}

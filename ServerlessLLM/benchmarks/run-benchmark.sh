@@ -19,6 +19,9 @@ OPTIONS:
   -s, --storage-path PATH      Model storage directory (default: ~/models)
   -r, --results-path PATH      Results output directory (default: ./results)
   -t, --benchmark-type TYPE    Test type: random|cached (default: random)
+      --formats LIST           Formats to run, space or comma separated (default: safetensors sllm sllm-condense)
+      --fptc-dir PATH          Directory of .fptc packages for sllm-condense
+      --load, --load-existing  Use existing converted model files; skip download/prepare
       --generate-plots         Generate visualization plots
       --keep-alive             Keep container running after completion
       --keep-models            Keep downloaded/converted model files in storage
@@ -68,6 +71,19 @@ while [[ $# -gt 0 ]]; do
             CLI_BENCHMARK_TYPE="$2"
             shift 2
             ;;
+        ############## SLLM-CONDENSE #########
+        --formats)
+            CLI_FORMATS="$2"
+            shift 2
+            ;;
+        --fptc-dir)
+            CLI_FPTC_DIR="$2"
+            shift 2
+            ;;
+        --load|--load-existing)
+            CLI_LOAD_EXISTING="true"
+            shift
+            ;;
         --generate-plots)
             CLI_GENERATE_PLOTS="true"
             shift
@@ -99,6 +115,11 @@ MEM_POOL_SIZE="${CLI_MEM_POOL_SIZE:-${MEM_POOL_SIZE:-32GB}}"
 STORAGE_PATH="${CLI_STORAGE_PATH:-${STORAGE_PATH:-$HOME/models}}"
 RESULTS_PATH="${CLI_RESULTS_PATH:-${RESULTS_PATH:-./results}}"
 BENCHMARK_TYPE="${CLI_BENCHMARK_TYPE:-${BENCHMARK_TYPE:-random}}"
+############## SLLM-CONDENSE #########
+FORMATS="${CLI_FORMATS:-${FORMATS:-safetensors sllm sllm-condense}}"
+FORMATS="${FORMATS//,/ }"
+FPTC_DIR="${CLI_FPTC_DIR:-${SLLM_CONDENSE_FPTC_DIR:-/home/ben046/projects/TensorProcessing/generate_compressed/comp}}"
+LOAD_EXISTING="${CLI_LOAD_EXISTING:-${LOAD_EXISTING:-false}}"
 GENERATE_PLOTS="${CLI_GENERATE_PLOTS:-${GENERATE_PLOTS:-false}}"
 KEEP_ALIVE="${CLI_KEEP_ALIVE:-${KEEP_ALIVE:-false}}"
 KEEP_MODELS="${CLI_KEEP_MODELS:-${KEEP_MODELS:-false}}"
@@ -121,6 +142,9 @@ log "Replicas: $NUM_REPLICAS"
 log "Memory Pool: $MEM_POOL_SIZE"
 log "Storage: $STORAGE_PATH"
 log "Benchmark Type: $BENCHMARK_TYPE"
+log "Formats: $FORMATS"
+log "FPTC Dir: $FPTC_DIR"
+log "Load Existing: $LOAD_EXISTING"
 log "Keep Models: $KEEP_MODELS"
 log ""
 
@@ -211,7 +235,7 @@ log "Starting benchmarks..."
 cd "$SCRIPT_DIR"
 
 # Clean storage directory
-if [ "$KEEP_MODELS" = "true" ]; then
+if [ "$KEEP_MODELS" = "true" ] || [ "$LOAD_EXISTING" = "true" ]; then
     log "Keeping existing storage directory contents..."
 else
     log "Cleaning storage directory..."
@@ -228,21 +252,27 @@ run_format_benchmark() {
         start_sllm_store
     fi
 
-    # For cached tests, only need 1 replica (loaded repeatedly)
-    local DOWNLOAD_REPLICAS=$NUM_REPLICAS
-    if [ "$BENCHMARK_TYPE" = "cached" ]; then
-        DOWNLOAD_REPLICAS=1
-        log "Cached test: downloading 1 replica (will be loaded $NUM_REPLICAS times)..."
+    if [ "$LOAD_EXISTING" = "true" ]; then
+        log "Using existing $MODEL_FORMAT files in $STORAGE_PATH; skipping download/prepare..."
     else
-        log "Downloading $NUM_REPLICAS replicas..."
-    fi
+        ############## SLLM-CONDENSE #########
+        # For cached tests, only need 1 replica (loaded repeatedly)
+        local DOWNLOAD_REPLICAS=$NUM_REPLICAS
+        if [ "$BENCHMARK_TYPE" = "cached" ]; then
+            DOWNLOAD_REPLICAS=1
+            log "Cached test: downloading 1 replica (will be loaded $NUM_REPLICAS times)..."
+        else
+            log "Downloading $NUM_REPLICAS replicas..."
+        fi
 
-    python3 download_models.py \
-        --model-name "$MODEL_NAME" \
-        --save-format "$MODEL_FORMAT" \
-        --save-dir "$STORAGE_PATH" \
-        --num-replicas "$DOWNLOAD_REPLICAS" \
-        2>&1 | tee -a "$LOG_FILE"
+        python3 download_models.py \
+            --model-name "$MODEL_NAME" \
+            --save-format "$MODEL_FORMAT" \
+            --save-dir "$STORAGE_PATH" \
+            --num-replicas "$DOWNLOAD_REPLICAS" \
+            --fptc-dir "$FPTC_DIR" \
+            2>&1 | tee -a "$LOG_FILE"
+    fi
 
     log "Running benchmark..."
     python3 test_loading.py \
@@ -254,7 +284,7 @@ run_format_benchmark() {
         --output-dir "$RESULTS_PATH" \
         2>&1 | tee -a "$LOG_FILE"
 
-    if [ "$KEEP_MODELS" = "true" ]; then
+    if [ "$KEEP_MODELS" = "true" ] || [ "$LOAD_EXISTING" = "true" ]; then
         log "Keeping storage after $MODEL_FORMAT benchmark..."
     else
         log "Cleaning storage..."
@@ -268,7 +298,7 @@ run_format_benchmark() {
 }
 
 # Run each format in separate subprocess (GPU memory freed on subprocess exit)
-for MODEL_FORMAT in safetensors sllm sllm-condense; do
+for MODEL_FORMAT in $FORMATS; do
     ( run_format_benchmark "$MODEL_FORMAT" )
     log "Format $MODEL_FORMAT completed, GPU memory released"
     sleep 5

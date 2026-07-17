@@ -39,6 +39,9 @@ std::unordered_map<std::string, torch::Tensor> RestoreTensors(
 // {dev_id: ptr}
 std::unordered_map<int, void*> AllocateCudaMemory(
     const std::unordered_map<int, size_t>& tensor_sizes);
+// ############# SLLM-CONDENSE #########
+std::unordered_map<int, uint64_t> GetCudaMemoryAddresses(
+    const std::unordered_map<int, void*>& memory_ptrs);
 void CopyCudaMemory(const std::unordered_map<int, void*>& dst_memory_ptrs,
                     const std::unordered_map<int, void*>& src_memory_ptrs,
                     const std::unordered_map<int, size_t>& tensor_sizes);

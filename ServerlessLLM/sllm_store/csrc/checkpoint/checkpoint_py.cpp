@@ -26,6 +26,10 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
   m.def("save_tensors", &SaveTensors, "Save a state dict")
       .def("restore_tensors", &RestoreTensors, "Restore a state dict")
       .def("allocate_cuda_memory", &AllocateCudaMemory, "Allocate cuda memory")
+      // ############# SLLM-CONDENSE #########
+      .def(
+          "get_cuda_memory_addresses", &GetCudaMemoryAddresses,
+          "Get CUDA memory addresses")
       .def("copy_cuda_memory", &CopyCudaMemory, "Copy CUDA memory")
       .def("free_cuda_memory", &FreeCudaMemory, "Free CUDA memory")
       .def(

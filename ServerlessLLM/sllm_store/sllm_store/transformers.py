@@ -18,6 +18,8 @@
 import concurrent.futures
 import json
 import os
+import shutil
+import sys
 import time
 import uuid
 from typing import Optional, Union, Dict, Any
@@ -29,8 +31,8 @@ from accelerate import dispatch_model, init_empty_weights
 from accelerate.utils import set_module_tensor_to_device
 from sllm_store._C import (
     allocate_cuda_memory,
-    copy_cuda_memory,
     free_cuda_memory,
+    get_cuda_memory_addresses,
     get_cuda_memory_handles,
     get_device_uuid_map,
     restore_tensors,
@@ -68,6 +70,14 @@ from transformers.utils.quantization_config import (
 )
 
 logger = init_logger(__name__)
+
+# ############# SLLM-CONDENSE #########
+CONDENSE_INDEX_FILENAME = "tensor_index.condense.json"
+CONDENSE_META_FILENAME = "condense_meta.json"
+DEFAULT_FPTC_DIR = "/home/ben046/projects/TensorProcessing/generate_compressed/comp"
+DEFAULT_FPTC_BIND_PATH = "/home/ben046/projects/TensorCodec/FPTC-2/bind"
+TENSOR_DATA_PREFIX = "tensor.data_"
+TENSOR_DATA_PARTITION_SIZE = 10 * 1024**3
 
 
 def _get_uuid():
@@ -108,6 +118,176 @@ def save_model(model: nn.Module, model_path: str):
     tied_no_split_modules = get_tied_no_split_modules(model, no_split_modules)
     with open(os.path.join(model_path, "tied_no_split_modules.json"), "w") as f:
         json.dump(tied_no_split_modules, f)
+
+
+
+
+
+
+
+
+
+
+################################ SLLM-CONDENSE ################################
+def save_model_condense(
+    model: nn.Module,
+    model_path: str,
+    fptc_dir: Optional[str] = None,
+):
+    save_model(model, model_path)
+    rewrite_model_with_fptc_packages(model_path, fptc_dir)
+
+
+def rewrite_model_with_fptc_packages(
+    model_path: str,
+    fptc_dir: Optional[str] = None,
+):
+    if fptc_dir is None:
+        fptc_dir = os.getenv("SLLM_CONDENSE_FPTC_DIR", DEFAULT_FPTC_DIR)
+
+    tensor_index_path = os.path.join(model_path, "tensor_index.json")
+    with open(tensor_index_path, "r") as f:
+        tensor_index = json.load(f)
+
+    temp_prefix = "tensor.data.condense_tmp_"
+    compressed_index = {}
+    partition_id = 0
+    partition_size = 0
+    logical_offset = 0
+    current_file = None
+
+    def close_current_file():
+        nonlocal current_file
+        if current_file is not None:
+            current_file.close()
+            current_file = None
+
+    def open_next_partition():
+        nonlocal current_file, partition_id, partition_size
+        close_current_file()
+        current_path = os.path.join(model_path, f"{temp_prefix}{partition_id}")
+        current_file = open(current_path, "wb")
+        partition_id += 1
+        partition_size = 0
+
+    try:
+        for name, (raw_offset, raw_size, shape, stride, dtype) in tensor_index.items():
+            fptc_path = _fptc_path_for_tensor(fptc_dir, name)
+            compressed_size = os.path.getsize(fptc_path)
+            if compressed_size == 0:
+                raise ValueError(f"FPTC package is empty: {fptc_path}")
+
+            if current_file is None or (
+                partition_size > 0
+                and partition_size + compressed_size > TENSOR_DATA_PARTITION_SIZE
+            ):
+                open_next_partition()
+
+            compressed_offset = logical_offset
+            with open(fptc_path, "rb") as src:
+                shutil.copyfileobj(src, current_file, length=16 * 1024 * 1024)
+
+            padding = (8 - (compressed_size % 8)) % 8
+            if padding:
+                current_file.write(b"\0" * padding)
+
+            written = compressed_size + padding
+            partition_size += written
+            logical_offset += written
+            compressed_index[name] = {
+                "compressed_offset": compressed_offset,
+                "compressed_size": compressed_size,
+                "uncompressed_offset": raw_offset,
+                "uncompressed_size": raw_size,
+                "shape": shape,
+                "stride": stride,
+                "dtype": "torch.bfloat16",
+                "source_dtype": dtype,
+                "fptc_path": os.path.relpath(fptc_path, fptc_dir),
+            }
+    finally:
+        close_current_file()
+
+    _replace_tensor_data_files(model_path, temp_prefix)
+
+    with open(os.path.join(model_path, CONDENSE_INDEX_FILENAME), "w") as f:
+        json.dump(compressed_index, f)
+    with open(os.path.join(model_path, CONDENSE_META_FILENAME), "w") as f:
+        json.dump(
+            {
+                "format": "sllm-condense",
+                "codec": "fptc-2",
+                "schema_version": 1,
+                "fptc_dir": fptc_dir,
+            },
+            f,
+            indent=2,
+        )
+
+
+def _replace_tensor_data_files(model_path: str, temp_prefix: str):
+    for filename in os.listdir(model_path):
+        if filename.startswith(TENSOR_DATA_PREFIX):
+            os.remove(os.path.join(model_path, filename))
+
+    for filename in os.listdir(model_path):
+        if not filename.startswith(temp_prefix):
+            continue
+        partition_id = filename.removeprefix(temp_prefix)
+        os.replace(
+            os.path.join(model_path, filename),
+            os.path.join(model_path, f"{TENSOR_DATA_PREFIX}{partition_id}"),
+        )
+
+
+def _fptc_path_for_tensor(fptc_dir: str, tensor_name: str) -> str:
+    parts = tensor_name.split(".")
+    if len(parts) >= 4 and parts[0] == "model" and parts[1] == "layers":
+        layer = parts[2]
+        leaf_name = ".".join(parts[3:])
+        path = os.path.join(fptc_dir, f"layer{layer}", f"{leaf_name}.fptc")
+    elif tensor_name == "model.embed_tokens.weight":
+        path = os.path.join(fptc_dir, "layer_misc", "embed_tokens.weight.fptc")
+    elif tensor_name == "model.norm.weight":
+        path = os.path.join(fptc_dir, "layer_misc", "norm.weight.fptc")
+    elif tensor_name == "lm_head.weight":
+        path = os.path.join(fptc_dir, "layer_misc", "lm_head.weight.fptc")
+    else:
+        safe_name = tensor_name.removeprefix("model.")
+        path = os.path.join(fptc_dir, "layer_misc", f"{safe_name}.fptc")
+
+    if not os.path.exists(path):
+        raise FileNotFoundError(
+            f"Missing FPTC package for tensor {tensor_name}: {path}"
+        )
+    return path
+
+
+def _load_fptc2_binding():
+    bind_path = os.getenv("FPTC2_BIND_PATH", DEFAULT_FPTC_BIND_PATH)
+    if bind_path and bind_path not in sys.path:
+        sys.path.insert(0, bind_path)
+    module_name = os.getenv("FPTC2_BIND_MODULE", "fptc2_bindings")
+    return importlib.import_module(module_name)
+
+
+def _shape_to_fptc_rows_cols(shape):
+    if len(shape) == 1:
+        return 1, int(shape[0])
+    if len(shape) == 2:
+        return int(shape[0]), int(shape[1])
+    raise ValueError(f"FPTC-2 binding only supports 1D/2D tensors, got {shape}")
+
+################################ SLLM-CONDENSE ################################
+
+
+
+
+
+
+
+
+
 
 
 def save_lora(model: PeftModel, lora_path: str):
@@ -181,6 +361,7 @@ def load_model_condense(
     storage_path: Optional[str] = None,
     hf_model_class: str = "AutoModelForCausalLM",
 ):
+    # ############# SLLM-CONDENSE #########
     return best_effort_load_condense(
         model_path=model_path,
         hf_model_class=hf_model_class,
@@ -429,6 +610,20 @@ def best_effort_load(
     return model
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+################################ SLLM-CONDENSE ################################
+
 def best_effort_load_condense(
     model_path: Optional[Union[str, os.PathLike]],
     hf_model_class: str,
@@ -439,11 +634,23 @@ def best_effort_load_condense(
     ] = None,
     storage_path: Optional[str] = None,
 ):
+    timing_sections = []
+
+    def record_timing(name, start, adjusted_time=None):
+        wall_time = time.time() - start
+        if adjusted_time is None:
+            adjusted_time = wall_time
+        timing_sections.append((name, wall_time, adjusted_time))
+        return wall_time
+
+    start = time.time()
     client = SllmStoreClient("127.0.0.1:8073")
     ret = client.load_into_cpu(model_path)
     if not ret:
         raise ValueError(f"Failed to load model {model_path} into CPU")
+    record_timing("load_into_cpu", start)
 
+    start = time.time()
     replica_uuid = _get_uuid()
     device_map = _transform_device_map_to_dict(device_map)
 
@@ -455,6 +662,8 @@ def best_effort_load_condense(
 
     if not storage_path:
         storage_path = os.getenv("STORAGE_PATH", os.path.expanduser("~/models"))
+    record_timing("setup", start)
+
     start = time.time()
     config = AutoConfig.from_pretrained(
         f"{os.path.join(storage_path, model_path)}", trust_remote_code=True
@@ -462,7 +671,8 @@ def best_effort_load_condense(
     if torch_dtype is not None:
         config.torch_dtype = torch_dtype
 
-    logger.debug(f"load config takes {time.time() - start} seconds")
+    record_timing("load_config", start)
+
     start = time.time()
     with init_empty_weights():
         module = importlib.import_module("transformers")
@@ -472,7 +682,7 @@ def best_effort_load_condense(
         )
 
     model.tie_weights()
-    logger.debug(f"load model takes {time.time() - start} seconds")
+    record_timing("init_empty_model", start)
 
     start = time.time()
     if isinstance(device_map, str):
@@ -485,52 +695,70 @@ def best_effort_load_condense(
             "The GPUs are either unavailable or do not have enough memory. Please ensure they are available and ready for use."  # noqa: E501
         )
 
-    logger.debug(
-        f"compute_device_placement takes {time.time() - start} seconds"
-    )
+    record_timing("compute_device_placement", start)
 
+    start = time.time()
     with open(
-        os.path.join(storage_path, model_path, "tensor_index.json"), "r"
+        os.path.join(storage_path, model_path, CONDENSE_INDEX_FILENAME), "r"
     ) as f:
         tensor_index = json.load(f)
 
     tensor_meta_index = {}
-    tensor_data_index = {}
-    for name, (offset, size, shape, stride, dtype) in tensor_index.items():
+    compressed_data_index = {}
+    final_data_index = {}
+    for name, meta in tensor_index.items():
+        shape = meta["shape"]
+        stride = meta["stride"]
+        dtype = meta["dtype"]
         tensor_meta_index[name] = (shape, stride, dtype)
-        tensor_data_index[name] = (offset, size)
+        compressed_data_index[name] = (
+            meta["compressed_offset"],
+            meta["compressed_size"],
+        )
+        final_data_index[name] = (
+            meta["uncompressed_offset"],
+            meta["uncompressed_size"],
+        )
+    record_timing("load_condense_index", start)
 
     start = time.time()
     expanded_device_map = _expand_tensor_name(
         device_map, list(tensor_index.keys())
     )
-    device_memory = calculate_device_memory(
-        expanded_device_map, tensor_data_index
+    compressed_device_memory = calculate_device_memory(
+        expanded_device_map, compressed_data_index
     )
-    if set(device_memory.keys()) != {0}:
+    final_device_memory = calculate_device_memory(
+        expanded_device_map, final_data_index
+    )
+    if set(final_device_memory.keys()) != {0}:
         raise ValueError(
             "sllm-condense staging prototype only supports one visible GPU "
-            f"(cuda:0), got device memory map {device_memory}"
+            f"(cuda:0), got device memory map {final_device_memory}"
         )
+    record_timing("plan_device_memory", start)
 
     final_cuda_memory_ptrs = None
     staging_cuda_memory_ptrs = None
     try:
-        final_cuda_memory_ptrs = allocate_cuda_memory(device_memory)
-        staging_cuda_memory_ptrs = allocate_cuda_memory(device_memory)
+        start = time.time()
+        final_cuda_memory_ptrs = allocate_cuda_memory(final_device_memory)
+        staging_cuda_memory_ptrs = allocate_cuda_memory(compressed_device_memory)
         staging_cuda_memory_handles = get_cuda_memory_handles(
             staging_cuda_memory_ptrs
         )
         device_uuid_map = get_device_uuid_map()
-        tensor_device_offsets, tensor_copy_chunks = (
+        tensor_device_offsets, _ = calculate_tensor_device_offsets(
+            expanded_device_map, final_data_index
+        )
+        compressed_device_offsets, tensor_copy_chunks = (
             calculate_tensor_device_offsets(
-                expanded_device_map, tensor_data_index
+                expanded_device_map, compressed_data_index
             )
         )
-        logger.debug(
-            f"allocate staged cuda memory takes {time.time() - start} seconds"
-        )
+        record_timing("allocate_cuda_memory_and_offsets", start)
 
+        start = time.time()
         ret = client.load_into_gpu(
             model_path,
             replica_uuid,
@@ -545,13 +773,48 @@ def best_effort_load_condense(
         )
         if not ret:
             raise ValueError(f"Failed to load model {model_path} into GPU")
+        record_timing("load_into_gpu_async", start)
 
         start = time.time()
-        copy_cuda_memory(
-            final_cuda_memory_ptrs, staging_cuda_memory_ptrs, device_memory
+        if not client.confirm_model_loaded(model_path, replica_uuid):
+            raise ValueError(f"Failed to confirm model {model_path} in GPU")
+        record_timing("confirm_loaded_before_decompress", start)
+
+        # ############# SLLM-CONDENSE #########
+        start = time.time()
+        fptc_decompress_time = 0.0
+        fptc2 = _load_fptc2_binding()
+        staging_addresses = get_cuda_memory_addresses(staging_cuda_memory_ptrs)
+        final_addresses = get_cuda_memory_addresses(final_cuda_memory_ptrs)
+        device = 0
+        for name in expanded_device_map.keys():
+            meta = tensor_index[name]
+            rows, cols = _shape_to_fptc_rows_cols(meta["shape"])
+            fptc_decompress_time += float(
+                fptc2.decompress_gpu_package_to_address(
+                    staging_addresses[device]
+                    + compressed_device_offsets[device][name],
+                    meta["compressed_size"],
+                    final_addresses[device]
+                    + tensor_device_offsets[device][name],
+                    meta["uncompressed_size"],
+                    rows,
+                    cols,
+                    meta["dtype"],
+                    device,
+                )
+            )
+        torch.cuda.synchronize(device)
+        decompress_wall_time = time.time() - start
+        condense_timing_adjustment = (
+            decompress_wall_time - fptc_decompress_time
         )
-        logger.info(
-            f"copy staging buffer to final cuda memory takes {time.time() - start} seconds"
+        timing_sections.append(
+            (
+                "decompress_staging_to_final",
+                decompress_wall_time,
+                fptc_decompress_time,
+            )
         )
     except Exception:
         if staging_cuda_memory_ptrs:
@@ -560,14 +823,17 @@ def best_effort_load_condense(
             free_cuda_memory(final_cuda_memory_ptrs)
         raise
     else:
+        start = time.time()
         free_cuda_memory(staging_cuda_memory_ptrs)
+        record_timing("free_staging_cuda_memory", start)
 
     start = time.time()
     state_dict = restore_tensors(
         tensor_meta_index, final_cuda_memory_ptrs, tensor_device_offsets
     )
-    logger.info(f"restore state_dict takes {time.time() - start} seconds")
+    record_timing("restore_state_dict", start)
 
+    start = time.time()
     with torch.no_grad():
         if quantization_config and torch.cuda.is_available():
             model = quantize(
@@ -589,16 +855,55 @@ def best_effort_load_condense(
             for name, param in state_dict.items():
                 set_module_tensor_to_device(model, name, param.device, param)
         send_module_buffers_to_device(model, device_map)
+    record_timing("apply_state_dict", start)
 
+    start = time.time()
     dispatch_model(
         model, device_map, skip_keys=model._skip_keys_device_placement
     )
+    record_timing("dispatch_model", start)
 
+    start = time.time()
     client.confirm_model_loaded(model_path, replica_uuid)
     model.eval()
     model.hf_device_map = device_map
+    record_timing("final_confirm_and_finalize", start)
 
-    return model
+    # ############# SLLM-CONDENSE #########
+    section_wall_sum = sum(wall for _, wall, _ in timing_sections)
+    section_adjusted_sum = sum(adjusted for _, _, adjusted in timing_sections)
+    timing_lines = [
+        "====TIMING INFO====",
+        f"model_path={model_path}",
+    ]
+    for name, wall_time, adjusted_time in timing_sections:
+        if adjusted_time == wall_time:
+            timing_lines.append(f"{name}: wall={wall_time:.6f}s")
+        else:
+            timing_lines.append(
+                f"{name}: wall={wall_time:.6f}s "
+                f"adjusted={adjusted_time:.6f}s "
+                f"difference={wall_time - adjusted_time:.6f}s"
+            )
+    timing_lines.extend(
+        [
+            f"section_wall_sum={section_wall_sum:.6f}s",
+            f"section_adjusted_sum={section_adjusted_sum:.6f}s",
+            f"timing_adjustment={condense_timing_adjustment:.6f}s",
+        ]
+    )
+    logger.info("\n".join(timing_lines))
+
+    return model, condense_timing_adjustment
+
+################################ SLLM-CONDENSE ################################
+
+
+
+
+
+
+
 
 
 def load_lora(

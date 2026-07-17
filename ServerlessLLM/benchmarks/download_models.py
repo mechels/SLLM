@@ -22,7 +22,8 @@ import torch
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from sllm_store.transformers import save_model
+############## SLLM-CONDENSE #########
+from sllm_store.transformers import save_model, save_model_condense
 
 
 def get_args():
@@ -54,6 +55,16 @@ def get_args():
         default=1,
         help="Number of replicas to save",
     )
+    ############## SLLM-CONDENSE #########
+    parser.add_argument(
+        "--fptc-dir",
+        type=str,
+        default=os.getenv(
+            "SLLM_CONDENSE_FPTC_DIR",
+            "/home/ben046/projects/TensorProcessing/generate_compressed/comp",
+        ),
+        help="Directory containing per-tensor .fptc packages for sllm-condense",
+    )
     return parser.parse_args()
 
 
@@ -72,11 +83,12 @@ def main():
     # Load model into memory
     print(f"Loading model {model_name} into memory")
     model = AutoModelForCausalLM.from_pretrained(
-        args.model_name, torch_dtype=torch.float16, trust_remote_code=True
+        args.model_name, torch_dtype=torch.bfloat16, trust_remote_code=True
     )
     tokenizer = AutoTokenizer.from_pretrained(args.model_name)
 
     # # Save model
+    ############## SLLM-CONDENSE #########
     if save_format in ("sllm", "sllm-condense"):
         print(f"Saving {replicas} {save_format} models to {save_dir}")
         for i in tqdm(range(replicas)):
@@ -86,7 +98,10 @@ def main():
                 else f"{model_name}_sllm-condense_{i}"
             )
             model_dir = os.path.join(save_dir, model_suffix)
-            save_model(model, model_dir)
+            if save_format == "sllm":
+                save_model(model, model_dir)
+            else:
+                save_model_condense(model, model_dir, args.fptc_dir)
             tokenizer.save_pretrained(model_dir)
     elif save_format == "safetensors":
         print(f"Saving {replicas} safetensors models to {save_dir}")

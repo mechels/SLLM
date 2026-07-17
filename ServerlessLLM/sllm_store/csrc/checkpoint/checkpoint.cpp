@@ -202,6 +202,16 @@ std::unordered_map<int, void*> AllocateCudaMemory(
   return memory_ptrs;
 }
 
+// ############# SLLM-CONDENSE #########
+std::unordered_map<int, uint64_t> GetCudaMemoryAddresses(
+    const std::unordered_map<int, void*>& memory_ptrs) {
+  std::unordered_map<int, uint64_t> memory_addresses;
+  for (const auto& p : memory_ptrs) {
+    memory_addresses[p.first] = reinterpret_cast<uint64_t>(p.second);
+  }
+  return memory_addresses;
+}
+
 void CopyCudaMemory(const std::unordered_map<int, void*>& dst_memory_ptrs,
                     const std::unordered_map<int, void*>& src_memory_ptrs,
                     const std::unordered_map<int, size_t>& tensor_sizes) {

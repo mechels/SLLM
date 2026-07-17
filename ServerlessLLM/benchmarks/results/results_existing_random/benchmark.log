@@ -1,0 +1,365 @@
+[2026-07-17 11:06:05] === ServerlessLLM Automated Benchmark ===
+[2026-07-17 11:06:05] Model: meta-llama/Meta-Llama-3-8B
+[2026-07-17 11:06:05] Replicas: 4
+[2026-07-17 11:06:05] Memory Pool: 32GB
+[2026-07-17 11:06:05] Storage: /mnt/data1/mechels
+[2026-07-17 11:06:05] Benchmark Type: random
+[2026-07-17 11:06:05] Formats: sllm sllm-condense safetensors
+[2026-07-17 11:06:05] FPTC Dir: /home/ben046/projects/TensorProcessing/generate_compressed/comp
+[2026-07-17 11:06:05] Load Existing: true
+[2026-07-17 11:06:05] Keep Models: false
+[2026-07-17 11:06:05] 
+[2026-07-17 11:06:05] Starting benchmarks...
+[2026-07-17 11:06:05] Keeping existing storage directory contents...
+[2026-07-17 11:06:05] === Testing sllm format ===
+[2026-07-17 11:06:05] Starting sllm-store server...
+[2026-07-17 11:06:05] sllm-store started (PID: 3261050)
+[2026-07-17 11:06:05] Waiting for sllm-store to be ready (pinning 32GB memory)...
+[2026-07-17 11:06:22] sllm-store is ready (took 16s)
+[2026-07-17 11:06:22] Using existing sllm files in /mnt/data1/mechels; skipping download/prepare...
+[2026-07-17 11:06:22] Running benchmark...
+================================================================================
+Starting benchmark for sllm format
+[GPU Memory START of script] Allocated: 0.00 GB, Reserved: 0.00 GB
+================================================================================
+Warming up 1 GPUs
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00,  4.18it/s]100%|██████████| 1/1 [00:00<00:00,  4.17it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Warming up inference
+Loading weights:   0%|          | 0/516 [00:00<?, ?it/s]Loading weights:   4%|▍         | 22/516 [00:00<00:02, 173.03it/s]Loading weights:  10%|▉         | 50/516 [00:00<00:02, 210.40it/s]Loading weights:  14%|█▍        | 72/516 [00:00<00:02, 212.42it/s]Loading weights:  19%|█▊        | 96/516 [00:00<00:01, 212.07it/s]Loading weights:  23%|██▎       | 118/516 [00:00<00:02, 178.62it/s]Loading weights:  28%|██▊       | 147/516 [00:00<00:01, 207.52it/s]Loading weights:  33%|███▎      | 169/516 [00:00<00:01, 185.27it/s]Loading weights:  37%|███▋      | 192/516 [00:00<00:01, 185.07it/s]Loading weights:  41%|████▏     | 214/516 [00:01<00:01, 191.22it/s]Loading weights:  45%|████▌     | 234/516 [00:01<00:01, 186.32it/s]Loading weights:  50%|████▉     | 256/516 [00:01<00:01, 193.92it/s]Loading weights:  54%|█████▍    | 278/516 [00:01<00:01, 194.99it/s]Loading weights:  58%|█████▊    | 298/516 [00:01<00:01, 182.06it/s]Loading weights:  62%|██████▏   | 319/516 [00:01<00:01, 186.51it/s]Loading weights:  66%|██████▌   | 338/516 [00:01<00:01, 169.33it/s]Loading weights:  69%|██████▉   | 358/516 [00:01<00:00, 176.00it/s]Loading weights:  73%|███████▎  | 376/516 [00:02<00:00, 176.30it/s]Loading weights:  78%|███████▊  | 400/516 [00:02<00:00, 189.09it/s]Loading weights:  81%|████████▏ | 420/516 [00:02<00:00, 185.15it/s]Loading weights:  85%|████████▌ | 439/516 [00:02<00:00, 164.63it/s]Loading weights:  90%|████████▉ | 462/516 [00:02<00:00, 173.42it/s]Loading weights:  94%|█████████▍| 486/516 [00:02<00:00, 185.70it/s]Loading weights:  98%|█████████▊| 505/516 [00:02<00:00, 182.70it/s]Loading weights: 100%|██████████| 516/516 [00:02<00:00, 189.39it/s]
+[GPU Memory after warmup] Allocated: 0.01 GB, Reserved: 0.02 GB
+Measuring loading time for sllm model=meta-llama/Meta-Llama-3-8B, repeating 4 times
+[GPU Memory BEFORE benchmark] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_2
+[GPU Memory before load #2] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-17 11:06:31 transformers.py:479] load config takes 0.00502777099609375 seconds
+DEBUG 07-17 11:06:31 transformers.py:489] load model takes 0.10578703880310059 seconds
+DEBUG 07-17 11:06:31 transformers.py:496] device_map: OrderedDict([('', 0)])
+DEBUG 07-17 11:06:31 transformers.py:503] compute_device_placement takes 0.010520219802856445 seconds
+DEBUG 07-17 11:06:32 transformers.py:534] allocate_cuda_memory takes 0.0021245479583740234 seconds
+DEBUG 07-17 11:06:32 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_2, 24e505e3-0289-4d73-857d-287c4326c857
+INFO 07-17 11:06:32 client.py:113] Model loaded: meta-llama/Meta-Llama-3-8B_2, 24e505e3-0289-4d73-857d-287c4326c857
+INFO 07-17 11:06:32 transformers.py:556] restore state_dict takes 0.0011043548583984375 seconds
+INFO 07-17 11:06:32 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_2, 24e505e3-0289-4d73-857d-287c4326c857
+INFO 07-17 11:08:48 client.py:125] Model loaded
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+[GPU Memory after inference #2] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory after cleanup #2] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_3
+[GPU Memory before load #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-17 11:08:51 transformers.py:479] load config takes 0.008203506469726562 seconds
+DEBUG 07-17 11:08:51 transformers.py:489] load model takes 0.10774779319763184 seconds
+DEBUG 07-17 11:08:51 transformers.py:496] device_map: OrderedDict([('', 0)])
+DEBUG 07-17 11:08:51 transformers.py:503] compute_device_placement takes 0.01018071174621582 seconds
+DEBUG 07-17 11:08:52 transformers.py:534] allocate_cuda_memory takes 0.006583690643310547 seconds
+DEBUG 07-17 11:08:52 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_3, aec3f4ee-eb7f-4277-858a-235af67253a2
+INFO 07-17 11:08:52 client.py:113] Model loaded: meta-llama/Meta-Llama-3-8B_3, aec3f4ee-eb7f-4277-858a-235af67253a2
+INFO 07-17 11:08:52 transformers.py:556] restore state_dict takes 0.0009102821350097656 seconds
+INFO 07-17 11:08:52 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_3, aec3f4ee-eb7f-4277-858a-235af67253a2
+INFO 07-17 11:11:08 client.py:125] Model loaded
+[GPU Memory after inference #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory after cleanup #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_1
+[GPU Memory before load #1] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-17 11:11:11 transformers.py:479] load config takes 0.10059309005737305 seconds
+DEBUG 07-17 11:11:11 transformers.py:489] load model takes 0.08770060539245605 seconds
+DEBUG 07-17 11:11:11 transformers.py:496] device_map: OrderedDict([('', 0)])
+DEBUG 07-17 11:11:11 transformers.py:503] compute_device_placement takes 0.010194063186645508 seconds
+DEBUG 07-17 11:11:11 transformers.py:534] allocate_cuda_memory takes 0.0066454410552978516 seconds
+DEBUG 07-17 11:11:11 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_1, fa1985c4-85f7-4743-9c70-f474efe4f040
+INFO 07-17 11:11:11 client.py:113] Model loaded: meta-llama/Meta-Llama-3-8B_1, fa1985c4-85f7-4743-9c70-f474efe4f040
+INFO 07-17 11:11:11 transformers.py:556] restore state_dict takes 0.0010197162628173828 seconds
+INFO 07-17 11:11:11 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_1, fa1985c4-85f7-4743-9c70-f474efe4f040
+INFO 07-17 11:13:27 client.py:125] Model loaded
+[GPU Memory after inference #1] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory after cleanup #1] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_0
+[GPU Memory before load #0] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-17 11:13:30 transformers.py:479] load config takes 0.0026597976684570312 seconds
+DEBUG 07-17 11:13:30 transformers.py:489] load model takes 0.08770608901977539 seconds
+DEBUG 07-17 11:13:30 transformers.py:496] device_map: OrderedDict([('', 0)])
+DEBUG 07-17 11:13:30 transformers.py:503] compute_device_placement takes 0.010031938552856445 seconds
+DEBUG 07-17 11:13:30 transformers.py:534] allocate_cuda_memory takes 0.0065021514892578125 seconds
+DEBUG 07-17 11:13:30 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_0, 8322be1a-e9ae-418b-b72c-126bbc8f5906
+INFO 07-17 11:13:30 client.py:113] Model loaded: meta-llama/Meta-Llama-3-8B_0, 8322be1a-e9ae-418b-b72c-126bbc8f5906
+INFO 07-17 11:13:30 transformers.py:556] restore state_dict takes 0.0008647441864013672 seconds
+INFO 07-17 11:13:30 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_0, 8322be1a-e9ae-418b-b72c-126bbc8f5906
+INFO 07-17 11:15:47 client.py:125] Model loaded
+[GPU Memory after inference #0] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory after cleanup #0] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory AFTER all benchmarks] Allocated: 0.01 GB, Reserved: 0.02 GB
+Results saved to /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random/meta-llama_Meta-Llama-3-8B_sllm_4_random.json
+================================================================================
+[GPU Memory END of script] Allocated: 0.01 GB, Reserved: 0.02 GB
+================================================================================
+[2026-07-17 11:15:50] Keeping storage after sllm benchmark...
+[2026-07-17 11:15:50] Stopping sllm-store (PID: 3261050)
+[2026-07-17 11:15:54] Format sllm completed, GPU memory released
+[2026-07-17 11:15:59] 
+[2026-07-17 11:15:59] === Testing sllm-condense format ===
+[2026-07-17 11:15:59] Starting sllm-store server...
+[2026-07-17 11:15:59] sllm-store started (PID: 3282015)
+[2026-07-17 11:15:59] Waiting for sllm-store to be ready (pinning 32GB memory)...
+[2026-07-17 11:16:14] sllm-store is ready (took 14s)
+[2026-07-17 11:16:14] Using existing sllm-condense files in /mnt/data1/mechels; skipping download/prepare...
+[2026-07-17 11:16:14] Running benchmark...
+================================================================================
+Starting benchmark for sllm-condense format
+[GPU Memory START of script] Allocated: 0.00 GB, Reserved: 0.00 GB
+================================================================================
+Warming up 1 GPUs
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00,  5.20it/s]100%|██████████| 1/1 [00:00<00:00,  5.20it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Warming up inference
+Loading weights:   0%|          | 0/516 [00:00<?, ?it/s]Loading weights:   0%|          | 2/516 [00:00<00:31, 16.40it/s]Loading weights:   7%|▋         | 38/516 [00:00<00:03, 146.56it/s]Loading weights:  12%|█▏        | 64/516 [00:00<00:02, 179.88it/s]Loading weights:  17%|█▋        | 86/516 [00:00<00:02, 176.01it/s]Loading weights:  20%|██        | 104/516 [00:00<00:02, 169.57it/s]Loading weights:  25%|██▌       | 130/516 [00:00<00:02, 189.00it/s]Loading weights:  29%|██▉       | 150/516 [00:00<00:02, 180.54it/s]Loading weights:  33%|███▎      | 169/516 [00:01<00:02, 173.32it/s]Loading weights:  38%|███▊      | 198/516 [00:01<00:01, 183.04it/s]Loading weights:  44%|████▍     | 226/516 [00:01<00:01, 198.58it/s]Loading weights:  48%|████▊     | 248/516 [00:01<00:01, 195.16it/s]Loading weights:  54%|█████▍    | 278/516 [00:01<00:01, 207.67it/s]Loading weights:  60%|██████    | 310/516 [00:01<00:00, 209.91it/s]Loading weights:  66%|██████▋   | 342/516 [00:01<00:00, 213.20it/s]Loading weights:  72%|███████▏  | 370/516 [00:01<00:00, 224.74it/s]Loading weights:  76%|███████▌  | 393/516 [00:02<00:00, 209.67it/s]Loading weights:  81%|████████  | 418/516 [00:02<00:00, 215.06it/s]Loading weights:  85%|████████▌ | 440/516 [00:02<00:00, 192.57it/s]Loading weights:  90%|████████▉ | 464/516 [00:02<00:00, 203.93it/s]Loading weights:  94%|█████████▍| 486/516 [00:02<00:00, 202.57it/s]Loading weights:  98%|█████████▊| 507/516 [00:02<00:00, 194.32it/s]Loading weights: 100%|██████████| 516/516 [00:02<00:00, 195.17it/s]
+[GPU Memory after warmup] Allocated: 0.01 GB, Reserved: 0.02 GB
+Measuring loading time for sllm-condense model=meta-llama/Meta-Llama-3-8B, repeating 4 times
+[GPU Memory BEFORE benchmark] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_3
+[GPU Memory before load #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-17 11:16:22 transformers.py:656] device_map: OrderedDict([('', 0)])
+DEBUG 07-17 11:16:23 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_sllm-condense_3, 1bec52fa-1966-42aa-8204-4fd6aaf40eea
+INFO 07-17 11:16:23 client.py:113] Model loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_3, 1bec52fa-1966-42aa-8204-4fd6aaf40eea
+INFO 07-17 11:16:23 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_3, 1bec52fa-1966-42aa-8204-4fd6aaf40eea
+INFO 07-17 11:17:23 client.py:125] Model loaded
+INFO 07-17 11:17:31 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_3, 1bec52fa-1966-42aa-8204-4fd6aaf40eea
+INFO 07-17 11:17:31 client.py:125] Model loaded
+INFO 07-17 11:17:31 transformers.py:857] ====TIMING INFO====
+INFO 07-17 11:17:31 transformers.py:857] model_path=meta-llama/Meta-Llama-3-8B_sllm-condense_3
+INFO 07-17 11:17:31 transformers.py:857] load_into_cpu: wall=0.008739s
+INFO 07-17 11:17:31 transformers.py:857] setup: wall=0.000033s
+INFO 07-17 11:17:31 transformers.py:857] load_config: wall=0.004550s
+INFO 07-17 11:17:31 transformers.py:857] init_empty_model: wall=0.079769s
+INFO 07-17 11:17:31 transformers.py:857] compute_device_placement: wall=0.008552s
+INFO 07-17 11:17:31 transformers.py:857] load_condense_index: wall=0.453136s
+INFO 07-17 11:17:31 transformers.py:857] plan_device_memory: wall=0.000414s
+INFO 07-17 11:17:31 transformers.py:857] allocate_cuda_memory_and_offsets: wall=0.005549s
+INFO 07-17 11:17:31 transformers.py:857] load_into_gpu_async: wall=0.004875s
+INFO 07-17 11:17:31 transformers.py:857] confirm_loaded_before_decompress: wall=59.932965s
+INFO 07-17 11:17:31 transformers.py:857] decompress_staging_to_final: wall=7.815427s adjusted=0.202974s difference=7.612453s
+INFO 07-17 11:17:31 transformers.py:857] free_staging_cuda_memory: wall=0.005741s
+INFO 07-17 11:17:31 transformers.py:857] restore_state_dict: wall=0.001445s
+INFO 07-17 11:17:31 transformers.py:857] apply_state_dict: wall=0.011782s
+INFO 07-17 11:17:31 transformers.py:857] dispatch_model: wall=0.004004s
+INFO 07-17 11:17:31 transformers.py:857] final_confirm_and_finalize: wall=0.002881s
+INFO 07-17 11:17:31 transformers.py:857] section_wall_sum=68.339863s
+INFO 07-17 11:17:31 transformers.py:857] section_adjusted_sum=60.727410s
+INFO 07-17 11:17:31 transformers.py:857] timing_adjustment=7.612453s
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+[GPU Memory after inference #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory after cleanup #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_0
+[GPU Memory before load #0] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-17 11:17:33 transformers.py:656] device_map: OrderedDict([('', 0)])
+DEBUG 07-17 11:17:34 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_sllm-condense_0, 5779f47b-b11d-4548-9086-d591c185184c
+INFO 07-17 11:17:34 client.py:113] Model loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_0, 5779f47b-b11d-4548-9086-d591c185184c
+INFO 07-17 11:17:34 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_0, 5779f47b-b11d-4548-9086-d591c185184c
+INFO 07-17 11:18:33 client.py:125] Model loaded
+INFO 07-17 11:18:41 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_0, 5779f47b-b11d-4548-9086-d591c185184c
+INFO 07-17 11:18:41 client.py:125] Model loaded
+INFO 07-17 11:18:41 transformers.py:857] ====TIMING INFO====
+INFO 07-17 11:18:41 transformers.py:857] model_path=meta-llama/Meta-Llama-3-8B_sllm-condense_0
+INFO 07-17 11:18:41 transformers.py:857] load_into_cpu: wall=0.004948s
+INFO 07-17 11:18:41 transformers.py:857] setup: wall=0.000044s
+INFO 07-17 11:18:41 transformers.py:857] load_config: wall=0.020072s
+INFO 07-17 11:18:41 transformers.py:857] init_empty_model: wall=0.077146s
+INFO 07-17 11:18:41 transformers.py:857] compute_device_placement: wall=0.008674s
+INFO 07-17 11:18:41 transformers.py:857] load_condense_index: wall=0.465858s
+INFO 07-17 11:18:41 transformers.py:857] plan_device_memory: wall=0.000377s
+INFO 07-17 11:18:41 transformers.py:857] allocate_cuda_memory_and_offsets: wall=0.005785s
+INFO 07-17 11:18:41 transformers.py:857] load_into_gpu_async: wall=0.004500s
+INFO 07-17 11:18:41 transformers.py:857] confirm_loaded_before_decompress: wall=59.674175s
+INFO 07-17 11:18:41 transformers.py:857] decompress_staging_to_final: wall=7.787697s adjusted=0.202522s difference=7.585175s
+INFO 07-17 11:18:41 transformers.py:857] free_staging_cuda_memory: wall=0.006005s
+INFO 07-17 11:18:41 transformers.py:857] restore_state_dict: wall=0.002019s
+INFO 07-17 11:18:41 transformers.py:857] apply_state_dict: wall=0.009577s
+INFO 07-17 11:18:41 transformers.py:857] dispatch_model: wall=0.003911s
+INFO 07-17 11:18:41 transformers.py:857] final_confirm_and_finalize: wall=0.002994s
+INFO 07-17 11:18:41 transformers.py:857] section_wall_sum=68.073782s
+INFO 07-17 11:18:41 transformers.py:857] section_adjusted_sum=60.488607s
+INFO 07-17 11:18:41 transformers.py:857] timing_adjustment=7.585175s
+[GPU Memory after inference #0] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory after cleanup #0] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_2
+[GPU Memory before load #2] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-17 11:18:44 transformers.py:656] device_map: OrderedDict([('', 0)])
+DEBUG 07-17 11:18:44 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_sllm-condense_2, 6ed39f90-db4c-4c69-9129-73baa89d58f5
+INFO 07-17 11:18:44 client.py:113] Model loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_2, 6ed39f90-db4c-4c69-9129-73baa89d58f5
+INFO 07-17 11:18:44 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_2, 6ed39f90-db4c-4c69-9129-73baa89d58f5
+INFO 07-17 11:19:44 client.py:125] Model loaded
+INFO 07-17 11:19:51 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_2, 6ed39f90-db4c-4c69-9129-73baa89d58f5
+INFO 07-17 11:19:51 client.py:125] Model loaded
+INFO 07-17 11:19:51 transformers.py:857] ====TIMING INFO====
+INFO 07-17 11:19:51 transformers.py:857] model_path=meta-llama/Meta-Llama-3-8B_sllm-condense_2
+INFO 07-17 11:19:51 transformers.py:857] load_into_cpu: wall=0.005298s
+INFO 07-17 11:19:51 transformers.py:857] setup: wall=0.000052s
+INFO 07-17 11:19:51 transformers.py:857] load_config: wall=0.011961s
+INFO 07-17 11:19:51 transformers.py:857] init_empty_model: wall=0.078045s
+INFO 07-17 11:19:51 transformers.py:857] compute_device_placement: wall=0.008353s
+INFO 07-17 11:19:51 transformers.py:857] load_condense_index: wall=0.411026s
+INFO 07-17 11:19:51 transformers.py:857] plan_device_memory: wall=0.000377s
+INFO 07-17 11:19:51 transformers.py:857] allocate_cuda_memory_and_offsets: wall=0.005932s
+INFO 07-17 11:19:51 transformers.py:857] load_into_gpu_async: wall=0.004381s
+INFO 07-17 11:19:51 transformers.py:857] confirm_loaded_before_decompress: wall=59.766423s
+INFO 07-17 11:19:51 transformers.py:857] decompress_staging_to_final: wall=7.222929s adjusted=0.202330s difference=7.020599s
+INFO 07-17 11:19:51 transformers.py:857] free_staging_cuda_memory: wall=0.005266s
+INFO 07-17 11:19:51 transformers.py:857] restore_state_dict: wall=0.001638s
+INFO 07-17 11:19:51 transformers.py:857] apply_state_dict: wall=0.009413s
+INFO 07-17 11:19:51 transformers.py:857] dispatch_model: wall=0.004767s
+INFO 07-17 11:19:51 transformers.py:857] final_confirm_and_finalize: wall=0.003011s
+INFO 07-17 11:19:51 transformers.py:857] section_wall_sum=67.538871s
+INFO 07-17 11:19:51 transformers.py:857] section_adjusted_sum=60.518272s
+INFO 07-17 11:19:51 transformers.py:857] timing_adjustment=7.020599s
+[GPU Memory after inference #2] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory after cleanup #2] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_1
+[GPU Memory before load #1] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-17 11:19:53 transformers.py:656] device_map: OrderedDict([('', 0)])
+DEBUG 07-17 11:19:54 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_sllm-condense_1, 1955f516-aaff-464a-9d29-b1c41250b521
+INFO 07-17 11:19:54 client.py:113] Model loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_1, 1955f516-aaff-464a-9d29-b1c41250b521
+INFO 07-17 11:19:54 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_1, 1955f516-aaff-464a-9d29-b1c41250b521
+INFO 07-17 11:20:54 client.py:125] Model loaded
+INFO 07-17 11:20:59 client.py:117] confirm_model_loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_1, 1955f516-aaff-464a-9d29-b1c41250b521
+INFO 07-17 11:20:59 client.py:125] Model loaded
+INFO 07-17 11:20:59 transformers.py:857] ====TIMING INFO====
+INFO 07-17 11:20:59 transformers.py:857] model_path=meta-llama/Meta-Llama-3-8B_sllm-condense_1
+INFO 07-17 11:20:59 transformers.py:857] load_into_cpu: wall=0.004889s
+INFO 07-17 11:20:59 transformers.py:857] setup: wall=0.000033s
+INFO 07-17 11:20:59 transformers.py:857] load_config: wall=0.002297s
+INFO 07-17 11:20:59 transformers.py:857] init_empty_model: wall=0.074049s
+INFO 07-17 11:20:59 transformers.py:857] compute_device_placement: wall=0.008432s
+INFO 07-17 11:20:59 transformers.py:857] load_condense_index: wall=0.487726s
+INFO 07-17 11:20:59 transformers.py:857] plan_device_memory: wall=0.000310s
+INFO 07-17 11:20:59 transformers.py:857] allocate_cuda_memory_and_offsets: wall=0.005870s
+INFO 07-17 11:20:59 transformers.py:857] load_into_gpu_async: wall=0.003486s
+INFO 07-17 11:20:59 transformers.py:857] confirm_loaded_before_decompress: wall=59.699017s
+INFO 07-17 11:20:59 transformers.py:857] decompress_staging_to_final: wall=5.642322s adjusted=0.202369s difference=5.439953s
+INFO 07-17 11:20:59 transformers.py:857] free_staging_cuda_memory: wall=0.005931s
+INFO 07-17 11:20:59 transformers.py:857] restore_state_dict: wall=0.001682s
+INFO 07-17 11:20:59 transformers.py:857] apply_state_dict: wall=0.009509s
+INFO 07-17 11:20:59 transformers.py:857] dispatch_model: wall=0.003768s
+INFO 07-17 11:20:59 transformers.py:857] final_confirm_and_finalize: wall=0.002943s
+INFO 07-17 11:20:59 transformers.py:857] section_wall_sum=65.952264s
+INFO 07-17 11:20:59 transformers.py:857] section_adjusted_sum=60.512311s
+INFO 07-17 11:20:59 transformers.py:857] timing_adjustment=5.439953s
+[GPU Memory after inference #1] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory after cleanup #1] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory AFTER all benchmarks] Allocated: 0.01 GB, Reserved: 0.02 GB
+Results saved to /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random/meta-llama_Meta-Llama-3-8B_sllm-condense_4_random.json
+================================================================================
+[GPU Memory END of script] Allocated: 0.01 GB, Reserved: 0.02 GB
+================================================================================
+[2026-07-17 11:21:02] Keeping storage after sllm-condense benchmark...
+[2026-07-17 11:21:02] Stopping sllm-store (PID: 3282015)
+[2026-07-17 11:21:07] Format sllm-condense completed, GPU memory released
+[2026-07-17 11:21:12] 
+[2026-07-17 11:21:12] === Testing safetensors format ===
+[2026-07-17 11:21:12] Using existing safetensors files in /mnt/data1/mechels; skipping download/prepare...
+[2026-07-17 11:21:12] Running benchmark...
+================================================================================
+Starting benchmark for safetensors format
+[GPU Memory START of script] Allocated: 0.00 GB, Reserved: 0.00 GB
+================================================================================
+Warming up 1 GPUs
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00,  6.04it/s]100%|██████████| 1/1 [00:00<00:00,  6.04it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Warming up inference
+Loading weights:   0%|          | 0/516 [00:00<?, ?it/s]Loading weights:   2%|▏         | 8/516 [00:00<00:06, 76.65it/s]Loading weights:   7%|▋         | 34/516 [00:00<00:02, 176.56it/s]Loading weights:  10%|█         | 54/516 [00:00<00:02, 183.45it/s]Loading weights:  14%|█▍        | 73/516 [00:00<00:02, 182.45it/s]Loading weights:  20%|█▉        | 102/516 [00:00<00:02, 186.74it/s]Loading weights:  23%|██▎       | 121/516 [00:00<00:02, 184.63it/s]Loading weights:  29%|██▉       | 150/516 [00:00<00:01, 184.61it/s]Loading weights:  33%|███▎      | 169/516 [00:00<00:01, 184.64it/s]Loading weights:  38%|███▊      | 194/516 [00:01<00:01, 194.40it/s]Loading weights:  41%|████▏     | 214/516 [00:01<00:01, 166.29it/s]Loading weights:  48%|████▊     | 246/516 [00:01<00:01, 182.45it/s]Loading weights:  51%|█████▏    | 265/516 [00:01<00:01, 175.72it/s]Loading weights:  57%|█████▋    | 294/516 [00:01<00:01, 184.54it/s]Loading weights:  61%|██████    | 313/516 [00:01<00:01, 171.36it/s]Loading weights:  65%|██████▌   | 337/516 [00:01<00:00, 186.06it/s]Loading weights:  69%|██████▉   | 358/516 [00:02<00:00, 160.27it/s]Loading weights:  75%|███████▍  | 386/516 [00:02<00:00, 179.47it/s]Loading weights:  79%|███████▊  | 406/516 [00:02<00:00, 166.99it/s]Loading weights:  84%|████████▎ | 432/516 [00:02<00:00, 184.84it/s]Loading weights:  88%|████████▊ | 454/516 [00:02<00:00, 177.54it/s]Loading weights:  93%|█████████▎| 482/516 [00:02<00:00, 201.27it/s]Loading weights:  97%|█████████▋| 503/516 [00:02<00:00, 187.75it/s]Loading weights: 100%|██████████| 516/516 [00:02<00:00, 182.24it/s]
+[GPU Memory after warmup] Allocated: 0.01 GB, Reserved: 0.02 GB
+Measuring loading time for safetensors model=meta-llama/Meta-Llama-3-8B, repeating 4 times
+[GPU Memory BEFORE benchmark] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_1
+[GPU Memory before load #1] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:29<2:22:56, 29.58s/it]Loading weights:   1%|▏         | 4/291 [00:30<28:29,  5.96s/it]  Loading weights:   2%|▏         | 5/291 [00:33<23:43,  4.98s/it]Loading weights:   3%|▎         | 9/291 [00:33<09:24,  2.00s/it]Loading weights:   3%|▎         | 10/291 [00:34<08:11,  1.75s/it]Loading weights:   4%|▍         | 13/291 [00:35<05:25,  1.17s/it]Loading weights:   5%|▍         | 14/291 [00:36<05:26,  1.18s/it]Loading weights:   5%|▌         | 15/291 [00:38<05:42,  1.24s/it]Loading weights:   6%|▌         | 18/291 [00:38<03:17,  1.38it/s]Loading weights:   7%|▋         | 19/291 [00:39<03:03,  1.48it/s]Loading weights:   7%|▋         | 20/291 [00:39<02:33,  1.76it/s]Loading weights:   8%|▊         | 22/291 [00:40<02:34,  1.75it/s]Loading weights:   8%|▊         | 23/291 [00:41<03:11,  1.40it/s]Loading weights:   8%|▊         | 24/291 [00:42<03:38,  1.22it/s]Loading weights:   9%|▉         | 26/291 [00:43<02:18,  1.91it/s]Loading weights:   9%|▉         | 27/291 [00:43<02:05,  2.11it/s]Loading weights:  10%|▉         | 28/291 [00:44<02:15,  1.93it/s]Loading weights:  11%|█         | 31/291 [00:45<01:51,  2.34it/s]Loading weights:  11%|█         | 32/291 [00:46<02:43,  1.59it/s]Loading weights:  11%|█▏        | 33/291 [00:47<03:09,  1.36it/s]Loading weights:  12%|█▏        | 35/291 [00:47<02:04,  2.06it/s]Loading weights:  12%|█▏        | 36/291 [00:48<01:54,  2.23it/s]Loading weights:  13%|█▎        | 37/291 [00:48<01:50,  2.29it/s]Loading weights:  14%|█▎        | 40/291 [00:51<02:38,  1.58it/s]Loading weights:  14%|█▍        | 41/291 [00:52<03:10,  1.31it/s]Loading weights:  14%|█▍        | 42/291 [00:55<04:54,  1.18s/it]Loading weights:  15%|█▌        | 44/291 [00:55<03:15,  1.26it/s]Loading weights:  15%|█▌        | 45/291 [00:55<03:05,  1.33it/s]Loading weights:  16%|█▌        | 46/291 [00:56<03:15,  1.25it/s]Loading weights:  16%|█▌        | 47/291 [00:57<02:33,  1.59it/s]Loading weights:  17%|█▋        | 49/291 [00:58<02:59,  1.35it/s]Loading weights:  17%|█▋        | 50/291 [01:03<06:15,  1.56s/it]Loading weights:  18%|█▊        | 53/291 [01:03<03:18,  1.20it/s]Loading weights:  19%|█▊        | 54/291 [01:04<03:07,  1.27it/s]Loading weights:  19%|█▉        | 55/291 [01:04<03:11,  1.23it/s]Loading weights:  19%|█▉        | 56/291 [01:05<02:31,  1.55it/s]Loading weights:  20%|█▉        | 57/291 [01:05<02:00,  1.94it/s]Loading weights:  20%|█▉        | 58/291 [01:07<03:43,  1.04it/s]Loading weights:  20%|██        | 59/291 [01:08<04:20,  1.12s/it]Loading weights:  21%|██        | 60/291 [01:11<06:00,  1.56s/it]Loading weights:  22%|██▏       | 63/291 [01:12<03:17,  1.16it/s]Loading weights:  22%|██▏       | 64/291 [01:13<03:03,  1.24it/s]Loading weights:  23%|██▎       | 67/291 [01:15<03:03,  1.22it/s]Loading weights:  23%|██▎       | 68/291 [01:17<04:02,  1.09s/it]Loading weights:  24%|██▎       | 69/291 [01:20<05:35,  1.51s/it]Loading weights:  24%|██▍       | 71/291 [01:21<03:43,  1.02s/it]Loading weights:  25%|██▍       | 72/291 [01:22<04:02,  1.11s/it]Loading weights:  26%|██▌       | 76/291 [01:24<02:52,  1.24it/s]Loading weights:  26%|██▋       | 77/291 [01:26<03:26,  1.04it/s]Loading weights:  27%|██▋       | 78/291 [01:29<04:24,  1.24s/it]Loading weights:  28%|██▊       | 81/291 [01:30<02:59,  1.17it/s]Loading weights:  28%|██▊       | 82/291 [01:31<03:05,  1.13it/s]Loading weights:  29%|██▉       | 85/291 [01:33<02:32,  1.35it/s]Loading weights:  30%|██▉       | 86/291 [01:34<03:07,  1.09it/s]Loading weights:  30%|██▉       | 87/291 [01:37<04:05,  1.20s/it]Loading weights:  31%|███       | 90/291 [01:37<02:32,  1.32it/s]Loading weights:  31%|███▏      | 91/291 [01:38<02:28,  1.35it/s]Loading weights:  32%|███▏      | 94/291 [01:39<01:55,  1.71it/s]Loading weights:  33%|███▎      | 95/291 [01:41<02:26,  1.34it/s]Loading weights:  33%|███▎      | 96/291 [01:42<02:46,  1.17it/s]Loading weights:  34%|███▍      | 99/291 [01:42<01:39,  1.93it/s]Loading weights:  34%|███▍      | 100/291 [01:43<01:41,  1.89it/s]Loading weights:  35%|███▌      | 103/291 [01:44<01:22,  2.27it/s]Loading weights:  36%|███▌      | 104/291 [01:45<01:59,  1.56it/s]Loading weights:  36%|███▌      | 105/291 [01:47<02:25,  1.28it/s]Loading weights:  37%|███▋      | 108/291 [01:47<01:29,  2.04it/s]Loading weights:  37%|███▋      | 109/291 [01:48<01:28,  2.06it/s]Loading weights:  38%|███▊      | 110/291 [01:48<01:15,  2.40it/s]Loading weights:  38%|███▊      | 112/291 [01:49<01:17,  2.30it/s]Loading weights:  39%|███▉      | 113/291 [01:50<01:50,  1.61it/s]Loading weights:  39%|███▉      | 114/291 [01:51<02:10,  1.36it/s]Loading weights:  40%|████      | 117/291 [01:53<01:50,  1.58it/s]Loading weights:  42%|████▏     | 121/291 [01:54<01:18,  2.16it/s]Loading weights:  42%|████▏     | 122/291 [01:56<01:57,  1.43it/s]Loading weights:  42%|████▏     | 123/291 [01:57<02:06,  1.32it/s]Loading weights:  43%|████▎     | 126/291 [01:58<01:21,  2.03it/s]Loading weights:  44%|████▎     | 127/291 [01:58<01:27,  1.86it/s]Loading weights:  44%|████▍     | 128/291 [01:58<01:16,  2.13it/s]Loading weights:  45%|████▍     | 130/291 [01:59<01:18,  2.05it/s]Loading weights:  45%|████▌     | 131/291 [02:01<01:44,  1.54it/s]Loading weights:  45%|████▌     | 132/291 [02:02<02:00,  1.32it/s]Loading weights:  46%|████▋     | 135/291 [02:02<01:13,  2.13it/s]Loading weights:  47%|████▋     | 136/291 [02:03<01:11,  2.17it/s]Loading weights:  48%|████▊     | 139/291 [02:04<01:02,  2.42it/s]Loading weights:  48%|████▊     | 140/291 [02:05<01:28,  1.71it/s]Loading weights:  48%|████▊     | 141/291 [02:07<01:49,  1.37it/s]Loading weights:  49%|████▉     | 143/291 [02:07<01:12,  2.06it/s]Loading weights:  49%|████▉     | 144/291 [02:07<01:05,  2.24it/s]Loading weights:  50%|████▉     | 145/291 [02:08<01:12,  2.02it/s]Loading weights:  51%|█████     | 148/291 [02:09<00:59,  2.41it/s]Loading weights:  51%|█████     | 149/291 [02:10<01:24,  1.68it/s]Loading weights:  52%|█████▏    | 150/291 [02:11<01:46,  1.33it/s]Loading weights:  52%|█████▏    | 152/291 [02:11<01:07,  2.05it/s]Loading weights:  53%|█████▎    | 153/291 [02:12<01:17,  1.77it/s]Loading weights:  53%|█████▎    | 154/291 [02:13<01:20,  1.69it/s]Loading weights:  53%|█████▎    | 155/291 [02:13<01:04,  2.11it/s]Loading weights:  54%|█████▍    | 157/291 [02:14<01:08,  1.96it/s]Loading weights:  54%|█████▍    | 158/291 [02:16<01:33,  1.42it/s]Loading weights:  55%|█████▍    | 159/291 [02:17<01:51,  1.18it/s]Loading weights:  56%|█████▌    | 162/291 [02:17<00:59,  2.18it/s]Loading weights:  56%|█████▌    | 163/291 [02:18<01:00,  2.13it/s]Loading weights:  56%|█████▋    | 164/291 [02:18<00:51,  2.49it/s]Loading weights:  57%|█████▋    | 166/291 [02:19<00:54,  2.28it/s]Loading weights:  57%|█████▋    | 167/291 [02:20<01:19,  1.56it/s]Loading weights:  58%|█████▊    | 168/291 [02:21<01:36,  1.28it/s]Loading weights:  59%|█████▉    | 171/291 [02:22<00:53,  2.22it/s]Loading weights:  59%|█████▉    | 172/291 [02:22<00:58,  2.02it/s]Loading weights:  60%|██████    | 175/291 [02:24<00:50,  2.29it/s]Loading weights:  60%|██████    | 176/291 [02:25<01:07,  1.71it/s]Loading weights:  61%|██████    | 177/291 [02:26<01:19,  1.43it/s]Loading weights:  62%|██████▏   | 180/291 [02:26<00:48,  2.29it/s]Loading weights:  62%|██████▏   | 181/291 [02:28<01:01,  1.79it/s]Loading weights:  63%|██████▎   | 184/291 [02:29<00:49,  2.15it/s]Loading weights:  64%|██████▎   | 185/291 [02:31<01:30,  1.17it/s]Loading weights:  65%|██████▍   | 189/291 [02:32<00:49,  2.05it/s]Loading weights:  65%|██████▌   | 190/291 [02:32<00:50,  2.02it/s]Loading weights:  66%|██████▌   | 192/291 [02:32<00:36,  2.71it/s]Loading weights:  66%|██████▋   | 193/291 [02:33<00:45,  2.17it/s]Loading weights:  67%|██████▋   | 194/291 [02:34<00:57,  1.69it/s]Loading weights:  67%|██████▋   | 195/291 [02:36<01:11,  1.35it/s]Loading weights:  68%|██████▊   | 198/291 [02:36<00:40,  2.28it/s]Loading weights:  68%|██████▊   | 199/291 [02:37<00:40,  2.25it/s]Loading weights:  69%|██████▊   | 200/291 [02:37<00:33,  2.68it/s]Loading weights:  69%|██████▉   | 202/291 [02:38<00:41,  2.15it/s]Loading weights:  70%|██████▉   | 203/291 [02:39<00:56,  1.57it/s]Loading weights:  70%|███████   | 204/291 [02:40<01:08,  1.27it/s]Loading weights:  71%|███████   | 207/291 [02:42<00:48,  1.72it/s]Loading weights:  72%|███████▏  | 209/291 [02:42<00:34,  2.41it/s]Loading weights:  73%|███████▎  | 211/291 [02:43<00:38,  2.10it/s]Loading weights:  73%|███████▎  | 212/291 [02:44<00:49,  1.59it/s]Loading weights:  73%|███████▎  | 213/291 [02:46<01:00,  1.28it/s]Loading weights:  74%|███████▍  | 216/291 [02:46<00:36,  2.04it/s]Loading weights:  75%|███████▍  | 217/291 [02:47<00:37,  1.95it/s]Loading weights:  75%|███████▍  | 218/291 [02:47<00:32,  2.28it/s]Loading weights:  76%|███████▌  | 220/291 [02:48<00:40,  1.77it/s]Loading weights:  76%|███████▌  | 221/291 [02:50<00:56,  1.25it/s]Loading weights:  76%|███████▋  | 222/291 [02:52<01:14,  1.07s/it]Loading weights:  77%|███████▋  | 223/291 [02:52<00:57,  1.18it/s]Loading weights:  77%|███████▋  | 225/291 [02:53<00:37,  1.74it/s]Loading weights:  78%|███████▊  | 226/291 [02:53<00:40,  1.61it/s]Loading weights:  79%|███████▊  | 229/291 [02:55<00:32,  1.89it/s]Loading weights:  79%|███████▉  | 230/291 [02:56<00:41,  1.47it/s]Loading weights:  79%|███████▉  | 231/291 [02:57<00:48,  1.24it/s]Loading weights:  80%|████████  | 234/291 [02:58<00:26,  2.13it/s]Loading weights:  81%|████████  | 235/291 [02:58<00:28,  1.96it/s]Loading weights:  82%|████████▏ | 238/291 [03:00<00:25,  2.11it/s]Loading weights:  82%|████████▏ | 239/291 [03:01<00:30,  1.70it/s]Loading weights:  82%|████████▏ | 240/291 [03:02<00:39,  1.30it/s]Loading weights:  84%|████████▎ | 243/291 [03:03<00:23,  2.07it/s]Loading weights:  84%|████████▍ | 244/291 [03:03<00:23,  2.00it/s]Loading weights:  84%|████████▍ | 245/291 [03:03<00:20,  2.25it/s]Loading weights:  85%|████████▍ | 247/291 [03:04<00:19,  2.22it/s]Loading weights:  85%|████████▌ | 248/291 [03:07<00:37,  1.15it/s]Loading weights:  87%|████████▋ | 252/291 [03:07<00:17,  2.26it/s]Loading weights:  87%|████████▋ | 253/291 [03:08<00:16,  2.28it/s]Loading weights:  88%|████████▊ | 255/291 [03:08<00:11,  3.12it/s]Loading weights:  88%|████████▊ | 256/291 [03:09<00:15,  2.20it/s]Loading weights:  88%|████████▊ | 257/291 [03:10<00:21,  1.60it/s]Loading weights:  89%|████████▊ | 258/291 [03:11<00:25,  1.28it/s]Loading weights:  90%|████████▉ | 261/291 [03:12<00:14,  2.06it/s]Loading weights:  90%|█████████ | 262/291 [03:12<00:13,  2.08it/s]Loading weights:  90%|█████████ | 263/291 [03:12<00:11,  2.49it/s]Loading weights:  91%|█████████ | 265/291 [03:13<00:10,  2.39it/s]Loading weights:  91%|█████████▏| 266/291 [03:16<00:22,  1.09it/s]Loading weights:  93%|█████████▎| 270/291 [03:17<00:10,  2.10it/s]Loading weights:  93%|█████████▎| 271/291 [03:17<00:10,  1.95it/s]Loading weights:  93%|█████████▎| 272/291 [03:17<00:08,  2.20it/s]Loading weights:  94%|█████████▍| 273/291 [03:18<00:06,  2.59it/s]Loading weights:  94%|█████████▍| 274/291 [03:19<00:09,  1.89it/s]Loading weights:  95%|█████████▍| 275/291 [03:20<00:12,  1.31it/s]Loading weights:  95%|█████████▍| 276/291 [03:21<00:13,  1.08it/s]Loading weights:  96%|█████████▌| 279/291 [03:22<00:06,  1.90it/s]Loading weights:  96%|█████████▌| 280/291 [03:23<00:06,  1.75it/s]Loading weights:  97%|█████████▋| 281/291 [03:23<00:04,  2.07it/s]Loading weights:  97%|█████████▋| 283/291 [03:25<00:05,  1.41it/s]Loading weights:  98%|█████████▊| 284/291 [03:26<00:05,  1.25it/s]Loading weights:  98%|█████████▊| 285/291 [03:27<00:05,  1.11it/s]Loading weights:  99%|█████████▉| 288/291 [03:28<00:01,  1.92it/s]Loading weights:  99%|█████████▉| 289/291 [03:28<00:01,  1.91it/s]Loading weights: 100%|██████████| 291/291 [03:28<00:00,  1.39it/s]
+[transformers] Both `max_new_tokens` (=50) and `max_length`(=4096) seem to have been set. `max_new_tokens` will take precedence. Please refer to the documentation for more information. (https://huggingface.co/docs/transformers/main/en/main_classes/text_generation)
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+[GPU Memory after inference #1] Allocated: 14.97 GB, Reserved: 15.00 GB
+[GPU Memory after cleanup #1] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_3
+[GPU Memory before load #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<00:37,  7.81it/s]Loading weights:   1%|          | 2/291 [00:00<00:36,  7.95it/s]Loading weights:   5%|▌         | 15/291 [00:00<00:04, 55.60it/s]Loading weights:  11%|█         | 31/291 [00:00<00:02, 90.77it/s]Loading weights:  14%|█▍        | 41/291 [00:00<00:02, 90.68it/s]Loading weights:  18%|█▊        | 51/291 [00:00<00:02, 88.30it/s]Loading weights:  22%|██▏       | 63/291 [00:00<00:02, 96.53it/s]Loading weights:  25%|██▌       | 73/291 [00:00<00:02, 97.32it/s]Loading weights:  29%|██▉       | 85/291 [00:01<00:02, 97.44it/s]Loading weights:  33%|███▎      | 95/291 [00:01<00:02, 93.37it/s]Loading weights:  36%|███▌      | 105/291 [00:01<00:02, 90.46it/s]Loading weights:  40%|████      | 117/291 [00:01<00:01, 97.47it/s]Loading weights:  44%|████▎     | 127/291 [00:01<00:01, 97.13it/s]Loading weights:  48%|████▊     | 139/291 [00:01<00:01, 97.42it/s]Loading weights:  51%|█████     | 149/291 [00:01<00:01, 93.12it/s]Loading weights:  55%|█████▍    | 159/291 [00:01<00:01, 89.83it/s]Loading weights:  59%|█████▉    | 171/291 [00:01<00:01, 96.77it/s]Loading weights:  62%|██████▏   | 181/291 [00:02<00:01, 97.04it/s]Loading weights:  66%|██████▋   | 193/291 [00:02<00:01, 97.29it/s]Loading weights:  70%|██████▉   | 203/291 [00:02<00:00, 92.85it/s]Loading weights:  73%|███████▎  | 213/291 [00:02<00:00, 90.01it/s]Loading weights:  77%|███████▋  | 225/291 [00:02<00:00, 97.50it/s]Loading weights:  82%|████████▏ | 238/291 [00:02<00:00, 103.49it/s]Loading weights:  86%|████████▌ | 249/291 [00:02<00:00, 93.36it/s] Loading weights:  90%|████████▉ | 261/291 [00:02<00:00, 99.14it/s]Loading weights:  93%|█████████▎| 272/291 [00:02<00:00, 101.44it/s]Loading weights:  97%|█████████▋| 283/291 [00:03<00:00, 98.78it/s] Loading weights: 100%|██████████| 291/291 [00:03<00:00, 92.30it/s]
+[transformers] Both `max_new_tokens` (=50) and `max_length`(=4096) seem to have been set. `max_new_tokens` will take precedence. Please refer to the documentation for more information. (https://huggingface.co/docs/transformers/main/en/main_classes/text_generation)
+[GPU Memory after inference #3] Allocated: 14.97 GB, Reserved: 14.99 GB
+[GPU Memory after cleanup #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_0
+[GPU Memory before load #0] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<03:40,  1.32it/s]Loading weights:   1%|          | 2/291 [00:02<06:51,  1.43s/it]Loading weights:   1%|▏         | 4/291 [00:03<03:21,  1.42it/s]Loading weights:   2%|▏         | 6/291 [00:05<04:48,  1.01s/it]Loading weights:   3%|▎         | 9/291 [00:06<02:31,  1.86it/s]Loading weights:   3%|▎         | 10/291 [00:06<02:39,  1.76it/s]Loading weights:   4%|▍         | 13/291 [00:12<05:32,  1.20s/it]Loading weights:   5%|▍         | 14/291 [00:17<08:24,  1.82s/it]Loading weights:   5%|▌         | 15/291 [00:17<06:58,  1.51s/it]Loading weights:   8%|▊         | 22/291 [00:17<02:18,  1.94it/s]Loading weights:   8%|▊         | 24/291 [00:17<01:52,  2.38it/s]Loading weights:  10%|▉         | 28/291 [00:18<01:11,  3.68it/s]Loading weights:  11%|█         | 31/291 [00:19<01:28,  2.94it/s]Loading weights:  11%|█▏        | 33/291 [00:22<02:22,  1.81it/s]Loading weights:  12%|█▏        | 35/291 [00:22<01:51,  2.29it/s]Loading weights:  13%|█▎        | 37/291 [00:23<01:46,  2.37it/s]Loading weights:  14%|█▎        | 40/291 [00:24<01:39,  2.52it/s]Loading weights:  14%|█▍        | 41/291 [00:25<02:10,  1.92it/s]Loading weights:  14%|█▍        | 42/291 [00:27<03:22,  1.23it/s]Loading weights:  15%|█▌        | 44/291 [00:27<02:21,  1.75it/s]Loading weights:  15%|█▌        | 45/291 [00:28<02:06,  1.94it/s]Loading weights:  16%|█▌        | 46/291 [00:28<01:58,  2.08it/s]Loading weights:  16%|█▌        | 47/291 [00:28<01:39,  2.46it/s]Loading weights:  17%|█▋        | 49/291 [00:29<01:45,  2.30it/s]Loading weights:  17%|█▋        | 50/291 [00:31<02:50,  1.41it/s]Loading weights:  18%|█▊        | 51/291 [00:33<03:53,  1.03it/s]Loading weights:  18%|█▊        | 53/291 [00:33<02:22,  1.68it/s]Loading weights:  19%|█▊        | 54/291 [00:33<02:07,  1.86it/s]Loading weights:  19%|█▉        | 55/291 [00:34<02:08,  1.83it/s]Loading weights:  20%|█▉        | 58/291 [00:35<02:13,  1.74it/s]Loading weights:  20%|██        | 59/291 [00:37<03:15,  1.19it/s]Loading weights:  21%|██        | 60/291 [00:38<03:28,  1.11it/s]Loading weights:  22%|██▏       | 63/291 [00:39<02:07,  1.79it/s]Loading weights:  22%|██▏       | 64/291 [00:40<02:03,  1.84it/s]Loading weights:  22%|██▏       | 65/291 [00:40<01:59,  1.89it/s]Loading weights:  23%|██▎       | 67/291 [00:42<02:24,  1.55it/s]Loading weights:  23%|██▎       | 68/291 [00:44<03:38,  1.02it/s]Loading weights:  24%|██▎       | 69/291 [00:46<04:37,  1.25s/it]Loading weights:  25%|██▍       | 72/291 [00:47<02:39,  1.37it/s]Loading weights:  25%|██▌       | 73/291 [00:47<02:28,  1.47it/s]Loading weights:  25%|██▌       | 74/291 [00:47<02:01,  1.79it/s]Loading weights:  26%|██▌       | 76/291 [00:49<02:15,  1.58it/s]Loading weights:  26%|██▋       | 77/291 [00:51<03:26,  1.04it/s]Loading weights:  27%|██▋       | 78/291 [00:53<04:01,  1.13s/it]Loading weights:  27%|██▋       | 80/291 [00:53<02:28,  1.42it/s]Loading weights:  28%|██▊       | 81/291 [00:53<02:16,  1.54it/s]Loading weights:  28%|██▊       | 82/291 [00:54<01:58,  1.77it/s]Loading weights:  29%|██▊       | 83/291 [00:54<01:51,  1.87it/s]Loading weights:  29%|██▉       | 85/291 [00:56<02:34,  1.34it/s]Loading weights:  30%|██▉       | 86/291 [00:58<03:34,  1.05s/it]Loading weights:  30%|██▉       | 87/291 [01:00<03:53,  1.14s/it]Loading weights:  30%|███       | 88/291 [01:00<02:57,  1.15it/s]Loading weights:  31%|███       | 90/291 [01:01<02:25,  1.38it/s]Loading weights:  31%|███▏      | 91/291 [01:01<02:24,  1.39it/s]Loading weights:  34%|███▍      | 99/291 [01:02<00:41,  4.65it/s]Loading weights:  36%|███▌      | 104/291 [01:02<00:27,  6.82it/s]Loading weights:  38%|███▊      | 112/291 [01:02<00:20,  8.92it/s]Loading weights:  40%|███▉      | 116/291 [01:03<00:16, 10.81it/s]Loading weights:  42%|████▏     | 121/291 [01:03<00:12, 13.64it/s]Loading weights:  43%|████▎     | 124/291 [01:03<00:12, 13.44it/s]Loading weights:  45%|████▌     | 131/291 [01:03<00:09, 16.52it/s]Loading weights:  48%|████▊     | 139/291 [01:03<00:06, 23.90it/s]Loading weights:  49%|████▉     | 143/291 [01:03<00:06, 24.64it/s]Loading weights:  51%|█████     | 148/291 [01:04<00:05, 26.71it/s]Loading weights:  52%|█████▏    | 152/291 [01:04<00:05, 26.46it/s]Loading weights:  54%|█████▍    | 158/291 [01:04<00:05, 24.39it/s]Loading weights:  57%|█████▋    | 166/291 [01:04<00:03, 31.93it/s]Loading weights:  58%|█████▊    | 170/291 [01:04<00:03, 33.14it/s]Loading weights:  60%|██████    | 175/291 [01:04<00:03, 35.48it/s]Loading weights:  62%|██████▏   | 179/291 [01:05<00:03, 29.12it/s]Loading weights:  63%|██████▎   | 183/291 [01:05<00:04, 25.80it/s]Loading weights:  64%|██████▍   | 186/291 [01:07<00:16,  6.37it/s]Loading weights:  65%|██████▌   | 190/291 [01:07<00:16,  6.03it/s]Loading weights:  66%|██████▋   | 193/291 [01:08<00:21,  4.58it/s]Loading weights:  67%|██████▋   | 195/291 [01:09<00:19,  4.92it/s]Loading weights:  69%|██████▉   | 202/291 [01:09<00:10,  8.60it/s]Loading weights:  70%|███████   | 205/291 [01:09<00:08, 10.04it/s]Loading weights:  71%|███████▏  | 208/291 [01:10<00:11,  7.04it/s]Loading weights:  73%|███████▎  | 211/291 [01:11<00:17,  4.65it/s]Loading weights:  73%|███████▎  | 213/291 [01:14<00:36,  2.13it/s]Loading weights:  74%|███████▎  | 214/291 [01:14<00:32,  2.36it/s]Loading weights:  74%|███████▍  | 216/291 [01:15<00:30,  2.42it/s]Loading weights:  75%|███████▍  | 217/291 [01:16<00:33,  2.20it/s]Loading weights:  75%|███████▍  | 218/291 [01:16<00:28,  2.52it/s]Loading weights:  76%|███████▌  | 220/291 [01:18<00:50,  1.40it/s]Loading weights:  76%|███████▌  | 221/291 [01:20<00:56,  1.23it/s]Loading weights:  76%|███████▋  | 222/291 [01:21<01:10,  1.02s/it]Loading weights:  77%|███████▋  | 223/291 [01:21<00:54,  1.26it/s]Loading weights:  77%|███████▋  | 225/291 [01:22<00:39,  1.67it/s]Loading weights:  78%|███████▊  | 226/291 [01:23<00:47,  1.36it/s]Loading weights:  79%|███████▊  | 229/291 [01:25<00:35,  1.72it/s]Loading weights:  79%|███████▉  | 230/291 [01:27<00:55,  1.10it/s]Loading weights:  79%|███████▉  | 231/291 [01:28<01:02,  1.04s/it]Loading weights:  80%|████████  | 234/291 [01:29<00:36,  1.58it/s]Loading weights:  81%|████████  | 235/291 [01:29<00:33,  1.67it/s]Loading weights:  81%|████████▏ | 237/291 [01:30<00:22,  2.35it/s]Loading weights:  82%|████████▏ | 238/291 [01:30<00:26,  1.99it/s]Loading weights:  82%|████████▏ | 239/291 [01:32<00:35,  1.47it/s]Loading weights:  82%|████████▏ | 240/291 [01:33<00:46,  1.09it/s]Loading weights:  83%|████████▎ | 242/291 [01:34<00:31,  1.53it/s]Loading weights:  84%|████████▎ | 243/291 [01:34<00:27,  1.76it/s]Loading weights:  84%|████████▍ | 244/291 [01:35<00:24,  1.88it/s]Loading weights:  84%|████████▍ | 245/291 [01:35<00:19,  2.36it/s]Loading weights:  85%|████████▍ | 247/291 [01:36<00:25,  1.73it/s]Loading weights:  85%|████████▌ | 248/291 [01:38<00:35,  1.23it/s]Loading weights:  86%|████████▌ | 249/291 [01:40<00:49,  1.17s/it]Loading weights:  87%|████████▋ | 252/291 [01:41<00:24,  1.58it/s]Loading weights:  87%|████████▋ | 253/291 [01:41<00:22,  1.68it/s]Loading weights:  87%|████████▋ | 254/291 [01:41<00:17,  2.06it/s]Loading weights:  88%|████████▊ | 256/291 [01:42<00:17,  1.96it/s]Loading weights:  88%|████████▊ | 257/291 [01:44<00:27,  1.23it/s]Loading weights:  89%|████████▊ | 258/291 [01:45<00:29,  1.10it/s]Loading weights:  90%|████████▉ | 261/291 [01:46<00:16,  1.85it/s]Loading weights:  90%|█████████ | 262/291 [01:46<00:15,  1.87it/s]Loading weights:  90%|█████████ | 263/291 [01:47<00:13,  2.12it/s]Loading weights:  91%|█████████ | 265/291 [01:48<00:12,  2.06it/s]Loading weights:  91%|█████████▏| 266/291 [01:49<00:18,  1.34it/s]Loading weights:  92%|█████████▏| 267/291 [01:51<00:22,  1.07it/s]Loading weights:  93%|█████████▎| 270/291 [01:52<00:12,  1.62it/s]Loading weights:  93%|█████████▎| 271/291 [01:53<00:13,  1.54it/s]Loading weights:  93%|█████████▎| 272/291 [01:53<00:10,  1.84it/s]Loading weights:  94%|█████████▍| 274/291 [01:54<00:10,  1.67it/s]Loading weights:  95%|█████████▍| 275/291 [01:56<00:12,  1.29it/s]Loading weights:  95%|█████████▍| 276/291 [01:57<00:14,  1.05it/s]Loading weights:  96%|█████████▌| 279/291 [01:58<00:07,  1.50it/s]Loading weights:  96%|█████████▌| 280/291 [01:59<00:07,  1.52it/s]Loading weights:  97%|█████████▋| 283/291 [02:01<00:05,  1.47it/s]Loading weights:  98%|█████████▊| 285/291 [02:02<00:03,  1.51it/s]Loading weights:  99%|█████████▉| 288/291 [02:03<00:01,  2.06it/s]Loading weights:  99%|█████████▉| 289/291 [02:04<00:01,  1.93it/s]Loading weights: 100%|██████████| 291/291 [02:04<00:00,  2.35it/s]
+[transformers] Both `max_new_tokens` (=50) and `max_length`(=4096) seem to have been set. `max_new_tokens` will take precedence. Please refer to the documentation for more information. (https://huggingface.co/docs/transformers/main/en/main_classes/text_generation)
+[GPU Memory after inference #0] Allocated: 14.97 GB, Reserved: 15.00 GB
+[GPU Memory after cleanup #0] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_2
+[GPU Memory before load #2] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:10<50:35, 10.47s/it]Loading weights:   1%|          | 2/291 [00:19<45:06,  9.37s/it]Loading weights:   1%|▏         | 4/291 [00:20<18:57,  3.97s/it]Loading weights:   2%|▏         | 5/291 [00:22<15:23,  3.23s/it]Loading weights:   2%|▏         | 6/291 [00:23<12:22,  2.61s/it]Loading weights:   3%|▎         | 9/291 [00:23<05:37,  1.20s/it]Loading weights:   3%|▎         | 10/291 [00:24<05:02,  1.08s/it]Loading weights:   4%|▍         | 13/291 [00:25<03:30,  1.32it/s]Loading weights:   5%|▍         | 14/291 [00:26<03:52,  1.19it/s]Loading weights:   5%|▌         | 15/291 [00:28<04:13,  1.09it/s]Loading weights:   6%|▌         | 18/291 [00:28<02:30,  1.81it/s]Loading weights:   7%|▋         | 19/291 [00:28<02:16,  1.99it/s]Loading weights:   7%|▋         | 20/291 [00:28<01:55,  2.34it/s]Loading weights:   8%|▊         | 22/291 [00:30<02:59,  1.50it/s]Loading weights:   8%|▊         | 23/291 [00:31<02:43,  1.64it/s]Loading weights:   8%|▊         | 24/291 [00:33<04:33,  1.02s/it]Loading weights:  11%|█         | 31/291 [00:33<01:23,  3.11it/s]Loading weights:  14%|█▍        | 41/291 [00:34<00:34,  7.16it/s]Loading weights:  18%|█▊        | 51/291 [00:34<00:19, 12.30it/s]Loading weights:  22%|██▏       | 63/291 [00:34<00:11, 20.25it/s]Loading weights:  25%|██▌       | 74/291 [00:34<00:07, 28.82it/s]Loading weights:  29%|██▉       | 85/291 [00:34<00:05, 37.40it/s]Loading weights:  32%|███▏      | 94/291 [00:35<00:11, 17.39it/s]Loading weights:  35%|███▍      | 101/291 [00:39<00:31,  6.03it/s]Loading weights:  36%|███▋      | 106/291 [00:43<00:52,  3.49it/s]Loading weights:  38%|███▊      | 110/291 [00:44<00:50,  3.59it/s]Loading weights:  39%|███▉      | 113/291 [00:46<01:05,  2.71it/s]Loading weights:  40%|███▉      | 115/291 [00:48<01:18,  2.25it/s]Loading weights:  40%|████      | 117/291 [00:48<01:10,  2.46it/s]Loading weights:  41%|████      | 118/291 [00:49<01:10,  2.45it/s]Loading weights:  41%|████      | 119/291 [00:49<01:03,  2.70it/s]Loading weights:  42%|████▏     | 121/291 [00:50<01:12,  2.33it/s]Loading weights:  42%|████▏     | 122/291 [00:53<02:19,  1.21it/s]Loading weights:  43%|████▎     | 126/291 [00:54<01:22,  2.00it/s]Loading weights:  44%|████▎     | 127/291 [00:54<01:18,  2.09it/s]Loading weights:  44%|████▍     | 128/291 [00:54<01:08,  2.39it/s]Loading weights:  45%|████▍     | 130/291 [00:55<01:14,  2.17it/s]Loading weights:  45%|████▌     | 131/291 [00:57<01:43,  1.55it/s]Loading weights:  45%|████▌     | 132/291 [00:58<02:03,  1.28it/s]Loading weights:  46%|████▌     | 134/291 [00:58<01:20,  1.95it/s]Loading weights:  46%|████▋     | 135/291 [00:59<01:29,  1.75it/s]Loading weights:  47%|████▋     | 138/291 [00:59<00:48,  3.16it/s]Loading weights:  48%|████▊     | 140/291 [01:01<01:30,  1.68it/s]Loading weights:  48%|████▊     | 141/291 [01:03<02:13,  1.13it/s]Loading weights:  49%|████▉     | 144/291 [01:04<01:21,  1.80it/s]Loading weights:  50%|████▉     | 145/291 [01:04<01:15,  1.94it/s]Loading weights:  50%|█████     | 146/291 [01:05<01:12,  2.01it/s]Loading weights:  51%|█████     | 148/291 [01:06<01:13,  1.96it/s]Loading weights:  51%|█████     | 149/291 [01:07<01:48,  1.30it/s]Loading weights:  52%|█████▏    | 150/291 [01:09<02:22,  1.01s/it]Loading weights:  52%|█████▏    | 151/291 [01:09<01:50,  1.26it/s]Loading weights:  52%|█████▏    | 152/291 [01:10<01:26,  1.62it/s]Loading weights:  53%|█████▎    | 153/291 [01:10<01:22,  1.68it/s]Loading weights:  53%|█████▎    | 154/291 [01:11<01:25,  1.60it/s]Loading weights:  53%|█████▎    | 155/291 [01:11<01:04,  2.10it/s]Loading weights:  54%|█████▍    | 157/291 [01:13<01:52,  1.19it/s]Loading weights:  54%|█████▍    | 158/291 [01:16<02:33,  1.15s/it]Loading weights:  55%|█████▍    | 159/291 [01:19<03:56,  1.79s/it]Loading weights:  56%|█████▌    | 162/291 [01:20<02:02,  1.06it/s]Loading weights:  56%|█████▌    | 163/291 [01:21<02:12,  1.03s/it]Loading weights:  57%|█████▋    | 166/291 [01:24<02:03,  1.01it/s]Loading weights:  57%|█████▋    | 167/291 [01:27<02:38,  1.27s/it]Loading weights:  58%|█████▊    | 168/291 [01:30<03:20,  1.63s/it]Loading weights:  58%|█████▊    | 170/291 [01:30<02:07,  1.05s/it]Loading weights:  59%|█████▉    | 171/291 [01:30<01:48,  1.11it/s]Loading weights:  59%|█████▉    | 172/291 [01:30<01:34,  1.26it/s]Loading weights:  60%|██████    | 175/291 [01:33<01:45,  1.10it/s]Loading weights:  60%|██████    | 176/291 [01:35<02:02,  1.06s/it]Loading weights:  61%|██████    | 177/291 [01:36<01:56,  1.02s/it]Loading weights:  62%|██████▏   | 179/291 [01:36<01:13,  1.53it/s]Loading weights:  62%|██████▏   | 180/291 [01:37<01:18,  1.41it/s]Loading weights:  63%|██████▎   | 184/291 [01:37<00:38,  2.77it/s]Loading weights:  64%|██████▎   | 185/291 [01:38<00:35,  2.97it/s]Loading weights:  64%|██████▍   | 186/291 [01:39<01:04,  1.63it/s]Loading weights:  66%|██████▌   | 191/291 [01:40<00:27,  3.57it/s]Loading weights:  67%|██████▋   | 194/291 [01:40<00:19,  4.88it/s]Loading weights:  67%|██████▋   | 196/291 [01:41<00:34,  2.75it/s]Loading weights:  68%|██████▊   | 198/291 [01:42<00:37,  2.51it/s]Loading weights:  68%|██████▊   | 199/291 [01:43<00:41,  2.24it/s]Loading weights:  69%|██████▉   | 202/291 [01:45<00:45,  1.98it/s]Loading weights:  70%|██████▉   | 203/291 [01:47<01:04,  1.36it/s]Loading weights:  70%|███████   | 204/291 [01:50<01:34,  1.09s/it]Loading weights:  71%|███████   | 206/291 [01:50<01:02,  1.37it/s]Loading weights:  71%|███████   | 207/291 [01:50<00:54,  1.54it/s]Loading weights:  71%|███████▏  | 208/291 [01:50<00:47,  1.76it/s]Loading weights:  72%|███████▏  | 210/291 [01:50<00:29,  2.72it/s]Loading weights:  73%|███████▎  | 211/291 [01:52<00:49,  1.63it/s]Loading weights:  73%|███████▎  | 212/291 [01:54<01:22,  1.04s/it]Loading weights:  73%|███████▎  | 213/291 [01:56<01:28,  1.14s/it]Loading weights:  74%|███████▍  | 216/291 [01:56<00:49,  1.50it/s]Loading weights:  75%|███████▍  | 217/291 [01:58<01:03,  1.16it/s]Loading weights:  76%|███████▌  | 220/291 [02:00<00:58,  1.21it/s]Loading weights:  76%|███████▌  | 221/291 [02:03<01:21,  1.17s/it]Loading weights:  76%|███████▋  | 222/291 [02:05<01:36,  1.40s/it]Loading weights:  77%|███████▋  | 225/291 [02:06<00:52,  1.26it/s]Loading weights:  78%|███████▊  | 226/291 [02:07<00:56,  1.15it/s]Loading weights:  79%|███████▊  | 229/291 [02:09<00:51,  1.20it/s]Loading weights:  79%|███████▉  | 230/291 [02:11<01:00,  1.02it/s]Loading weights:  79%|███████▉  | 231/291 [02:13<01:13,  1.22s/it]Loading weights:  80%|████████  | 234/291 [02:15<00:49,  1.16it/s]Loading weights:  81%|████████  | 235/291 [02:15<00:45,  1.24it/s]Loading weights:  81%|████████  | 236/291 [02:15<00:36,  1.50it/s]Loading weights:  82%|████████▏ | 238/291 [02:16<00:34,  1.53it/s]Loading weights:  82%|████████▏ | 239/291 [02:19<00:55,  1.08s/it]Loading weights:  82%|████████▏ | 240/291 [02:21<01:01,  1.20s/it]Loading weights:  84%|████████▎ | 243/291 [02:21<00:30,  1.56it/s]Loading weights:  84%|████████▍ | 244/291 [02:22<00:33,  1.41it/s]Loading weights:  85%|████████▍ | 247/291 [02:24<00:33,  1.30it/s]Loading weights:  85%|████████▌ | 248/291 [02:26<00:39,  1.10it/s]Loading weights:  86%|████████▌ | 249/291 [02:28<00:50,  1.21s/it]Loading weights:  86%|████████▋ | 251/291 [02:29<00:33,  1.18it/s]Loading weights:  87%|████████▋ | 252/291 [02:30<00:34,  1.14it/s]Loading weights:  87%|████████▋ | 253/291 [02:30<00:29,  1.28it/s]Loading weights:  87%|████████▋ | 254/291 [02:31<00:26,  1.38it/s]Loading weights:  88%|████████▊ | 256/291 [02:32<00:21,  1.64it/s]Loading weights:  88%|████████▊ | 257/291 [02:35<00:37,  1.10s/it]Loading weights:  89%|████████▊ | 258/291 [02:36<00:40,  1.23s/it]Loading weights:  89%|████████▉ | 260/291 [02:36<00:23,  1.34it/s]Loading weights:  90%|████████▉ | 261/291 [02:37<00:21,  1.40it/s]Loading weights:  90%|█████████ | 262/291 [02:37<00:19,  1.47it/s]Loading weights:  90%|█████████ | 263/291 [02:38<00:15,  1.80it/s]Loading weights:  91%|█████████ | 265/291 [02:40<00:20,  1.27it/s]Loading weights:  91%|█████████▏| 266/291 [02:42<00:27,  1.08s/it]Loading weights:  92%|█████████▏| 267/291 [02:44<00:29,  1.23s/it]Loading weights:  92%|█████████▏| 269/291 [02:44<00:17,  1.26it/s]Loading weights:  93%|█████████▎| 270/291 [02:45<00:15,  1.32it/s]Loading weights:  93%|█████████▎| 271/291 [02:45<00:15,  1.28it/s]Loading weights:  93%|█████████▎| 272/291 [02:46<00:11,  1.61it/s]Loading weights:  94%|█████████▍| 274/291 [02:47<00:11,  1.54it/s]Loading weights:  95%|█████████▍| 275/291 [02:49<00:17,  1.07s/it]Loading weights:  95%|█████████▍| 276/291 [02:51<00:19,  1.29s/it]Loading weights:  96%|█████████▌| 279/291 [02:52<00:08,  1.42it/s]Loading weights:  96%|█████████▌| 280/291 [02:53<00:08,  1.26it/s]Loading weights:  97%|█████████▋| 283/291 [02:55<00:06,  1.26it/s]Loading weights:  98%|█████████▊| 284/291 [02:56<00:04,  1.45it/s]Loading weights: 100%|██████████| 291/291 [02:56<00:00,  1.65it/s]
+[transformers] Both `max_new_tokens` (=50) and `max_length`(=4096) seem to have been set. `max_new_tokens` will take precedence. Please refer to the documentation for more information. (https://huggingface.co/docs/transformers/main/en/main_classes/text_generation)
+[GPU Memory after inference #2] Allocated: 14.97 GB, Reserved: 14.99 GB
+[GPU Memory after cleanup #2] Allocated: 0.01 GB, Reserved: 0.02 GB
+[GPU Memory AFTER all benchmarks] Allocated: 0.01 GB, Reserved: 0.02 GB
+Results saved to /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random/meta-llama_Meta-Llama-3-8B_safetensors_4_random.json
+================================================================================
+[GPU Memory END of script] Allocated: 0.01 GB, Reserved: 0.02 GB
+================================================================================
+[2026-07-17 11:30:07] Keeping storage after safetensors benchmark...
+[2026-07-17 11:30:07] Format safetensors completed, GPU memory released
+[2026-07-17 11:30:12] 
+[2026-07-17 11:30:12] Generating benchmark report...
+============================================================
+ServerlessLLM Benchmark Results
+============================================================
+Model: meta-llama/Meta-Llama-3-8B
+Replicas: 4
+Benchmark Type: random
+
+Loading Time Comparison:
+------------------------------------------------------------
+Format          Avg (s)      Min (s)      Max (s)      Std Dev   
+------------------------------------------------------------
+SLLM            136.766      136.691      136.875      0.068     
+SafeTensors     128.960      3.953        209.729      78.260    
+SLLM Condense   60.562       60.489       60.728       0.096     
+------------------------------------------------------------
+SLLM Speedup: 0.94x faster than SafeTensors
+SLLM Condense Speedup: 2.13x faster than SafeTensors
+
+Inference Performance:
+------------------------------------------------------------
+SLLM Avg Throughput: 68.19 tokens/s
+SafeTensors Avg Throughput: 75.47 tokens/s
+SLLM Condense Avg Throughput: 74.74 tokens/s
+
+============================================================
+
+Reports saved:
+  Text: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random/summary.txt
+  JSON: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random/summary.json
+[2026-07-17 11:30:12] 
+[2026-07-17 11:30:12] === Benchmark Summary ===
+============================================================
+ServerlessLLM Benchmark Results
+============================================================
+Model: meta-llama/Meta-Llama-3-8B
+Replicas: 4
+Benchmark Type: random
+
+Loading Time Comparison:
+------------------------------------------------------------
+Format          Avg (s)      Min (s)      Max (s)      Std Dev   
+------------------------------------------------------------
+SLLM            136.766      136.691      136.875      0.068     
+SafeTensors     128.960      3.953        209.729      78.260    
+SLLM Condense   60.562       60.489       60.728       0.096     
+------------------------------------------------------------
+SLLM Speedup: 0.94x faster than SafeTensors
+SLLM Condense Speedup: 2.13x faster than SafeTensors
+
+Inference Performance:
+------------------------------------------------------------
+SLLM Avg Throughput: 68.19 tokens/s
+SafeTensors Avg Throughput: 75.47 tokens/s
+SLLM Condense Avg Throughput: 74.74 tokens/s
+
+============================================================[2026-07-17 11:30:12] 
+[2026-07-17 11:30:12] === Benchmark Complete ===
+[2026-07-17 11:30:12] Results saved to: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random
+[2026-07-17 11:30:12] Summary: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random/summary.txt
+[2026-07-17 11:30:12] Full log: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random/benchmark.log
+[2026-07-17 11:30:12] Cleaning up...
