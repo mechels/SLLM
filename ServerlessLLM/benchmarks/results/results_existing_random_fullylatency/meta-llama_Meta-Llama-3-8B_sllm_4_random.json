@@ -1,0 +1,30 @@
+[
+    {
+        "model_name": "meta-llama/Meta-Llama-3-8B_3",
+        "loading_time": 183.54928708076477,
+        "end_to_end_time": 0.9274132251739502,
+        "throughput": 65.7743477709826,
+        "output_text": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
+    },
+    {
+        "model_name": "meta-llama/Meta-Llama-3-8B_2",
+        "loading_time": 174.7677764892578,
+        "end_to_end_time": 0.7648060321807861,
+        "throughput": 79.75878514721327,
+        "output_text": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
+    },
+    {
+        "model_name": "meta-llama/Meta-Llama-3-8B_0",
+        "loading_time": 161.8075098991394,
+        "end_to_end_time": 0.7883756160736084,
+        "throughput": 77.37428550086537,
+        "output_text": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
+    },
+    {
+        "model_name": "meta-llama/Meta-Llama-3-8B_1",
+        "loading_time": 167.323744058609,
+        "end_to_end_time": 0.7755415439605713,
+        "throughput": 78.65471614645217,
+        "output_text": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
+    }
+]

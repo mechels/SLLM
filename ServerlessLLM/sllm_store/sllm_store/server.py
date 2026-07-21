@@ -86,6 +86,7 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
                 mem_copy_chunk.size = chunk.size
                 mem_copy_chunk.dst_offset = chunk.dst_offset
                 mem_copy_chunk.handle_idx = chunk.handle_idx
+                mem_copy_chunk.group_id = chunk.group_id
                 return mem_copy_chunk
 
             mem_copy_chunks = {
@@ -147,6 +148,45 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
         )
         context.set_code(grpc.StatusCode.INTERNAL)
         return storage_pb2.ConfirmModelResponse()
+
+    # ############# SLLM-CONDENSE #########
+    async def ConfirmGpuGroup(self, request, context):
+        model_path = request.model_path
+        replica_uuid = request.replica_uuid
+        group_id = request.group_id
+        device_type = request.target_device_type
+
+        if not model_path:
+            logger.error("model_path is empty")
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            return storage_pb2.ConfirmGpuGroupResponse()
+
+        if not replica_uuid:
+            logger.error("replica_uuid is empty")
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            return storage_pb2.ConfirmGpuGroupResponse()
+
+        if device_type != storage_pb2.DEVICE_TYPE_GPU:
+            logger.error(f"Unsupported device type: {device_type}")
+            context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+            return storage_pb2.ConfirmGpuGroupResponse()
+
+        ret = self.storage.wait_gpu_group(model_path, replica_uuid, group_id)
+        if ret == 0:
+            logger.info(
+                f"Confirm GPU group {group_id} for {model_path} "
+                f"replica {replica_uuid} success"
+            )
+            return storage_pb2.ConfirmGpuGroupResponse(
+                model_path=model_path, group_id=group_id
+            )
+
+        logger.error(
+            f"Confirm GPU group {group_id} for {model_path} "
+            f"replica {replica_uuid} failed"
+        )
+        context.set_code(grpc.StatusCode.INTERNAL)
+        return storage_pb2.ConfirmGpuGroupResponse()
 
     async def UnloadModel(self, request, context):
         model_path = request.model_path

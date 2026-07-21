@@ -1,0 +1,23 @@
+{
+  "model_name": "meta-llama/Meta-Llama-3-8B",
+  "num_replicas": 4,
+  "benchmark_type": "random",
+  "statistics": {
+    "sllm": {
+      "count": 4,
+      "avg_loading_time": 159.5857367515564,
+      "min_loading_time": 145.3582375049591,
+      "max_loading_time": 170.54436230659485,
+      "std_loading_time": 10.474786088908322,
+      "avg_throughput": 77.7759855417735
+    },
+    "sllm-condense": {
+      "count": 4,
+      "avg_loading_time": 82.69703644514084,
+      "min_loading_time": 77.8201413154602,
+      "max_loading_time": 88.26469826698303,
+      "std_loading_time": 4.82423819785822,
+      "avg_throughput": 77.81626402030435
+    }
+  }
+}

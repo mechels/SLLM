@@ -31,7 +31,8 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
       .def_readwrite("src_offset", &MemCopyChunk::src_offset_)
       .def_readwrite("size", &MemCopyChunk::size_)
       .def_readwrite("dst_offset", &MemCopyChunk::dst_offset_)
-      .def_readwrite("handle_idx", &MemCopyChunk::handle_idx_);
+      .def_readwrite("handle_idx", &MemCopyChunk::handle_idx_)
+      .def_readwrite("group_id", &MemCopyChunk::group_id_);
 
   py::class_<CheckpointStore>(m, "CheckpointStore")
       .def(py::init<const std::string&, size_t, int, size_t>(),
@@ -70,6 +71,11 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
       .def("wait_model_in_gpu", &CheckpointStore::WaitModelInGpu,
            py::arg("model_path"), py::arg("replica_uuid"),
            "Wait for a model to be available in GPU memory.")
+      // ############# SLLM-CONDENSE #########
+      .def("wait_gpu_group", &CheckpointStore::WaitGpuGroup,
+           py::arg("model_path"), py::arg("replica_uuid"),
+           py::arg("group_id"),
+           "Wait for a GPU copy group to be available in GPU memory.")
       .def("unload_model_from_host", &CheckpointStore::UnloadModelFromHost,
            py::arg("model_path"), "Unload a model from the host memory.")
       .def("clear_mem", &CheckpointStore::ClearMem,

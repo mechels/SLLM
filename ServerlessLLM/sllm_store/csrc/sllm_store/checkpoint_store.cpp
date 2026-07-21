@@ -273,6 +273,22 @@ int CheckpointStore::WaitModelInGpu(const std::string& model_path,
   return model->WaitInGpu(replica_uuid);
 }
 
+// ############# SLLM-CONDENSE #########
+int CheckpointStore::WaitGpuGroup(const std::string& model_path,
+                                  const std::string& replica_uuid,
+                                  size_t group_id) {
+  std::shared_ptr<Model> model;
+  std::unique_lock<std::mutex> lock_info(model_info_mutex_);
+  if (model_map_.find(model_path) == model_map_.end()) {
+    LOG(ERROR) << "Model " << model_path << " is not registered";
+    return 1;
+  }
+  model = model_map_[model_path];
+  lock_info.unlock();
+
+  return model->WaitGpuGroup(replica_uuid, group_id);
+}
+
 int CheckpointStore::ClearMem() {
   std::unique_lock<std::mutex> lock_info(model_info_mutex_);
   for (auto& [model_path, model] : model_map_) {

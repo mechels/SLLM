@@ -100,7 +100,6 @@ def measure(
         print(f"Loading {model_name}_{model_idx}")
         print_gpu_memory(f"before load #{model_idx}")
         model_record = {"model_name": f"{model_name}_{model_idx}"}
-        loading_time_adjustment = 0.0
 
         # Model Loading
         if model_format == "sllm":
@@ -119,7 +118,7 @@ def measure(
             model_id = f"{model_name}_sllm-condense_{model_idx}"
             model_path = os.path.join(model_dir, model_id)
             start_time = time.time()
-            model, loading_time_adjustment = load_model_condense(
+            model, _loading_time_adjustment = load_model_condense(
                 model_id,
                 storage_path=model_dir,
                 device_map="auto",
@@ -138,9 +137,7 @@ def measure(
             )
             end_time = time.time()
         ############## SLLM-CONDENSE #########
-        model_record["loading_time"] = (
-            end_time - start_time - loading_time_adjustment
-        )
+        model_record["loading_time"] = end_time - start_time
 
         # Inference
         end_to_end_time, throughput, output_text = benchmark_inference(

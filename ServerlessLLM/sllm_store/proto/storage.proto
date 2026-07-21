@@ -5,6 +5,8 @@ package storage;
 service Storage {
   rpc LoadModelAsync (LoadModelRequest) returns (LoadModelResponse) {}
   rpc ConfirmModel (ConfirmModelRequest) returns (ConfirmModelResponse) {}
+  // ############# SLLM-CONDENSE #########
+  rpc ConfirmGpuGroup (ConfirmGpuGroupRequest) returns (ConfirmGpuGroupResponse) {}
   rpc UnloadModel (UnloadModelRequest) returns (UnloadModelResponse) {}
 
   rpc ClearMem (ClearMemRequest) returns (ClearMemResponse) {}
@@ -41,6 +43,7 @@ message MemCopyChunk {
   uint64 size = 2;
   uint64 dst_offset = 3;
   uint64 handle_idx = 4;
+  uint64 group_id = 5;
 }
 message MemCopyChunkList {
   repeated MemCopyChunk chunks = 1;
@@ -74,6 +77,20 @@ message ConfirmModelRequest {
 message ConfirmModelResponse {
   string model_path = 1;
   int32 code = 2;
+}
+
+// ############# SLLM-CONDENSE #########
+message ConfirmGpuGroupRequest {
+  string model_path = 1;
+  string replica_uuid = 2;
+  uint64 group_id = 3;
+  DeviceType target_device_type = 4;
+}
+
+message ConfirmGpuGroupResponse {
+  string model_path = 1;
+  uint64 group_id = 2;
+  int32 code = 3;
 }
 
 message UnloadModelRequest {

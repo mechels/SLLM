@@ -37,6 +37,7 @@ struct GpuBatch {
   size_t size_ = 0;
   size_t gpu_offset_ = 0;
   size_t handle_idx_ = 0;
+  size_t group_id_ = 0;
 };
 typedef ConcurrentQueue<GpuBatch> BatchQueue;
 
@@ -58,6 +59,7 @@ struct MemCopyChunk {
   size_t size_ = 0;
   size_t dst_offset_ = 0;
   size_t handle_idx_ = 0;
+  size_t group_id_ = 0;
 };
 using MemCopyChunkList = std::vector<MemCopyChunk>;
 
@@ -70,5 +72,5 @@ typedef std::unordered_map<std::string, MemCopyHandleList> MemCopyHandleListMap;
 typedef std::unordered_map<std::string, MemCopyChunkList> MemCopyChunkListMap;
 typedef std::unordered_map<int, std::vector<void*>> MemPtrListMap;
 
-// device_id, chunk_offset, size, gpu_offset. handle_idx
-typedef std::tuple<int, size_t, size_t, size_t, size_t> GpuChunk;
+// device_id, chunk_offset, size, gpu_offset, handle_idx, group_id
+typedef std::tuple<int, size_t, size_t, size_t, size_t, size_t> GpuChunk;

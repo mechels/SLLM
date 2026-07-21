@@ -1,0 +1,15 @@
+{
+  "model_name": "meta-llama/Meta-Llama-3-8B",
+  "num_replicas": 4,
+  "benchmark_type": "random",
+  "statistics": {
+    "sllm-condense": {
+      "count": 4,
+      "avg_loading_time": 68.27726358175278,
+      "min_loading_time": 67.91420936584473,
+      "max_loading_time": 69.16007924079895,
+      "std_loading_time": 0.5135911974590666,
+      "avg_throughput": 75.29236913320982
+    }
+  }
+}

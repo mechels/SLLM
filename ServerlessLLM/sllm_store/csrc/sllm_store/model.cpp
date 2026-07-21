@@ -274,6 +274,12 @@ int Model::ToGpu(
     gpu_replica->gpu_loading_queue_.emplace(device_id,
                                             std::make_shared<BatchQueue>());
   }
+  // ############# SLLM-CONDENSE #########
+  for (const auto& [_, mem_copy_chunk_list] : mem_copy_chunks) {
+    for (const auto& chunk : mem_copy_chunk_list) {
+      gpu_replica->group_total_bytes_[chunk.group_id_] += chunk.size_;
+    }
+  }
   gpu_replica->device_ptrs_ = device_ptrs;
   gpu_replica->state_ = MemoryState::LOADING;
   LOG(INFO) << "Created replica " << replica_uuid;
@@ -311,8 +317,8 @@ int Model::ToGpu(
 
           size_t loaded_size = 0;
           while (true) {
-            auto [chunk_id, chunk_offset, size, gpu_offset, handle_idx] =
-                gpu_loading_queue->dequeue();
+            auto [chunk_id, chunk_offset, size, gpu_offset, handle_idx,
+                  group_id] = gpu_loading_queue->dequeue();
             if (size == 0) {
               break;
             }
@@ -331,6 +337,20 @@ int Model::ToGpu(
                     cudaMemcpyHostToDevice),
                 "cudaMemcpy Error");
             loaded_size += size;
+            {
+              // ############# SLLM-CONDENSE #########
+              std::unique_lock<std::mutex> lock(mutex_);
+              auto total_it = gpu_replica->group_total_bytes_.find(group_id);
+              if (total_it != gpu_replica->group_total_bytes_.end()) {
+                size_t loaded =
+                    gpu_replica->group_loaded_bytes_[group_id] + size;
+                gpu_replica->group_loaded_bytes_[group_id] = loaded;
+                if (loaded >= total_it->second) {
+                  gpu_replica->ready_groups_.insert(group_id);
+                  gpu_replica->cv_.notify_all();
+                }
+              }
+            }
           }
 
           LOG(INFO) << "Finished loading tensor from memory to device "
@@ -420,6 +440,43 @@ int Model::WaitInGpu(const std::string& replica_uuid) {
 
   if (gpu_replica->state_ >= MemoryState::INTERRUPTED) {
     LOG(INFO) << "Model " << model_path_ << " is interrupted";
+    return 1;
+  }
+
+  return 0;
+}
+
+// ############# SLLM-CONDENSE #########
+int Model::WaitGpuGroup(const std::string& replica_uuid, size_t group_id) {
+  std::unique_lock<std::mutex> lock(mutex_);
+  if (gpu_replicas_.find(replica_uuid) == gpu_replicas_.end()) {
+    cv_.wait(lock, [this, replica_uuid] {
+      return gpu_replicas_.find(replica_uuid) != gpu_replicas_.end();
+    });
+  }
+
+  auto& gpu_replica = gpu_replicas_.at(replica_uuid);
+  if (gpu_replica->group_total_bytes_.find(group_id) ==
+      gpu_replica->group_total_bytes_.end()) {
+    LOG(ERROR) << "Model " << model_path_ << " replica " << replica_uuid
+               << " has no GPU copy group " << group_id;
+    return 1;
+  }
+
+  if (gpu_replica->ready_groups_.find(group_id) ==
+      gpu_replica->ready_groups_.end()) {
+    gpu_replica->cv_.wait(lock, [&gpu_replica, group_id] {
+      return gpu_replica->ready_groups_.find(group_id) !=
+                 gpu_replica->ready_groups_.end() ||
+             gpu_replica->state_ == MemoryState::LOADED ||
+             gpu_replica->state_ == MemoryState::INTERRUPTED;
+    });
+  }
+
+  if (gpu_replica->ready_groups_.find(group_id) ==
+      gpu_replica->ready_groups_.end()) {
+    LOG(INFO) << "Model " << model_path_ << " replica " << replica_uuid
+              << " GPU copy group " << group_id << " is not loaded";
     return 1;
   }
 
@@ -537,16 +594,16 @@ int Model::DispatchToGpu(
     const auto& device_handles = mem_copy_handles.at(device_id);
     std::vector<size_t> handle_offsets(device_handles.size(), 0);
 
-    for (auto [host_offset, size, gpu_offset, handle_idx] :
+    for (auto [host_offset, size, gpu_offset, handle_idx, group_id] :
          mem_copy_chunk_list) {
       handle_offsets[handle_idx] = gpu_offset;
 
       std::vector<std::tuple<int, size_t, size_t>> chunks =
           MapDataToChunks(host_offset, size, pinned_mem_->chunk_size());
       for (const auto& [chunk_id, chunk_offset, size] : chunks) {
-        chunk_id_to_gpu_chunks[chunk_id].push_back(
-            std::make_tuple(device_id, chunk_offset, size,
-                            handle_offsets[handle_idx], handle_idx));
+        chunk_id_to_gpu_chunks[chunk_id].push_back(std::make_tuple(
+            device_id, chunk_offset, size, handle_offsets[handle_idx],
+            handle_idx, group_id));
         handle_offsets[handle_idx] += size;
       }
     }
@@ -556,14 +613,15 @@ int Model::DispatchToGpu(
     auto data_chunk = host_ptr_vector_->dequeue(i);
     auto chunk_id = data_chunk.chunk_id_;
     auto& gpu_chunks = chunk_id_to_gpu_chunks[chunk_id];
-    for (const auto& [device_id, chunk_offset, size, gpu_offset, handle_idx] :
-         gpu_chunks) {
+    for (const auto& [device_id, chunk_offset, size, gpu_offset, handle_idx,
+                      group_id] : gpu_chunks) {
       auto& gpu_loading_queue = gpu_replica->gpu_loading_queue_.at(device_id);
       // LOG(INFO) << "Enqueueing chunk " << chunk_id << " offset " <<
       // chunk_offset
       //           << " size " << size << " to device " << device_id;
       gpu_loading_queue->enqueue(
-          GpuBatch{chunk_id, chunk_offset, size, gpu_offset, handle_idx});
+          GpuBatch{chunk_id, chunk_offset, size, gpu_offset, handle_idx,
+                   group_id});
     }
   }
 

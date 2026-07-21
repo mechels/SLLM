@@ -756,6 +756,29 @@ def best_effort_load_condense(
                 expanded_device_map, compressed_data_index
             )
         )
+        copy_group_by_record = {}
+        next_group_id = 0
+        for name in expanded_device_map.keys():
+            record = compressed_data_index[name]
+            if record not in copy_group_by_record:
+                copy_group_by_record[record] = next_group_id
+                next_group_id += 1
+        grouped_tensor_copy_chunks = {}
+        for device_id, chunks in tensor_copy_chunks.items():
+            grouped_tensor_copy_chunks[device_id] = [
+                (
+                    src_offset,
+                    size,
+                    dst_offset,
+                    handle_idx,
+                    copy_group_by_record[(src_offset, size)],
+                )
+                for src_offset, size, dst_offset, handle_idx in chunks
+            ]
+        group_id_by_name = {
+            name: copy_group_by_record[compressed_data_index[name]]
+            for name in expanded_device_map.keys()
+        }
         record_timing("allocate_cuda_memory_and_offsets", start)
 
         start = time.time()
@@ -764,7 +787,7 @@ def best_effort_load_condense(
             replica_uuid,
             {
                 device_uuid_map[device_id]: v
-                for device_id, v in tensor_copy_chunks.items()
+                for device_id, v in grouped_tensor_copy_chunks.items()
             },
             {
                 device_uuid_map[device_id]: [v]
@@ -776,21 +799,34 @@ def best_effort_load_condense(
         record_timing("load_into_gpu_async", start)
 
         start = time.time()
-        if not client.confirm_model_loaded(model_path, replica_uuid):
-            raise ValueError(f"Failed to confirm model {model_path} in GPU")
-        record_timing("confirm_loaded_before_decompress", start)
-
-        # ############# SLLM-CONDENSE #########
-        start = time.time()
         fptc_decompress_time = 0.0
+        fptc_call_wall_time = 0.0
+        fptc_call_timings = []
+        group_wait_time = 0.0
+        first_group_wait_time = None
         fptc2 = _load_fptc2_binding()
         staging_addresses = get_cuda_memory_addresses(staging_cuda_memory_ptrs)
         final_addresses = get_cuda_memory_addresses(final_cuda_memory_ptrs)
         device = 0
         for name in expanded_device_map.keys():
+            wait_start = time.time()
+            group_id = group_id_by_name[name]
+            if not client.confirm_gpu_group(
+                model_path, replica_uuid, group_id
+            ):
+                raise ValueError(
+                    f"Failed to confirm GPU copy group {group_id} "
+                    f"for model {model_path}"
+                )
+            wait_s = time.time() - wait_start
+            group_wait_time += wait_s
+            if first_group_wait_time is None:
+                first_group_wait_time = wait_s
+
             meta = tensor_index[name]
             rows, cols = _shape_to_fptc_rows_cols(meta["shape"])
-            fptc_decompress_time += float(
+            fptc_call_start = time.time()
+            fptc_reported_time = float(
                 fptc2.decompress_gpu_package_to_address(
                     staging_addresses[device]
                     + compressed_device_offsets[device][name],
@@ -804,6 +840,17 @@ def best_effort_load_condense(
                     device,
                 )
             )
+            fptc_call_wall_s = time.time() - fptc_call_start
+            fptc_decompress_time += fptc_reported_time
+            fptc_call_wall_time += fptc_call_wall_s
+            fptc_call_timings.append(
+                (
+                    name,
+                    group_id,
+                    fptc_call_wall_s,
+                    fptc_reported_time,
+                )
+            )
         torch.cuda.synchronize(device)
         decompress_wall_time = time.time() - start
         condense_timing_adjustment = (
@@ -811,7 +858,7 @@ def best_effort_load_condense(
         )
         timing_sections.append(
             (
-                "decompress_staging_to_final",
+                "pipelined_decompress_staging_to_final",
                 decompress_wall_time,
                 fptc_decompress_time,
             )
@@ -869,7 +916,6 @@ def best_effort_load_condense(
     model.hf_device_map = device_map
     record_timing("final_confirm_and_finalize", start)
 
-    # ############# SLLM-CONDENSE #########
     section_wall_sum = sum(wall for _, wall, _ in timing_sections)
     section_adjusted_sum = sum(adjusted for _, _, adjusted in timing_sections)
     timing_lines = [
@@ -885,6 +931,21 @@ def best_effort_load_condense(
                 f"adjusted={adjusted_time:.6f}s "
                 f"difference={wall_time - adjusted_time:.6f}s"
             )
+    timing_lines.append(
+        "pipelined_wait_for_groups="
+        f"{group_wait_time:.6f}s first_group_wait="
+        f"{(first_group_wait_time or 0.0):.6f}s"
+    )
+    timing_lines.append(
+        "fptc_call_wall_sum="
+        f"{fptc_call_wall_time:.6f}s fptc_reported_sum="
+        f"{fptc_decompress_time:.6f}s"
+    )
+    for name, group_id, wall_time, reported_time in fptc_call_timings:
+        timing_lines.append(
+            f"fptc_call name={name} group_id={group_id} "
+            f"wall={wall_time:.6f}s reported={reported_time:.6f}s"
+        )
     timing_lines.extend(
         [
             f"section_wall_sum={section_wall_sum:.6f}s",

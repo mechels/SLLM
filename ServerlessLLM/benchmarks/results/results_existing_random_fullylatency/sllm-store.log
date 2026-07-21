@@ -1,0 +1,94 @@
+INFO 07-21 10:13:51 cli.py:211] Starting gRPC server
+INFO 07-21 10:13:51 server.py:40] StorageServicer: storage_path=/mnt/data1/mechels, mem_pool_size=34359738368, num_thread=4, chunk_size=16777216, registration_required=False
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I20260721 10:13:51.714758 2530509 checkpoint_store.cpp:41] Number of GPUs: 1
+I20260721 10:13:51.714808 2530509 checkpoint_store.cpp:43] I/O threads: 4, chunk size: 16MB
+I20260721 10:13:51.714818 2530509 checkpoint_store.cpp:45] Storage path: "/mnt/data1/mechels"
+I20260721 10:13:51.924363 2530509 checkpoint_store.cpp:71] GPU 0 UUID: fcba4fca-be40-5d12-2c9b-81a2c624a2a7
+I20260721 10:13:51.924443 2530509 pinned_memory_pool.cpp:29] Creating PinnedMemoryPool with 2048 buffers of 16777216 bytes
+I20260721 10:14:07.521334 2530509 checkpoint_store.cpp:83] Memory pool created with 32GB
+INFO 07-21 10:14:07 server.py:231] Starting gRPC server on 0.0.0.0:8073
+I20260721 10:14:17.715518 2530509 model.cpp:53] Tensor file "/mnt/data1/mechels/meta-llama/Meta-Llama-3-8B_sllm-condense_2/tensor.data_1" does not exist
+I20260721 10:14:17.715613 2530509 checkpoint_store.cpp:106] Model meta-llama/Meta-Llama-3-8B_sllm-condense_2 is registered
+I20260721 10:14:17.715993 2534292 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 423 buffers free buffers 1625 total buffers 2048
+INFO 07-21 10:14:17 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_sllm-condense_2 with target 1
+I20260721 10:14:17.755900 2534292 model.cpp:120] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_2 size 7080615848 to host
+I20260721 10:14:17.755962 2534292 model.cpp:134] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_2 to host with 4 threads, 423 chunks, 16777216 chunk size, 106 chunks per thread
+I20260721 10:14:17.756337 2534293 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260721 10:14:17.756332 2534294 model.cpp:155] Thread 1 starting from partition 0 offset 1778384896
+I20260721 10:14:17.756393 2534296 model.cpp:155] Thread 3 starting from partition 0 offset 5335154688
+I20260721 10:14:17.756318 2534295 model.cpp:155] Thread 2 starting from partition 0 offset 3556769792
+I20260721 10:14:18.828908 2534660 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_2
+INFO 07-21 10:14:18 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_sllm-condense_2 with target 2
+I20260721 10:14:18.890959 2534660 model.cpp:269] Creating replica 295853c4-7826-41e4-9623-db5b51504dbe
+I20260721 10:14:18.890995 2534660 model.cpp:273] Creating queue for device 0
+I20260721 10:14:18.891014 2534660 model.cpp:279] Created replica 295853c4-7826-41e4-9623-db5b51504dbe
+I20260721 10:14:18.891091 2534660 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_sllm-condense_2
+I20260721 10:14:18.891126 2534660 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_sllm-condense_2 num tasks 1 state 3
+I20260721 10:15:33.878518 2534665 model.cpp:336] Finished loading tensor from memory to device 0
+INFO 07-21 10:15:33 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_sllm-condense_2 replica 295853c4-7826-41e4-9623-db5b51504dbe success
+I20260721 10:15:33.898815 2534292 model.cpp:250] Finished loading model meta-llama/Meta-Llama-3-8B_sllm-condense_2 from disk
+INFO 07-21 10:15:43 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_sllm-condense_2 replica 295853c4-7826-41e4-9623-db5b51504dbe success
+I20260721 10:15:46.222782 2530509 model.cpp:53] Tensor file "/mnt/data1/mechels/meta-llama/Meta-Llama-3-8B_sllm-condense_3/tensor.data_1" does not exist
+I20260721 10:15:46.222865 2530509 checkpoint_store.cpp:106] Model meta-llama/Meta-Llama-3-8B_sllm-condense_3 is registered
+I20260721 10:15:46.223155 2541123 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 423 buffers free buffers 1202 total buffers 2048
+INFO 07-21 10:15:46 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_sllm-condense_3 with target 1
+I20260721 10:15:46.223704 2541123 model.cpp:120] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_3 size 7080615848 to host
+I20260721 10:15:46.223757 2541123 model.cpp:134] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_3 to host with 4 threads, 423 chunks, 16777216 chunk size, 106 chunks per thread
+I20260721 10:15:46.223924 2541125 model.cpp:155] Thread 1 starting from partition 0 offset 1778384896
+I20260721 10:15:46.223953 2541124 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260721 10:15:46.224011 2541126 model.cpp:155] Thread 2 starting from partition 0 offset 3556769792
+I20260721 10:15:46.224085 2541127 model.cpp:155] Thread 3 starting from partition 0 offset 5335154688
+I20260721 10:15:47.286048 2541211 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_3
+INFO 07-21 10:15:47 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_sllm-condense_3 with target 2
+I20260721 10:15:47.413748 2541211 model.cpp:269] Creating replica 4a17e039-12ce-4bc7-b9ee-e20c3c439e09
+I20260721 10:15:47.413803 2541211 model.cpp:273] Creating queue for device 0
+I20260721 10:15:47.413818 2541211 model.cpp:279] Created replica 4a17e039-12ce-4bc7-b9ee-e20c3c439e09
+I20260721 10:15:47.413939 2541211 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_sllm-condense_3
+I20260721 10:15:47.413990 2541211 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_sllm-condense_3 num tasks 1 state 3
+I20260721 10:17:03.309728 2541213 model.cpp:336] Finished loading tensor from memory to device 0
+I20260721 10:17:03.320801 2541123 model.cpp:250] Finished loading model meta-llama/Meta-Llama-3-8B_sllm-condense_3 from disk
+INFO 07-21 10:17:03 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_sllm-condense_3 replica 4a17e039-12ce-4bc7-b9ee-e20c3c439e09 success
+INFO 07-21 10:17:11 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_sllm-condense_3 replica 4a17e039-12ce-4bc7-b9ee-e20c3c439e09 success
+I20260721 10:17:14.247851 2530509 model.cpp:53] Tensor file "/mnt/data1/mechels/meta-llama/Meta-Llama-3-8B_sllm-condense_1/tensor.data_1" does not exist
+I20260721 10:17:14.247931 2530509 checkpoint_store.cpp:106] Model meta-llama/Meta-Llama-3-8B_sllm-condense_1 is registered
+INFO 07-21 10:17:14 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_sllm-condense_1 with target 1
+I20260721 10:17:14.248991 2543710 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 423 buffers free buffers 779 total buffers 2048
+I20260721 10:17:14.249589 2543710 model.cpp:120] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_1 size 7080615848 to host
+I20260721 10:17:14.249644 2543710 model.cpp:134] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_1 to host with 4 threads, 423 chunks, 16777216 chunk size, 106 chunks per thread
+I20260721 10:17:14.249773 2543711 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260721 10:17:14.249807 2543712 model.cpp:155] Thread 1 starting from partition 0 offset 1778384896
+I20260721 10:17:14.249852 2543713 model.cpp:155] Thread 2 starting from partition 0 offset 3556769792
+I20260721 10:17:14.249876 2543714 model.cpp:155] Thread 3 starting from partition 0 offset 5335154688
+I20260721 10:17:15.400763 2543721 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_1
+INFO 07-21 10:17:15 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_sllm-condense_1 with target 2
+I20260721 10:17:15.452090 2543721 model.cpp:269] Creating replica 14828eb6-2ff0-4d3c-84e4-edbb2ecc1326
+I20260721 10:17:15.452122 2543721 model.cpp:273] Creating queue for device 0
+I20260721 10:17:15.452139 2543721 model.cpp:279] Created replica 14828eb6-2ff0-4d3c-84e4-edbb2ecc1326
+I20260721 10:17:15.452224 2543721 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_sllm-condense_1
+I20260721 10:17:15.452258 2543721 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_sllm-condense_1 num tasks 1 state 3
+I20260721 10:18:31.049351 2543723 model.cpp:336] Finished loading tensor from memory to device 0
+I20260721 10:18:31.059806 2543710 model.cpp:250] Finished loading model meta-llama/Meta-Llama-3-8B_sllm-condense_1 from disk
+INFO 07-21 10:18:31 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_sllm-condense_1 replica 14828eb6-2ff0-4d3c-84e4-edbb2ecc1326 success
+INFO 07-21 10:18:38 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_sllm-condense_1 replica 14828eb6-2ff0-4d3c-84e4-edbb2ecc1326 success
+I20260721 10:18:41.114655 2530509 model.cpp:53] Tensor file "/mnt/data1/mechels/meta-llama/Meta-Llama-3-8B_sllm-condense_0/tensor.data_1" does not exist
+I20260721 10:18:41.114738 2530509 checkpoint_store.cpp:106] Model meta-llama/Meta-Llama-3-8B_sllm-condense_0 is registered
+INFO 07-21 10:18:41 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_sllm-condense_0 with target 1
+I20260721 10:18:41.115271 2545973 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 423 buffers free buffers 356 total buffers 2048
+I20260721 10:18:41.115748 2545973 model.cpp:120] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_0 size 7080615848 to host
+I20260721 10:18:41.115777 2545973 model.cpp:134] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_0 to host with 4 threads, 423 chunks, 16777216 chunk size, 106 chunks per thread
+I20260721 10:18:41.115891 2545974 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260721 10:18:41.115967 2545976 model.cpp:155] Thread 2 starting from partition 0 offset 3556769792
+I20260721 10:18:41.115998 2545977 model.cpp:155] Thread 3 starting from partition 0 offset 5335154688
+I20260721 10:18:41.115962 2545975 model.cpp:155] Thread 1 starting from partition 0 offset 1778384896
+I20260721 10:18:42.140093 2545999 checkpoint_store.cpp:209] Loading model meta-llama/Meta-Llama-3-8B_sllm-condense_0
+INFO 07-21 10:18:42 server.py:114] LoadModel: success meta-llama/Meta-Llama-3-8B_sllm-condense_0 with target 2
+I20260721 10:18:42.195848 2545999 model.cpp:269] Creating replica e205651b-c947-46ef-979d-bc41b7729e4b
+I20260721 10:18:42.195888 2545999 model.cpp:273] Creating queue for device 0
+I20260721 10:18:42.195899 2545999 model.cpp:279] Created replica e205651b-c947-46ef-979d-bc41b7729e4b
+I20260721 10:18:42.195987 2545999 model.cpp:290] Dispatcher started for model meta-llama/Meta-Llama-3-8B_sllm-condense_0
+I20260721 10:18:42.196024 2545999 model.cpp:343] Waiting for model meta-llama/Meta-Llama-3-8B_sllm-condense_0 num tasks 1 state 3
+I20260721 10:19:55.828882 2546001 model.cpp:336] Finished loading tensor from memory to device 0
+I20260721 10:19:55.838832 2545973 model.cpp:250] Finished loading model meta-llama/Meta-Llama-3-8B_sllm-condense_0 from disk
+INFO 07-21 10:19:55 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_sllm-condense_0 replica e205651b-c947-46ef-979d-bc41b7729e4b success
+INFO 07-21 10:20:04 server.py:137] Confirm model meta-llama/Meta-Llama-3-8B_sllm-condense_0 replica e205651b-c947-46ef-979d-bc41b7729e4b success

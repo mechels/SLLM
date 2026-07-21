@@ -29,6 +29,7 @@
 #include <mutex>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 // Third-party library headers
@@ -45,6 +46,9 @@ struct GpuReplica {
 
   std::unordered_map<int, std::shared_ptr<BatchQueue>> gpu_loading_queue_;
   MemPtrListMap device_ptrs_;
+  std::unordered_map<size_t, size_t> group_total_bytes_;
+  std::unordered_map<size_t, size_t> group_loaded_bytes_;
+  std::unordered_set<size_t> ready_groups_;
 };
 using GpuReplicaPtr = std::shared_ptr<GpuReplica>;
 
@@ -59,6 +63,7 @@ class Model {
             const std::unordered_map<int, MemCopyHandleList>& mem_copy_handles);
   int WaitInHost();
   int WaitInGpu(const std::string& replica_uuid);
+  int WaitGpuGroup(const std::string& replica_uuid, size_t group_id);
   int FreeGpu(const std::string& replica_uuid);
   int FreeHost();
   int TryFreeHost();

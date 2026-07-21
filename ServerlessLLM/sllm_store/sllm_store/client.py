@@ -80,6 +80,7 @@ class SllmStoreClient:
                         size=chunk[1],
                         dst_offset=chunk[2],
                         handle_idx=chunk[3],
+                        group_id=chunk[4] if len(chunk) > 4 else 0,
                     )
                     for chunk in chunks
                 ]
@@ -127,6 +128,29 @@ class SllmStoreClient:
         except grpc.RpcError as e:
             if e.code() == grpc.StatusCode.CANCELLED:
                 logger.error("Model not loaded")
+                return False
+            else:
+                logger.error(f"Error: {e}")
+                return False
+
+    # ############# SLLM-CONDENSE #########
+    def confirm_gpu_group(self, model_path, replica_uuid, group_id):
+        logger.info(
+            f"confirm_gpu_group: {model_path}, {replica_uuid}, {group_id}"
+        )
+        request = storage_pb2.ConfirmGpuGroupRequest(
+            model_path=model_path,
+            replica_uuid=replica_uuid,
+            group_id=group_id,
+            target_device_type=storage_pb2.DeviceType.DEVICE_TYPE_GPU,
+        )
+        try:
+            _ = self.stub.ConfirmGpuGroup(request)
+            logger.info(f"GPU group loaded: {group_id}")
+            return True
+        except grpc.RpcError as e:
+            if e.code() == grpc.StatusCode.CANCELLED:
+                logger.error(f"GPU group not loaded: {group_id}")
                 return False
             else:
                 logger.error(f"Error: {e}")

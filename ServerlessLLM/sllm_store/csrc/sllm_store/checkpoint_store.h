@@ -56,6 +56,8 @@ class CheckpointStore {
                             const MemCopyChunkListMap& mem_copy_chunks);
   int WaitModelInGpu(const std::string& model_path,
                      const std::string& replica_uuid);
+  int WaitGpuGroup(const std::string& model_path,
+                   const std::string& replica_uuid, size_t group_id);
   int UnloadModelFromHost(const std::string& model_path);
   int ClearMem();
 
