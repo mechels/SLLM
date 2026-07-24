@@ -379,6 +379,17 @@ int Model::ToGpu(
     LOG(ERROR) << "Failed to load model " << model_path_;
     gpu_replica->state_ = MemoryState::INTERRUPTED;
   } else {
+    // ############# SLLM-CONDENSE #########
+    for (const auto& [group_id, total] : gpu_replica->group_total_bytes_) {
+      if (gpu_replica->group_loaded_bytes_[group_id] >= total) {
+        gpu_replica->ready_groups_.insert(group_id);
+      } else {
+        LOG(ERROR) << "Model " << model_path_ << " replica " << replica_uuid
+                   << " GPU copy group " << group_id << " loaded "
+                   << gpu_replica->group_loaded_bytes_[group_id] << " of "
+                   << total << " bytes";
+      }
+    }
     gpu_replica->state_ = MemoryState::LOADED;
   }
   gpu_replica->cv_.notify_all();
@@ -475,6 +486,11 @@ int Model::WaitGpuGroup(const std::string& replica_uuid, size_t group_id) {
 
   if (gpu_replica->ready_groups_.find(group_id) ==
       gpu_replica->ready_groups_.end()) {
+    auto total = gpu_replica->group_total_bytes_.at(group_id);
+    if (gpu_replica->group_loaded_bytes_[group_id] >= total) {
+      gpu_replica->ready_groups_.insert(group_id);
+      return 0;
+    }
     LOG(INFO) << "Model " << model_path_ << " replica " << replica_uuid
               << " GPU copy group " << group_id << " is not loaded";
     return 1;

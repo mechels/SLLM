@@ -78,6 +78,7 @@ DEFAULT_FPTC_DIR = "/home/ben046/projects/TensorProcessing/generate_compressed/c
 DEFAULT_FPTC_BIND_PATH = "/home/ben046/projects/TensorCodec/FPTC-2/bind"
 TENSOR_DATA_PREFIX = "tensor.data_"
 TENSOR_DATA_PARTITION_SIZE = 10 * 1024**3
+TENSOR_DATA_ALIGNMENT = 512
 
 
 def _get_uuid():
@@ -187,7 +188,10 @@ def rewrite_model_with_fptc_packages(
             with open(fptc_path, "rb") as src:
                 shutil.copyfileobj(src, current_file, length=16 * 1024 * 1024)
 
-            padding = (8 - (compressed_size % 8)) % 8
+            padding = (
+                TENSOR_DATA_ALIGNMENT
+                - (compressed_size % TENSOR_DATA_ALIGNMENT)
+            ) % TENSOR_DATA_ALIGNMENT
             if padding:
                 current_file.write(b"\0" * padding)
 
@@ -219,6 +223,7 @@ def rewrite_model_with_fptc_packages(
                 "codec": "fptc-2",
                 "schema_version": 1,
                 "fptc_dir": fptc_dir,
+                "data_alignment": TENSOR_DATA_ALIGNMENT,
             },
             f,
             indent=2,
@@ -726,7 +731,9 @@ def best_effort_load_condense(
         device_map, list(tensor_index.keys())
     )
     compressed_device_memory = calculate_device_memory(
-        expanded_device_map, compressed_data_index
+        expanded_device_map,
+        compressed_data_index,
+        alignment=TENSOR_DATA_ALIGNMENT,
     )
     final_device_memory = calculate_device_memory(
         expanded_device_map, final_data_index
@@ -753,7 +760,9 @@ def best_effort_load_condense(
         )
         compressed_device_offsets, tensor_copy_chunks = (
             calculate_tensor_device_offsets(
-                expanded_device_map, compressed_data_index
+                expanded_device_map,
+                compressed_data_index,
+                alignment=TENSOR_DATA_ALIGNMENT,
             )
         )
         copy_group_by_record = {}
@@ -804,6 +813,10 @@ def best_effort_load_condense(
         fptc_call_timings = []
         group_wait_time = 0.0
         first_group_wait_time = None
+        confirmed_group_ids = set()
+        total_copy_groups = len(copy_group_by_record)
+        all_groups_confirmed_at = None
+        last_fptc_done_at = None
         fptc2 = _load_fptc2_binding()
         staging_addresses = get_cuda_memory_addresses(staging_cuda_memory_ptrs)
         final_addresses = get_cuda_memory_addresses(final_cuda_memory_ptrs)
@@ -822,24 +835,51 @@ def best_effort_load_condense(
             group_wait_time += wait_s
             if first_group_wait_time is None:
                 first_group_wait_time = wait_s
+            confirmed_group_ids.add(group_id)
+            if (
+                all_groups_confirmed_at is None
+                and len(confirmed_group_ids) == total_copy_groups
+            ):
+                all_groups_confirmed_at = time.time()
 
             meta = tensor_index[name]
             rows, cols = _shape_to_fptc_rows_cols(meta["shape"])
-            fptc_call_start = time.time()
-            fptc_reported_time = float(
-                fptc2.decompress_gpu_package_to_address(
-                    staging_addresses[device]
-                    + compressed_device_offsets[device][name],
-                    meta["compressed_size"],
-                    final_addresses[device]
-                    + tensor_device_offsets[device][name],
-                    meta["uncompressed_size"],
-                    rows,
-                    cols,
-                    meta["dtype"],
-                    device,
-                )
+            compressed_addr = (
+                staging_addresses[device]
+                + compressed_device_offsets[device][name]
             )
+            final_addr = (
+                final_addresses[device] + tensor_device_offsets[device][name]
+            )
+            fptc_call_start = time.time()
+            try:
+                fptc_reported_time = float(
+                    fptc2.decompress_gpu_package_to_address(
+                        compressed_addr,
+                        meta["compressed_size"],
+                        final_addr,
+                        meta["uncompressed_size"],
+                        rows,
+                        cols,
+                        meta["dtype"],
+                        device,
+                    )
+                )
+            except Exception:
+                logger.exception(
+                    "FPTC decompress failed "
+                    f"name={name} group_id={group_id} "
+                    f"compressed_addr={compressed_addr} "
+                    f"compressed_addr_mod_256={compressed_addr % 256} "
+                    f"compressed_offset={compressed_device_offsets[device][name]} "
+                    f"compressed_size={meta['compressed_size']} "
+                    f"final_addr={final_addr} "
+                    f"final_addr_mod_256={final_addr % 256} "
+                    f"final_offset={tensor_device_offsets[device][name]} "
+                    f"uncompressed_size={meta['uncompressed_size']} "
+                    f"rows={rows} cols={cols} dtype={meta['dtype']}"
+                )
+                raise
             fptc_call_wall_s = time.time() - fptc_call_start
             fptc_decompress_time += fptc_reported_time
             fptc_call_wall_time += fptc_call_wall_s
@@ -852,7 +892,8 @@ def best_effort_load_condense(
                 )
             )
         torch.cuda.synchronize(device)
-        decompress_wall_time = time.time() - start
+        last_fptc_done_at = time.time()
+        decompress_wall_time = last_fptc_done_at - start
         condense_timing_adjustment = (
             decompress_wall_time - fptc_decompress_time
         )
@@ -865,9 +906,15 @@ def best_effort_load_condense(
         )
     except Exception:
         if staging_cuda_memory_ptrs:
-            free_cuda_memory(staging_cuda_memory_ptrs)
+            try:
+                free_cuda_memory(staging_cuda_memory_ptrs)
+            except Exception:
+                logger.exception("Failed to free SLLM-CONDENSE staging memory")
         if final_cuda_memory_ptrs:
-            free_cuda_memory(final_cuda_memory_ptrs)
+            try:
+                free_cuda_memory(final_cuda_memory_ptrs)
+            except Exception:
+                logger.exception("Failed to free SLLM-CONDENSE final memory")
         raise
     else:
         start = time.time()
@@ -941,6 +988,11 @@ def best_effort_load_condense(
         f"{fptc_call_wall_time:.6f}s fptc_reported_sum="
         f"{fptc_decompress_time:.6f}s"
     )
+    if all_groups_confirmed_at is not None and last_fptc_done_at is not None:
+        timing_lines.append(
+            "tail_after_all_groups_confirmed="
+            f"{last_fptc_done_at - all_groups_confirmed_at:.6f}s"
+        )
     for name, group_id, wall_time, reported_time in fptc_call_timings:
         timing_lines.append(
             f"fptc_call name={name} group_id={group_id} "

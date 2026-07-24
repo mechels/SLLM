@@ -216,6 +216,12 @@ int CheckpointStore::LoadModelFromMem(
     }
     converted_mem_copy_chunks[device_id] = mem_copy_chunks.at(gpu_info.uuid_);
   }
+  // ############# SLLM-CONDENSE #########
+  if (converted_mem_copy_chunks.empty()) {
+    LOG(ERROR) << "No memory copy chunks matched known GPU UUIDs for "
+               << model_path;
+    return -1;
+  }
 
   std::unordered_map<int, MemCopyHandleList> converted_mem_copy_handles;
   for (auto& [device_id, gpu_info] : gpu_info_map_) {
@@ -225,8 +231,19 @@ int CheckpointStore::LoadModelFromMem(
     converted_mem_copy_handles[device_id] =
         gpu_memory_handles.at(gpu_info.uuid_);
   }
+  // ############# SLLM-CONDENSE #########
+  if (converted_mem_copy_handles.empty()) {
+    LOG(ERROR) << "No memory copy handles matched known GPU UUIDs for "
+               << model_path;
+    return -1;
+  }
   // Convert memory handles to device pointers
   auto device_ptrs = GetDevicePtrsFromMemHandles(gpu_memory_handles);
+  // ############# SLLM-CONDENSE #########
+  if (device_ptrs.empty()) {
+    LOG(ERROR) << "No CUDA IPC handles opened for " << model_path;
+    return -1;
+  }
 
   auto ret = model->ToGpu(replica_uuid, device_ptrs, converted_mem_copy_chunks,
                           converted_mem_copy_handles);
@@ -247,6 +264,38 @@ int CheckpointStore::LoadModelFromMemAsync(
     const std::unordered_map<std::string, MemCopyHandleList>&
         gpu_memory_handles,
     const std::unordered_map<std::string, MemCopyChunkList>& mem_copy_chunks) {
+  // ############# SLLM-CONDENSE #########
+  bool has_matching_chunks = false;
+  bool has_matching_handles = false;
+  for (auto& [_, gpu_info] : gpu_info_map_) {
+    has_matching_chunks =
+        has_matching_chunks ||
+        mem_copy_chunks.find(gpu_info.uuid_) != mem_copy_chunks.end();
+    has_matching_handles =
+        has_matching_handles ||
+        gpu_memory_handles.find(gpu_info.uuid_) != gpu_memory_handles.end();
+  }
+  if (!has_matching_chunks || !has_matching_handles) {
+    LOG(ERROR) << "No matching GPU UUIDs for async GPU load of " << model_path
+               << " chunks_matched=" << has_matching_chunks
+               << " handles_matched=" << has_matching_handles
+               << " requested_chunks=" << mem_copy_chunks.size()
+               << " requested_handles=" << gpu_memory_handles.size()
+               << " known_gpus=" << gpu_info_map_.size();
+    for (auto& [device_id, gpu_info] : gpu_info_map_) {
+      LOG(ERROR) << "Known GPU " << device_id << " UUID " << gpu_info.uuid_;
+    }
+    for (auto& [uuid, chunks] : mem_copy_chunks) {
+      LOG(ERROR) << "Requested chunk UUID " << uuid << " chunks "
+                 << chunks.size();
+    }
+    for (auto& [uuid, handles] : gpu_memory_handles) {
+      LOG(ERROR) << "Requested handle UUID " << uuid << " handles "
+                 << handles.size();
+    }
+    return -1;
+  }
+
   std::unique_lock<std::mutex> lock_info(model_info_mutex_);
   async_tasks_.emplace(std::async(
       std::launch::async,

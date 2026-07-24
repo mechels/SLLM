@@ -171,7 +171,19 @@ class StorageServicer(storage_pb2_grpc.StorageServicer):
             context.set_code(grpc.StatusCode.UNIMPLEMENTED)
             return storage_pb2.ConfirmGpuGroupResponse()
 
-        ret = self.storage.wait_gpu_group(model_path, replica_uuid, group_id)
+        try:
+            ret = self.storage.wait_gpu_group(
+                model_path, replica_uuid, group_id
+            )
+        except Exception as exc:
+            logger.exception(
+                f"Confirm GPU group {group_id} for {model_path} "
+                f"replica {replica_uuid} raised"
+            )
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(str(exc))
+            return storage_pb2.ConfirmGpuGroupResponse()
+
         if ret == 0:
             logger.info(
                 f"Confirm GPU group {group_id} for {model_path} "
@@ -255,7 +267,7 @@ async def serve(
     mem_pool_size,
     registration_required,
 ):
-    server = grpc.aio.server()
+    server = grpc.aio.server(options=(("grpc.so_reuseport", 0),))
     storage_pb2_grpc.add_StorageServicer_to_server(
         StorageServicer(
             storage_path,
@@ -267,7 +279,12 @@ async def serve(
         server,
     )
     listen_addr = f"{host}:{port}"
-    server.add_insecure_port(listen_addr)
+    bound_port = server.add_insecure_port(listen_addr)
+    if bound_port == 0:
+        raise RuntimeError(
+            f"Failed to bind gRPC server on {listen_addr}. "
+            "Another sllm-store may already be running."
+        )
     logger.info(f"Starting gRPC server on {listen_addr}")
     await server.start()
 

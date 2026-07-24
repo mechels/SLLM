@@ -3706,3 +3706,110 @@ SLLM Condense Avg Throughput: 75.29 tokens/s
 [2026-07-21 11:19:11] Summary: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2/summary.txt
 [2026-07-21 11:19:11] Full log: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2/benchmark.log
 [2026-07-21 11:19:11] Cleaning up...
+[2026-07-23 11:23:24] === ServerlessLLM Automated Benchmark ===
+[2026-07-23 11:23:24] Model: meta-llama/Meta-Llama-3-8B
+[2026-07-23 11:23:24] Replicas: 4
+[2026-07-23 11:23:24] Memory Pool: 32GB
+[2026-07-23 11:23:24] Storage: /mnt/data1/mechels
+[2026-07-23 11:23:24] Benchmark Type: random
+[2026-07-23 11:23:24] Formats: sllm-condense
+[2026-07-23 11:23:24] FPTC Dir: /home/ben046/projects/TensorProcessing/generate_compressed/comp
+[2026-07-23 11:23:24] Load Existing: true
+[2026-07-23 11:23:24] Keep Models: false
+[2026-07-23 11:23:24] 
+[2026-07-23 11:23:24] Starting benchmarks...
+[2026-07-23 11:23:24] Keeping existing storage directory contents...
+[2026-07-23 11:23:24] === Testing sllm-condense format ===
+[2026-07-23 11:23:24] Starting sllm-store server...
+[2026-07-23 11:23:24] sllm-store started (PID: 3076185)
+[2026-07-23 11:23:24] Waiting for sllm-store to be ready (pinning 32GB memory)...
+[2026-07-23 11:23:54] Still waiting for sllm-store... (30s elapsed)
+[2026-07-23 11:24:14] sllm-store is ready (took 50s)
+[2026-07-23 11:24:14] Using existing sllm-condense files in /mnt/data1/mechels; skipping download/prepare...
+[2026-07-23 11:24:14] Running benchmark...
+================================================================================
+Starting benchmark for sllm-condense format
+[GPU Memory START of script] Allocated: 0.00 GB, Reserved: 0.00 GB
+================================================================================
+Warming up 1 GPUs
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00,  2.15it/s]100%|██████████| 1/1 [00:00<00:00,  2.15it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Warming up inference
+Loading weights:   0%|          | 0/516 [00:00<?, ?it/s]Loading weights:   0%|          | 2/516 [00:02<10:18,  1.20s/it]Loading weights:   4%|▍         | 22/516 [00:03<00:55,  8.92it/s]Loading weights:   7%|▋         | 34/516 [00:03<00:33, 14.28it/s]Loading weights:   7%|▋         | 38/516 [00:03<00:36, 13.16it/s]Loading weights:   8%|▊         | 41/516 [00:03<00:34, 13.87it/s]Loading weights:  10%|█         | 54/516 [00:04<00:27, 16.95it/s]Loading weights:  11%|█         | 57/516 [00:04<00:26, 17.18it/s]Loading weights:  12%|█▏        | 64/516 [00:04<00:23, 19.63it/s]Loading weights:  14%|█▎        | 70/516 [00:05<00:29, 15.26it/s]Loading weights:  16%|█▋        | 85/516 [00:06<00:21, 20.50it/s]Loading weights:  17%|█▋        | 88/516 [00:06<00:30, 13.97it/s]Loading weights:  20%|█▉        | 101/516 [00:07<00:21, 19.32it/s]Loading weights:  20%|██        | 104/516 [00:07<00:30, 13.52it/s]Loading weights:  23%|██▎       | 118/516 [00:07<00:18, 21.81it/s]Loading weights:  26%|██▌       | 134/516 [00:08<00:12, 31.10it/s]Loading weights:  28%|██▊       | 146/516 [00:08<00:13, 27.01it/s]Loading weights:  29%|██▉       | 150/516 [00:09<00:16, 22.50it/s]Loading weights:  30%|██▉       | 154/516 [00:09<00:15, 23.62it/s]Loading weights:  31%|███       | 160/516 [00:09<00:12, 27.49it/s]Loading weights:  32%|███▏      | 166/516 [00:10<00:26, 13.00it/s]Loading weights:  35%|███▌      | 182/516 [00:11<00:19, 17.30it/s]Loading weights:  38%|███▊      | 194/516 [00:11<00:13, 24.54it/s]Loading weights:  39%|███▉      | 200/516 [00:11<00:12, 25.39it/s]Loading weights:  41%|████▏     | 214/516 [00:12<00:12, 23.37it/s]Loading weights:  42%|████▏     | 218/516 [00:12<00:12, 23.07it/s]Loading weights:  45%|████▍     | 230/516 [00:13<00:16, 17.21it/s]Loading weights:  45%|████▌     | 233/516 [00:13<00:17, 16.18it/s]Loading weights:  46%|████▌     | 236/516 [00:13<00:17, 15.88it/s]Loading weights:  47%|████▋     | 242/516 [00:14<00:29,  9.40it/s]Loading weights:  47%|████▋     | 244/516 [00:15<00:27,  9.93it/s]Loading weights:  48%|████▊     | 248/516 [00:15<00:24, 10.77it/s]Loading weights:  50%|████▉     | 256/516 [00:16<00:23, 10.92it/s]Loading weights:  51%|█████     | 262/516 [00:17<00:28,  8.99it/s]Loading weights:  53%|█████▎    | 272/516 [00:17<00:16, 14.62it/s]Loading weights:  54%|█████▎    | 277/516 [00:17<00:17, 13.81it/s]Loading weights:  54%|█████▍    | 280/516 [00:18<00:25,  9.22it/s]Loading weights:  57%|█████▋    | 294/516 [00:20<00:27,  8.00it/s]Loading weights:  59%|█████▉    | 306/516 [00:21<00:24,  8.44it/s]Loading weights:  60%|██████    | 310/516 [00:21<00:22,  9.33it/s]Loading weights:  61%|██████    | 316/516 [00:22<00:17, 11.12it/s]Loading weights:  63%|██████▎   | 326/516 [00:24<00:24,  7.80it/s]Loading weights:  65%|██████▌   | 336/516 [00:24<00:15, 11.31it/s]Loading weights:  66%|██████▌   | 341/516 [00:24<00:13, 13.31it/s]Loading weights:  67%|██████▋   | 345/516 [00:25<00:21,  7.95it/s]Loading weights:  69%|██████▊   | 354/516 [00:26<00:18,  8.79it/s]Loading weights:  69%|██████▉   | 357/516 [00:26<00:16,  9.52it/s]Loading weights:  70%|██████▉   | 360/516 [00:27<00:24,  6.47it/s]Loading weights:  72%|███████▏  | 374/516 [00:28<00:14, 10.09it/s]Loading weights:  73%|███████▎  | 376/516 [00:29<00:20,  6.95it/s]Loading weights:  73%|███████▎  | 378/516 [00:29<00:19,  6.91it/s]Loading weights:  76%|███████▌  | 390/516 [00:30<00:11, 11.33it/s]Loading weights:  78%|███████▊  | 402/516 [00:32<00:13,  8.39it/s]Loading weights:  79%|███████▊  | 406/516 [00:32<00:14,  7.84it/s]Loading weights:  81%|████████  | 418/516 [00:33<00:08, 11.96it/s]Loading weights:  82%|████████▏ | 422/516 [00:35<00:14,  6.59it/s]Loading weights:  82%|████████▏ | 424/516 [00:35<00:13,  6.90it/s]Loading weights:  84%|████████▍ | 434/516 [00:36<00:11,  6.94it/s]Loading weights:  85%|████████▍ | 438/516 [00:37<00:10,  7.36it/s]Loading weights:  87%|████████▋ | 448/516 [00:37<00:05, 11.55it/s]Loading weights:  87%|████████▋ | 451/516 [00:38<00:07,  8.21it/s]Loading weights:  88%|████████▊ | 454/516 [00:39<00:09,  6.53it/s]Loading weights:  88%|████████▊ | 456/516 [00:39<00:09,  6.50it/s]Loading weights:  90%|████████▉ | 464/516 [00:40<00:06,  7.74it/s]Loading weights:  91%|█████████ | 470/516 [00:41<00:07,  6.18it/s]Loading weights:  91%|█████████▏| 472/516 [00:41<00:06,  6.80it/s]Loading weights:  93%|█████████▎| 482/516 [00:42<00:03, 10.31it/s]Loading weights:  94%|█████████▍| 484/516 [00:42<00:03,  8.64it/s]Loading weights:  94%|█████████▍| 486/516 [00:43<00:04,  6.76it/s]Loading weights:  95%|█████████▍| 488/516 [00:43<00:04,  6.95it/s]Loading weights:  95%|█████████▍| 489/516 [00:44<00:05,  4.65it/s]Loading weights:  95%|█████████▍| 490/516 [00:44<00:05,  4.55it/s]Loading weights:  97%|█████████▋| 502/516 [00:45<00:01, 10.78it/s]Loading weights:  99%|█████████▉| 512/516 [00:45<00:00, 17.50it/s]Loading weights: 100%|██████████| 516/516 [00:45<00:00, 11.38it/s]
+[GPU Memory after warmup] Allocated: 0.01 GB, Reserved: 0.02 GB
+Measuring loading time for sllm-condense model=meta-llama/Meta-Llama-3-8B, repeating 4 times
+[GPU Memory BEFORE benchmark] Allocated: 0.01 GB, Reserved: 0.02 GB
+Loading meta-llama/Meta-Llama-3-8B_3
+[GPU Memory before load #3] Allocated: 0.01 GB, Reserved: 0.02 GB
+DEBUG 07-23 11:25:08 transformers.py:692] device_map: OrderedDict([('', 0)])
+DEBUG 07-23 11:25:08 client.py:72] load_into_gpu: meta-llama/Meta-Llama-3-8B_sllm-condense_3, 02d5390a-1860-4dd7-a894-0c605334d7e5
+INFO 07-23 11:25:08 client.py:114] Model loaded: meta-llama/Meta-Llama-3-8B_sllm-condense_3, 02d5390a-1860-4dd7-a894-0c605334d7e5
+INFO 07-23 11:25:08 client.py:138] confirm_gpu_group: meta-llama/Meta-Llama-3-8B_sllm-condense_3, 02d5390a-1860-4dd7-a894-0c605334d7e5, 0
+INFO 07-23 11:25:26 client.py:149] GPU group loaded: 0
+ERROR: invalid FPTC2 package header in GPU bytes
+Traceback (most recent call last):
+  File "/home/ben046/projects/SLLM/ServerlessLLM/benchmarks/test_loading.py", line 126, in <module>
+    main()
+  File "/home/ben046/projects/SLLM/ServerlessLLM/benchmarks/test_loading.py", line 108, in main
+    results = measure(model_name, model_format, model_dir, loading_order)
+  File "/home/ben046/projects/SLLM/ServerlessLLM/benchmarks/benchmark_utils.py", line 121, in measure
+    model, _loading_time_adjustment = load_model_condense(
+  File "/home/ben046/projects/SLLM/ServerlessLLM/sllm_store/sllm_store/transformers.py", line 365, in load_model_condense
+    return best_effort_load_condense(
+  File "/home/ben046/projects/SLLM/ServerlessLLM/sllm_store/sllm_store/transformers.py", line 830, in best_effort_load_condense
+    fptc2.decompress_gpu_package_to_address(
+RuntimeError: failed to read FPTC package from GPU bytes
+[2026-07-23 11:25:28] Keeping storage after sllm-condense benchmark...
+[2026-07-23 11:25:28] Stopping sllm-store (PID: 3076185)
+[2026-07-23 11:25:35] Format sllm-condense completed, GPU memory released
+[2026-07-23 11:25:40] 
+[2026-07-23 11:25:40] Generating benchmark report...
+Warning: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2/meta-llama_Meta-Llama-3-8B_sllm_4_random.json not found
+Warning: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2/meta-llama_Meta-Llama-3-8B_safetensors_4_random.json not found
+============================================================
+ServerlessLLM Benchmark Results
+============================================================
+Model: meta-llama/Meta-Llama-3-8B
+Replicas: 4
+Benchmark Type: random
+
+Loading Time Comparison:
+------------------------------------------------------------
+Format          Avg (s)      Min (s)      Max (s)      Std Dev   
+------------------------------------------------------------
+SLLM Condense   68.277       67.914       69.160       0.514     
+------------------------------------------------------------
+Inference Performance:
+------------------------------------------------------------
+SLLM Condense Avg Throughput: 75.29 tokens/s
+
+============================================================
+
+Reports saved:
+  Text: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2/summary.txt
+  JSON: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2/summary.json
+[2026-07-23 11:25:40] 
+[2026-07-23 11:25:40] === Benchmark Summary ===
+============================================================
+ServerlessLLM Benchmark Results
+============================================================
+Model: meta-llama/Meta-Llama-3-8B
+Replicas: 4
+Benchmark Type: random
+
+Loading Time Comparison:
+------------------------------------------------------------
+Format          Avg (s)      Min (s)      Max (s)      Std Dev   
+------------------------------------------------------------
+SLLM Condense   68.277       67.914       69.160       0.514     
+------------------------------------------------------------
+Inference Performance:
+------------------------------------------------------------
+SLLM Condense Avg Throughput: 75.29 tokens/s
+
+============================================================[2026-07-23 11:25:40] 
+[2026-07-23 11:25:40] === Benchmark Complete ===
+[2026-07-23 11:25:40] Results saved to: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2
+[2026-07-23 11:25:40] Summary: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2/summary.txt
+[2026-07-23 11:25:40] Full log: /home/ben046/projects/SLLM/ServerlessLLM/benchmarks/results/results_existing_random_asyncv2/benchmark.log
+[2026-07-23 11:25:40] Cleaning up...

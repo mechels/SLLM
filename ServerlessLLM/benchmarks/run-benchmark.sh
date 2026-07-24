@@ -118,7 +118,7 @@ BENCHMARK_TYPE="${CLI_BENCHMARK_TYPE:-${BENCHMARK_TYPE:-random}}"
 ############## SLLM-CONDENSE #########
 FORMATS="${CLI_FORMATS:-${FORMATS:-safetensors sllm sllm-condense}}"
 FORMATS="${FORMATS//,/ }"
-FPTC_DIR="${CLI_FPTC_DIR:-${SLLM_CONDENSE_FPTC_DIR:-/home/ben046/projects/TensorProcessing/generate_compressed/comp}}"
+FPTC_DIR="${CLI_FPTC_DIR:-${SLLM_CONDENSE_FPTC_DIR:-/home/ben046/projects/TensorProcessing/generate_compressed/comp_july23}}"
 LOAD_EXISTING="${CLI_LOAD_EXISTING:-${LOAD_EXISTING:-false}}"
 GENERATE_PLOTS="${CLI_GENERATE_PLOTS:-${GENERATE_PLOTS:-false}}"
 KEEP_ALIVE="${CLI_KEEP_ALIVE:-${KEEP_ALIVE:-false}}"
@@ -162,11 +162,29 @@ fi
 
 # Global variable for sllm-store PID
 SLLM_STORE_PID=""
+SLLM_STORE_PORT=8073
+
+check_sllm_store_port_free() {
+    if ! command -v ss >/dev/null 2>&1; then
+        return 0
+    fi
+
+    local listeners
+    listeners=$(ss -lptn "sport = :$SLLM_STORE_PORT" 2>/dev/null | awk 'NR > 1')
+    if [ -n "$listeners" ]; then
+        log "ERROR: sllm-store port $SLLM_STORE_PORT is already in use before this run starts its server."
+        echo "$listeners" | tee -a "$LOG_FILE"
+        log "Stop the stale sllm-store process before rerunning the benchmark."
+        exit 1
+    fi
+}
 
 # Function to start sllm-store
 start_sllm_store() {
+    check_sllm_store_port_free
     log "Starting sllm-store server..."
     sllm-store start \
+        --port "$SLLM_STORE_PORT" \
         --storage-path "$STORAGE_PATH" \
         --mem-pool-size "$MEM_POOL_SIZE" \
         --chunk-size 16MB \
@@ -297,9 +315,9 @@ run_format_benchmark() {
     fi
 }
 
-# Run each format in separate subprocess (GPU memory freed on subprocess exit)
+# Run each format; model loading happens in Python subprocesses so GPU memory is freed.
 for MODEL_FORMAT in $FORMATS; do
-    ( run_format_benchmark "$MODEL_FORMAT" )
+    run_format_benchmark "$MODEL_FORMAT"
     log "Format $MODEL_FORMAT completed, GPU memory released"
     sleep 5
     log ""
