@@ -1,0 +1,120 @@
+INFO 07-26 14:21:51 cli.py:211] Starting gRPC server
+INFO 07-26 14:21:51 server.py:40] StorageServicer: storage_path=/mnt/data1/mechels/sllm_storage/Llama-2-13B/, mem_pool_size=34359738368, num_thread=4, chunk_size=16777216, registration_required=False
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I20260726 14:21:51.437076 1663616 checkpoint_store.cpp:41] Number of GPUs: 1
+I20260726 14:21:51.437134 1663616 checkpoint_store.cpp:43] I/O threads: 4, chunk size: 16MB
+I20260726 14:21:51.437143 1663616 checkpoint_store.cpp:45] Storage path: "/mnt/data1/mechels/sllm_storage/Llama-2-13B/"
+I20260726 14:21:51.571599 1663616 checkpoint_store.cpp:71] GPU 0 UUID: e00f9c39-26cb-e49a-5563-c9ff59f4e47f
+I20260726 14:21:51.571676 1663616 pinned_memory_pool.cpp:29] Creating PinnedMemoryPool with 2048 buffers of 16777216 bytes
+I20260726 14:22:01.662019 1663616 checkpoint_store.cpp:83] Memory pool created with 32GB
+INFO 07-26 14:22:01 server.py:288] Starting gRPC server on 0.0.0.0:8073
+I20260726 14:22:10.912204 1663616 model.cpp:53] Tensor file "/mnt/data1/mechels/sllm_storage/Llama-2-13B/meta-llama/Llama-2-13b-hf_0/tensor.data_3" does not exist
+I20260726 14:22:10.912267 1663616 checkpoint_store.cpp:106] Model meta-llama/Llama-2-13b-hf_0 is registered
+INFO 07-26 14:22:10 server.py:115] LoadModel: success meta-llama/Llama-2-13b-hf_0 with target 1
+I20260726 14:22:10.912600 1665331 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 1552 buffers free buffers 496 total buffers 2048
+I20260726 14:22:10.913431 1665331 model.cpp:120] Loading model meta-llama/Llama-2-13b-hf_0 size 26031728640 to host
+I20260726 14:22:10.913501 1665331 model.cpp:134] Loading model meta-llama/Llama-2-13b-hf_0 to host with 4 threads, 1552 chunks, 16777216 chunk size, 388 chunks per thread
+I20260726 14:22:10.913736 1665332 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260726 14:22:10.913815 1665335 model.cpp:155] Thread 3 starting from partition 1 offset 8840740864
+I20260726 14:22:10.913825 1665334 model.cpp:155] Thread 2 starting from partition 1 offset 2331181056
+I20260726 14:22:10.913829 1665333 model.cpp:155] Thread 1 starting from partition 0 offset 6509559808
+I20260726 14:22:11.478658 1665349 checkpoint_store.cpp:209] Loading model meta-llama/Llama-2-13b-hf_0
+INFO 07-26 14:22:11 server.py:115] LoadModel: success meta-llama/Llama-2-13b-hf_0 with target 2
+I20260726 14:22:11.687125 1665349 model.cpp:269] Creating replica fb342074-4fae-4e53-98c3-24e06549734e
+I20260726 14:22:11.687196 1665349 model.cpp:273] Creating queue for device 0
+I20260726 14:22:11.687217 1665349 model.cpp:285] Created replica fb342074-4fae-4e53-98c3-24e06549734e
+I20260726 14:22:11.687330 1665349 model.cpp:296] Dispatcher started for model meta-llama/Llama-2-13b-hf_0
+I20260726 14:22:11.687390 1665349 model.cpp:363] Waiting for model meta-llama/Llama-2-13b-hf_0 num tasks 1 state 3
+I20260726 14:25:55.998389 1665369 model.cpp:356] Finished loading tensor from memory to device 0
+I20260726 14:25:55.998617 1665331 model.cpp:250] Finished loading model meta-llama/Llama-2-13b-hf_0 from disk
+INFO 07-26 14:25:56 server.py:138] Confirm model meta-llama/Llama-2-13b-hf_0 replica fb342074-4fae-4e53-98c3-24e06549734e success
+I20260726 14:25:57.910388 1663616 model.cpp:53] Tensor file "/mnt/data1/mechels/sllm_storage/Llama-2-13B/meta-llama/Llama-2-13b-hf_3/tensor.data_3" does not exist
+I20260726 14:25:57.910476 1663616 checkpoint_store.cpp:106] Model meta-llama/Llama-2-13b-hf_3 is registered
+E20260726 14:25:57.910661 1670380 pinned_memory_pool.cpp:64] PinnedMemoryPool out of memory (496 buffers available, 1552 buffers needed)
+W20260726 14:25:57.910729 1670380 model.cpp:688] Not enough memory for model meta-llama/Llama-2-13b-hf_3
+I20260726 14:25:57.910741 1670380 pinned_memory.cpp:23] Deallocating 1552 memory chunks
+INFO 07-26 14:25:57 server.py:115] LoadModel: success meta-llama/Llama-2-13b-hf_3 with target 1
+I20260726 14:25:57.910812 1670380 pinned_memory_pool.cpp:98] Deallocated 1552 buffers
+I20260726 14:25:57.910825 1670380 checkpoint_store.cpp:138] Free 1552 chunks, remaining 1056
+I20260726 14:25:57.910847 1670380 checkpoint_store.cpp:141] Model meta-llama/Llama-2-13b-hf_0 is freed from memory
+I20260726 14:25:57.910856 1670380 pinned_memory.cpp:23] Deallocating 0 memory chunks
+I20260726 14:25:57.910862 1670380 pinned_memory_pool.cpp:98] Deallocated 0 buffers
+I20260726 14:25:57.910908 1670380 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 1552 buffers free buffers 496 total buffers 2048
+I20260726 14:25:57.911484 1670380 model.cpp:120] Loading model meta-llama/Llama-2-13b-hf_3 size 26031728640 to host
+I20260726 14:25:57.911525 1670380 model.cpp:134] Loading model meta-llama/Llama-2-13b-hf_3 to host with 4 threads, 1552 chunks, 16777216 chunk size, 388 chunks per thread
+I20260726 14:25:57.911653 1670382 model.cpp:155] Thread 1 starting from partition 0 offset 6509559808
+I20260726 14:25:57.911724 1670384 model.cpp:155] Thread 3 starting from partition 1 offset 8840740864
+I20260726 14:25:57.911692 1670381 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260726 14:25:57.911732 1670383 model.cpp:155] Thread 2 starting from partition 1 offset 2331181056
+INFO 07-26 14:25:59 server.py:115] LoadModel: success meta-llama/Llama-2-13b-hf_3 with target 2
+I20260726 14:25:59.102131 1670395 checkpoint_store.cpp:209] Loading model meta-llama/Llama-2-13b-hf_3
+I20260726 14:25:59.298207 1670395 model.cpp:269] Creating replica 69ab9591-ac98-45ad-952f-61571ab8961d
+I20260726 14:25:59.298276 1670395 model.cpp:273] Creating queue for device 0
+I20260726 14:25:59.298288 1670395 model.cpp:285] Created replica 69ab9591-ac98-45ad-952f-61571ab8961d
+I20260726 14:25:59.298395 1670395 model.cpp:296] Dispatcher started for model meta-llama/Llama-2-13b-hf_3
+I20260726 14:25:59.298478 1670395 model.cpp:363] Waiting for model meta-llama/Llama-2-13b-hf_3 num tasks 1 state 3
+I20260726 14:29:53.135007 1670404 model.cpp:356] Finished loading tensor from memory to device 0
+I20260726 14:29:53.168853 1670380 model.cpp:250] Finished loading model meta-llama/Llama-2-13b-hf_3 from disk
+INFO 07-26 14:29:53 server.py:138] Confirm model meta-llama/Llama-2-13b-hf_3 replica 69ab9591-ac98-45ad-952f-61571ab8961d success
+I20260726 14:29:54.934288 1663616 model.cpp:53] Tensor file "/mnt/data1/mechels/sllm_storage/Llama-2-13B/meta-llama/Llama-2-13b-hf_2/tensor.data_3" does not exist
+I20260726 14:29:54.934386 1663616 checkpoint_store.cpp:106] Model meta-llama/Llama-2-13b-hf_2 is registered
+E20260726 14:29:54.934623 1676105 pinned_memory_pool.cpp:64] PinnedMemoryPool out of memory (496 buffers available, 1552 buffers needed)
+INFO 07-26 14:29:54 server.py:115] LoadModel: success meta-llama/Llama-2-13b-hf_2 with target 1
+W20260726 14:29:54.934716 1676105 model.cpp:688] Not enough memory for model meta-llama/Llama-2-13b-hf_2
+W20260726 14:29:54.934736 1676105 model.cpp:578] Model meta-llama/Llama-2-13b-hf_0 is not allocated
+I20260726 14:29:54.934751 1676105 checkpoint_store.cpp:138] Free 0 chunks, remaining 1056
+I20260726 14:29:54.934765 1676105 pinned_memory.cpp:23] Deallocating 1552 memory chunks
+I20260726 14:29:54.934862 1676105 pinned_memory_pool.cpp:98] Deallocated 1552 buffers
+I20260726 14:29:54.934880 1676105 checkpoint_store.cpp:138] Free 1552 chunks, remaining 1056
+I20260726 14:29:54.934893 1676105 checkpoint_store.cpp:141] Model meta-llama/Llama-2-13b-hf_3 is freed from memory
+I20260726 14:29:54.934906 1676105 pinned_memory.cpp:23] Deallocating 0 memory chunks
+I20260726 14:29:54.934919 1676105 pinned_memory_pool.cpp:98] Deallocated 0 buffers
+I20260726 14:29:54.934959 1676105 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 1552 buffers free buffers 496 total buffers 2048
+I20260726 14:29:54.936156 1676105 model.cpp:120] Loading model meta-llama/Llama-2-13b-hf_2 size 26031728640 to host
+I20260726 14:29:54.936229 1676105 model.cpp:134] Loading model meta-llama/Llama-2-13b-hf_2 to host with 4 threads, 1552 chunks, 16777216 chunk size, 388 chunks per thread
+I20260726 14:29:54.936337 1676106 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260726 14:29:54.936357 1676107 model.cpp:155] Thread 1 starting from partition 0 offset 6509559808
+I20260726 14:29:54.936441 1676108 model.cpp:155] Thread 2 starting from partition 1 offset 2331181056
+I20260726 14:29:54.936491 1676109 model.cpp:155] Thread 3 starting from partition 1 offset 8840740864
+INFO 07-26 14:29:56 server.py:115] LoadModel: success meta-llama/Llama-2-13b-hf_2 with target 2
+I20260726 14:29:56.054589 1676148 checkpoint_store.cpp:209] Loading model meta-llama/Llama-2-13b-hf_2
+I20260726 14:29:56.272630 1676148 model.cpp:269] Creating replica 77cdcf79-3242-467a-bb85-963bda8ae74d
+I20260726 14:29:56.272711 1676148 model.cpp:273] Creating queue for device 0
+I20260726 14:29:56.272724 1676148 model.cpp:285] Created replica 77cdcf79-3242-467a-bb85-963bda8ae74d
+I20260726 14:29:56.272845 1676148 model.cpp:296] Dispatcher started for model meta-llama/Llama-2-13b-hf_2
+I20260726 14:29:56.272903 1676148 model.cpp:363] Waiting for model meta-llama/Llama-2-13b-hf_2 num tasks 1 state 3
+I20260726 14:33:52.960752 1676150 model.cpp:356] Finished loading tensor from memory to device 0
+I20260726 14:33:52.994047 1676105 model.cpp:250] Finished loading model meta-llama/Llama-2-13b-hf_2 from disk
+INFO 07-26 14:33:52 server.py:138] Confirm model meta-llama/Llama-2-13b-hf_2 replica 77cdcf79-3242-467a-bb85-963bda8ae74d success
+I20260726 14:33:54.766839 1663616 model.cpp:53] Tensor file "/mnt/data1/mechels/sllm_storage/Llama-2-13B/meta-llama/Llama-2-13b-hf_1/tensor.data_3" does not exist
+I20260726 14:33:54.766911 1663616 checkpoint_store.cpp:106] Model meta-llama/Llama-2-13b-hf_1 is registered
+INFO 07-26 14:33:54 server.py:115] LoadModel: success meta-llama/Llama-2-13b-hf_1 with target 1
+E20260726 14:33:54.767104 1681812 pinned_memory_pool.cpp:64] PinnedMemoryPool out of memory (496 buffers available, 1552 buffers needed)
+W20260726 14:33:54.767206 1681812 model.cpp:688] Not enough memory for model meta-llama/Llama-2-13b-hf_1
+W20260726 14:33:54.767232 1681812 model.cpp:578] Model meta-llama/Llama-2-13b-hf_0 is not allocated
+I20260726 14:33:54.767253 1681812 checkpoint_store.cpp:138] Free 0 chunks, remaining 1056
+W20260726 14:33:54.767274 1681812 model.cpp:578] Model meta-llama/Llama-2-13b-hf_3 is not allocated
+I20260726 14:33:54.767293 1681812 checkpoint_store.cpp:138] Free 0 chunks, remaining 1056
+I20260726 14:33:54.767313 1681812 pinned_memory.cpp:23] Deallocating 1552 memory chunks
+I20260726 14:33:54.767436 1681812 pinned_memory_pool.cpp:98] Deallocated 1552 buffers
+I20260726 14:33:54.767460 1681812 checkpoint_store.cpp:138] Free 1552 chunks, remaining 1056
+I20260726 14:33:54.767479 1681812 checkpoint_store.cpp:141] Model meta-llama/Llama-2-13b-hf_2 is freed from memory
+I20260726 14:33:54.767498 1681812 pinned_memory.cpp:23] Deallocating 0 memory chunks
+I20260726 14:33:54.767516 1681812 pinned_memory_pool.cpp:98] Deallocated 0 buffers
+I20260726 14:33:54.767575 1681812 pinned_memory_pool.cpp:78] PinnedMemoryPool Allocate 1552 buffers free buffers 496 total buffers 2048
+I20260726 14:33:54.768338 1681812 model.cpp:120] Loading model meta-llama/Llama-2-13b-hf_1 size 26031728640 to host
+I20260726 14:33:54.768426 1681812 model.cpp:134] Loading model meta-llama/Llama-2-13b-hf_1 to host with 4 threads, 1552 chunks, 16777216 chunk size, 388 chunks per thread
+I20260726 14:33:54.768585 1681814 model.cpp:155] Thread 1 starting from partition 0 offset 6509559808
+I20260726 14:33:54.768589 1681813 model.cpp:155] Thread 0 starting from partition 0 offset 0
+I20260726 14:33:54.768651 1681815 model.cpp:155] Thread 2 starting from partition 1 offset 2331181056
+I20260726 14:33:54.768693 1681816 model.cpp:155] Thread 3 starting from partition 1 offset 8840740864
+I20260726 14:33:55.822927 1681849 checkpoint_store.cpp:209] Loading model meta-llama/Llama-2-13b-hf_1
+INFO 07-26 14:33:55 server.py:115] LoadModel: success meta-llama/Llama-2-13b-hf_1 with target 2
+I20260726 14:33:56.032752 1681849 model.cpp:269] Creating replica 5b9b4cd2-9a46-409a-aae4-d7814de2be6c
+I20260726 14:33:56.032831 1681849 model.cpp:273] Creating queue for device 0
+I20260726 14:33:56.032845 1681849 model.cpp:285] Created replica 5b9b4cd2-9a46-409a-aae4-d7814de2be6c
+I20260726 14:33:56.032980 1681849 model.cpp:296] Dispatcher started for model meta-llama/Llama-2-13b-hf_1
+I20260726 14:33:56.033022 1681849 model.cpp:363] Waiting for model meta-llama/Llama-2-13b-hf_1 num tasks 1 state 3
+I20260726 14:37:51.510324 1681851 model.cpp:356] Finished loading tensor from memory to device 0
+I20260726 14:37:51.545567 1681812 model.cpp:250] Finished loading model meta-llama/Llama-2-13b-hf_1 from disk
+INFO 07-26 14:37:51 server.py:138] Confirm model meta-llama/Llama-2-13b-hf_1 replica 5b9b4cd2-9a46-409a-aae4-d7814de2be6c success

@@ -1,0 +1,30 @@
+[
+    {
+        "model_name": "meta-llama/Llama-3.2-1B_2",
+        "loading_time": 36.48452067375183,
+        "end_to_end_time": 0.6246275901794434,
+        "throughput": 97.65819019053559,
+        "output_text": "The quick brown fox jumps over the lazy dog. This is a classic example of the first law of logic, which states that everything follows from a single premise. It is also known as the law of identity, and it is one of the most important laws in logic. The law of identity states that"
+    },
+    {
+        "model_name": "meta-llama/Llama-3.2-1B_1",
+        "loading_time": 28.62111806869507,
+        "end_to_end_time": 0.42951393127441406,
+        "throughput": 142.0210045783764,
+        "output_text": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
+    },
+    {
+        "model_name": "meta-llama/Llama-3.2-1B_0",
+        "loading_time": 30.023041486740112,
+        "end_to_end_time": 0.4492526054382324,
+        "throughput": 135.7810711871027,
+        "output_text": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.\nThe quick brown fox jumps over the lazy dog.\nThe quick brown fox jumps over the lazy dog."
+    },
+    {
+        "model_name": "meta-llama/Llama-3.2-1B_3",
+        "loading_time": 31.066024780273438,
+        "end_to_end_time": 0.43974733352661133,
+        "throughput": 138.71602019915053,
+        "output_text": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog."
+    }
+]

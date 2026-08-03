@@ -1,0 +1,25 @@
+============================================================
+ServerlessLLM Benchmark Results
+============================================================
+Model: meta-llama/Llama-2-13b-hf
+Replicas: 4
+Benchmark Type: random
+
+Loading Time Comparison:
+------------------------------------------------------------
+Format          Avg (s)      Min (s)      Max (s)      Std Dev   
+------------------------------------------------------------
+SLLM            233.840      225.146      238.095      5.116     
+SafeTensors     115.880      6.593        267.390      113.267   
+SLLM Condense   107.897      106.727      109.327      1.012     
+------------------------------------------------------------
+SLLM Speedup: 0.50x faster than SafeTensors
+SLLM Condense Speedup: 1.07x faster than SafeTensors
+
+Inference Performance:
+------------------------------------------------------------
+SLLM Avg Throughput: 53.21 tokens/s
+SafeTensors Avg Throughput: 51.96 tokens/s
+SLLM Condense Avg Throughput: 53.46 tokens/s
+
+============================================================

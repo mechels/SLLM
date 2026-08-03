@@ -1,0 +1,13 @@
+model,format,mean_loading_time_s,std_loading_time_s,min_loading_time_s,max_loading_time_s,count,speedup_vs_safetensors
+meta-llama/Llama-3.2-1B,safetensors,31.548676,2.978828,28.621118,36.484521,4,1.000000
+meta-llama/Llama-3.2-1B,sllm,23.979424,0.524873,23.308197,24.760574,4,1.315656
+meta-llama/Llama-3.2-1B,sllm-condense,12.471191,0.085552,12.346244,12.576923,4,2.529724
+meta-llama/Llama-3.2-3B,safetensors,71.617766,2.589815,68.560233,74.592786,4,1.000000
+meta-llama/Llama-3.2-3B,sllm,61.964293,0.728866,61.336477,63.204374,4,1.155791
+meta-llama/Llama-3.2-3B,sllm-condense,30.142665,0.319580,29.947824,30.696018,4,2.375960
+meta-llama/Meta-Llama-3-8B,safetensors,199.874000,5.928615,194.158876,209.517060,4,1.000000
+meta-llama/Meta-Llama-3-8B,sllm,153.528490,1.707126,151.572342,155.993122,4,1.301869
+meta-llama/Meta-Llama-3-8B,sllm-condense,74.763335,1.307543,72.968513,76.318222,4,2.673423
+meta-llama/Llama-2-13b-hf,safetensors,274.497939,6.147498,267.390196,284.249679,4,1.000000
+meta-llama/Llama-2-13b-hf,sllm,233.839789,5.116236,225.145913,238.095240,4,1.173872
+meta-llama/Llama-2-13b-hf,sllm-condense,107.897058,1.012187,106.726797,109.327497,4,2.544073
